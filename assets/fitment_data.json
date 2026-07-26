@@ -1,0 +1,6463 @@
+{
+  "Audi": {
+    "models": [
+      {
+        "name": "Audi A3",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "8V",
+            "year": "2013-2020",
+            "pcd": "5x112",
+            "offset": "ET42-55",
+            "cb": "57.1mm",
+            "thread": "M14x1.5",
+            "torque": "120Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/45R17",
+          "225/40R18",
+          "225/35R19"
+        ],
+        "rimSizes": [
+          "7.5Jx17 ET51",
+          "7.5Jx18 ET51",
+          "8Jx19 ET49"
+        ]
+      },
+      {
+        "name": "Audi A4",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "B9",
+            "year": "2016-2023",
+            "pcd": "5x112",
+            "offset": "ET32-45",
+            "cb": "66.5mm",
+            "thread": "M14x1.5",
+            "torque": "120Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/50R17",
+          "245/40R18",
+          "245/35R19"
+        ],
+        "rimSizes": [
+          "7.5Jx17 ET40",
+          "8Jx18 ET40",
+          "8.5Jx19 ET38"
+        ]
+      },
+      {
+        "name": "Audi A6",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "C8",
+            "year": "2018+",
+            "pcd": "5x112",
+            "offset": "ET32-45",
+            "cb": "66.5mm",
+            "thread": "M14x1.5",
+            "torque": "120Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/55R17",
+          "245/45R18",
+          "255/40R19"
+        ],
+        "rimSizes": [
+          "7.5Jx17 ET40",
+          "8Jx18 ET40",
+          "8.5Jx19 ET38"
+        ]
+      },
+      {
+        "name": "Audi Q5",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "80A",
+            "year": "2017+",
+            "pcd": "5x112",
+            "offset": "ET33-45",
+            "cb": "66.5mm",
+            "thread": "M14x1.5",
+            "torque": "120Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/60R18",
+          "255/45R19",
+          "255/40R20"
+        ],
+        "rimSizes": [
+          "8Jx18 ET38",
+          "8.5Jx19 ET38",
+          "9Jx20 ET33"
+        ]
+      },
+      {
+        "name": "Audi Q3",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "F3",
+            "year": "2019+",
+            "pcd": "5x112",
+            "offset": "ET42-50",
+            "cb": "57.1mm",
+            "thread": "M14x1.5",
+            "torque": "120Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/65R17",
+          "235/55R18",
+          "235/50R19"
+        ],
+        "rimSizes": [
+          "7Jx17 ET43",
+          "7.5Jx18 ET43",
+          "8Jx19 ET43"
+        ]
+      },
+      {
+        "name": "Audi e-tron / Q8 e-tron",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "All",
+            "year": "2019+",
+            "pcd": "5x112",
+            "offset": "ET35-45",
+            "cb": "66.5mm",
+            "thread": "M14x1.5",
+            "torque": "120Nm"
+          }
+        ],
+        "tyreSizes": [
+          "255/55R19",
+          "255/50R20",
+          "265/45R21"
+        ],
+        "rimSizes": [
+          "8.5Jx19",
+          "9Jx20",
+          "9.5Jx21"
+        ]
+      },
+      {
+        "name": "Volkswagen Golf",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "Mk7",
+            "year": "2013-2020",
+            "pcd": "5x112",
+            "offset": "ET42-53",
+            "cb": "57.1mm",
+            "thread": "M14x1.5",
+            "torque": "120Nm"
+          }
+        ],
+        "tyreSizes": [
+          "205/55R16",
+          "225/45R17",
+          "225/40R18"
+        ],
+        "rimSizes": [
+          "6.5Jx16 ET46",
+          "7Jx17 ET49",
+          "7.5Jx18 ET51"
+        ]
+      },
+      {
+        "name": "Volkswagen Tiguan",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "Mk2",
+            "year": "2016+",
+            "pcd": "5x112",
+            "offset": "ET33-45",
+            "cb": "57.1mm",
+            "thread": "M14x1.5",
+            "torque": "120Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/65R17",
+          "235/55R18",
+          "235/50R19"
+        ],
+        "rimSizes": [
+          "7Jx17 ET43",
+          "7.5Jx18 ET43",
+          "8Jx19 ET40"
+        ]
+      },
+      {
+        "name": "Volkswagen ID.4",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "All",
+            "year": "2021+",
+            "pcd": "5x112",
+            "offset": "ET42-50",
+            "cb": "57.1mm",
+            "thread": "M14x1.5",
+            "torque": "120Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/55R19",
+          "235/50R20",
+          "255/45R20"
+        ],
+        "rimSizes": [
+          "8Jx19 ET43",
+          "8.5Jx20 ET46"
+        ]
+      },
+      {
+        "name": "Audi R8",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "4S",
+            "year": "2015+",
+            "pcd": "5x112 (Audi style)",
+            "offset": "ET25-35",
+            "cb": "57.1mm",
+            "thread": "M14x1.5",
+            "torque": "120Nm"
+          }
+        ],
+        "tyreSizes": [],
+        "rimSizes": []
+      }
+    ]
+  },
+  "BMW": {
+    "models": [
+      {
+        "name": "3 Series",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "VII (G20/G21) Saloon/Touring",
+            "year": "2019–2027",
+            "pcd": "5x112",
+            "offset": "17x7.5 ET30, 18x7.5 ET25, 18x8.5 ET40, 19x8 ET27, 19x8.5 ET40, 20x8 ET27, 20x8.5 ET40",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "VI LCI (F30/F31) Saloon/Touring",
+            "year": "2015–2019",
+            "pcd": "5x120",
+            "offset": "16x7 ET31, 16x7.5 ET37, 17x7.5 ET37, 18x8 ET34, 18x8.5 ET47, 19x8.5 ET47, 20x8.5 ET47",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "VI (F30/F31) Saloon/Touring",
+            "year": "2011–2016",
+            "pcd": "5x120",
+            "offset": "16x7 ET31, 17x7.5 ET37, 18x8 ET34, 18x8.5 ET47, 19x8.5 ET47",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "V LCI (E90/E91/E92/E93)",
+            "year": "2008–2013",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "V (E90/E91/E92/E93)",
+            "year": "2005–2010",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "IV (E46)",
+            "year": "1998–2007",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "110 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 225/55R17",
+          "225/45R18",
+          "225/40R19",
+          "255/35R18 (rear staggered)"
+        ],
+        "rimSizes": [
+          "17×7.5",
+          "18×7.5",
+          "18×8",
+          "18×8.5",
+          "19×8",
+          "19×8.5",
+          "20×8",
+          "20×8.5"
+        ]
+      },
+      {
+        "name": "5 Series",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "VIII (G60/G61/G68)",
+            "year": "2023–2027",
+            "pcd": "5x112",
+            "offset": "18x8 ET30, 19x8 ET30, 19x9 ET44, 20x9 ET44",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "VII LCI (G30/G31/G38)",
+            "year": "2020–2024",
+            "pcd": "5x112",
+            "offset": "17x7.5 ET27, 18x8 ET30, 18x9 ET44, 19x8 ET30, 19x9 ET44, 20x9 ET44",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "VII (G30/G31/G38)",
+            "year": "2016–2020",
+            "pcd": "5x112",
+            "offset": "17x7.5 ET27, 18x8 ET30, 18x9 ET44, 19x8 ET30, 19x9 ET44, 20x9 ET44",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "VI LCI (F10/F11)",
+            "year": "2013–2017",
+            "pcd": "5x120",
+            "offset": "17x8 ET30, 18x8 ET30, 18x9 ET44, 19x8.5 ET30, 19x9 ET44",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "VI (F10/F11)",
+            "year": "2009–2013",
+            "pcd": "5x120",
+            "offset": "17x8 ET30, 18x8 ET30, 19x8.5 ET30",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "V Facelift (E60/E61)",
+            "year": "2007–2010",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "IV (E39)",
+            "year": "1995–2004",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "110 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 225/55R17",
+          "245/45R18",
+          "275/40R18 (rear)"
+        ],
+        "rimSizes": [
+          "17×7.5",
+          "18×8",
+          "18×9",
+          "19×8",
+          "19×9",
+          "20×9"
+        ]
+      },
+      {
+        "name": "X3",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "IV (G45/G48)",
+            "year": "2024–2027",
+            "pcd": "5x112",
+            "offset": "18x7 ET22, 19x7.5 ET32, 20x8 ET27, 20x9.5 ET43, 21x8.5 ET30, 21x9.5 ET43",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "III LCI (G01)",
+            "year": "2021–2024",
+            "pcd": "5x112",
+            "offset": "18x7 ET22, 19x7.5 ET32, 20x8 ET27, 20x9.5 ET43, 21x8.5 ET30, 21x9.5 ET43",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "III (G01)",
+            "year": "2017–2021",
+            "pcd": "5x112",
+            "offset": "18x7 ET22, 19x7.5 ET32, 20x8 ET27, 20x9.5 ET43, 21x8.5 ET30, 21x9.5 ET43",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "II Facelift (F25)",
+            "year": "2014–2017",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "II (F25)",
+            "year": "2010–2014",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "I Facelift (E83)",
+            "year": "2006–2010",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 225/55R17",
+          "225/60R17",
+          "225/50R18",
+          "245/50R18"
+        ],
+        "rimSizes": [
+          "18×7",
+          "18×7.5",
+          "19×7.5",
+          "19×8",
+          "20×8",
+          "20×9.5",
+          "21×8.5",
+          "21×9.5"
+        ]
+      },
+      {
+        "name": "X5",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "IV LCI (G05/G18)",
+            "year": "2023–2027",
+            "pcd": "5x112",
+            "offset": "19x9 ET38, 20x9 ET35, 20x10.5 ET40, 21x9.5 ET37, 21x10.5 ET43, 22x9.5 ET37, 22x10.5 ET43",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "IV (G05/G18)",
+            "year": "2018–2023",
+            "pcd": "5x112",
+            "offset": "18x8.5 ET44, 19x9 ET38, 20x9 ET35, 20x10.5 ET40, 21x9.5 ET37, 21x10.5 ET43, 22x9.5 ET37, 22x10.5 ET43",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "III (F15)",
+            "year": "2013–2018",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "II LCI (E70)",
+            "year": "2010–2013",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "II (E70)",
+            "year": "2006–2010",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "I (E53)",
+            "year": "1999–2006",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "110 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 255/55R18",
+          "265/50R19",
+          "275/45R20",
+          "285/40R20"
+        ],
+        "rimSizes": [
+          "18×8.5",
+          "19×9",
+          "20×9",
+          "20×10.5",
+          "21×9.5",
+          "21×10.5",
+          "22×9.5",
+          "22×10.5"
+        ]
+      },
+      {
+        "name": "1 Series",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "IV (F70) Hatch",
+            "year": "2024–2027",
+            "pcd": "5x112",
+            "offset": "17x7.5 ET47, 18x8 ET54",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "III (F40) Hatch",
+            "year": "2019–2024",
+            "pcd": "5x112",
+            "offset": "16x7 ET47, 17x7 ET47, 17x7.5 ET54, 18x8 ET54, 19x8 ET54",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "II LCI (F20/F21) Hatch",
+            "year": "2015–2019",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "II (F20/F21) Hatch",
+            "year": "2011–2015",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "I (E81/E87/E88) Hatch",
+            "year": "2004–2013",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "195/55R16",
+          "205/50R17",
+          "225/45R17",
+          "225/40R18",
+          "235/35R19"
+        ],
+        "rimSizes": [
+          "16×7",
+          "17×7",
+          "17×7.5",
+          "18×8",
+          "19×8"
+        ]
+      },
+      {
+        "name": "X1",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "III (U10)",
+            "year": "2023–2027",
+            "pcd": "5x112",
+            "offset": "17x7.5, 18x8, 19x8",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "II LCI (F48)",
+            "year": "2019–2022",
+            "pcd": "5x112",
+            "offset": "17x7.5, 18x8, 19x8",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "II (F48)",
+            "year": "2015–2019",
+            "pcd": "5x112",
+            "offset": "17x7.5, 18x8",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "I (E84)",
+            "year": "2009–2015",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "205/60R17",
+          "225/55R17",
+          "225/50R18",
+          "225/45R19"
+        ],
+        "rimSizes": [
+          "17×7.5",
+          "18×8",
+          "19×8"
+        ]
+      },
+      {
+        "name": "7 Series",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "VII (G70/G71)",
+            "year": "2022–2027",
+            "pcd": "5x112",
+            "offset": "19x8, 20x8.5, 21x9, 21x10.5, 22x9.5, 22x10.5",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "VI LCI (G11/G12)",
+            "year": "2019–2022",
+            "pcd": "5x112",
+            "offset": "18x8, 19x8.5, 20x9, 21x9.5",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "VI (G11/G12)",
+            "year": "2015–2019",
+            "pcd": "5x112",
+            "offset": "18x8, 19x8.5, 20x9",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "V LCI (F01/F02)",
+            "year": "2012–2015",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "V (F01/F02)",
+            "year": "2008–2012",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "IV (E65/E66)",
+            "year": "2001–2008",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "245/50R18",
+          "245/45R19",
+          "255/40R20",
+          "275/35R20 rear"
+        ],
+        "rimSizes": [
+          "18×8",
+          "19×8.5",
+          "20×9",
+          "21×9.5",
+          "22×9.5",
+          "22×10.5"
+        ]
+      },
+      {
+        "name": "X7",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "I LCI (G07)",
+            "year": "2022–2027",
+            "pcd": "5x112",
+            "offset": "20x9, 21x9.5, 22x9.5, 22x10.5, 23x9.5, 23x10.5",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "I (G07)",
+            "year": "2018–2022",
+            "pcd": "5x112",
+            "offset": "20x9, 21x9.5, 22x9.5, 22x10.5",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "265/50R20",
+          "285/45R21",
+          "275/40R22 front",
+          "315/35R22 rear"
+        ],
+        "rimSizes": [
+          "20×9",
+          "21×9.5",
+          "22×9.5",
+          "22×10.5",
+          "23×9.5",
+          "23×10.5"
+        ]
+      },
+      {
+        "name": "2 Series Gran Coupe",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "(F44) GC",
+            "year": "2019–2027",
+            "pcd": "5x112",
+            "offset": "16x7 ET47, 17x7 ET47, 17x7.5 ET54, 18x6.5 ET41, 18x8 ET54, 19x8 ET54",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "205/55R17",
+          "225/45R18",
+          "235/40R19"
+        ],
+        "rimSizes": [
+          "16×7",
+          "17×7",
+          "17×7.5",
+          "18×6.5",
+          "18×8",
+          "19×8"
+        ]
+      },
+      {
+        "name": "i4",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "(G26) Gran Coupe",
+            "year": "2021–2027",
+            "pcd": "5x112",
+            "offset": "18x7.5, 18x8.5, 19x8, 19x8.5, 20x8, 20x8.5",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/50R18",
+          "245/45R18",
+          "245/40R19",
+          "255/40R19 rear"
+        ],
+        "rimSizes": [
+          "18×7.5",
+          "18×8.5",
+          "19×8",
+          "19×8.5",
+          "20×8",
+          "20×8.5"
+        ]
+      },
+      {
+        "name": "iX3",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "(G08)",
+            "year": "2020–2027",
+            "pcd": "5x112",
+            "offset": "18x7.5, 19x8, 20x8",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/55R18",
+          "225/50R19",
+          "245/45R20"
+        ],
+        "rimSizes": [
+          "18×7.5",
+          "19×8",
+          "20×8"
+        ]
+      },
+      {
+        "name": "Z4",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "III (G29) Roadster",
+            "year": "2018–2027",
+            "pcd": "5x112",
+            "offset": "17x7.5, 18x8, 19x9, 20x9",
+            "cb": "66.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "140 Nm"
+          },
+          {
+            "name": "II (E89) Roadster",
+            "year": "2009–2016",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "I (E85/E86) Roadster",
+            "year": "2002–2008",
+            "pcd": "5x120",
+            "offset": "Various",
+            "cb": "72.6 mm",
+            "thread": "M14 x 1.25",
+            "torque": "120 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/50R17",
+          "225/45R18",
+          "255/40R18 rear",
+          "255/35R19 rear"
+        ],
+        "rimSizes": [
+          "17×7.5",
+          "18×8",
+          "19×9",
+          "20×9"
+        ]
+      },
+      {
+        "name": "M2 / M3 / M4",
+        "generations": [
+          {
+            "name": "-------",
+            "year": "------------",
+            "pcd": "------",
+            "offset": "-----",
+            "cb": "--------",
+            "thread": "-------------",
+            "torque": "--------"
+          },
+          {
+            "name": "M2",
+            "year": "G87",
+            "pcd": "2022–2027",
+            "offset": "5x112",
+            "cb": "19x9.5 ET28 front, 20x10.5 ET40 rear",
+            "thread": "66.6 mm",
+            "torque": "M14 x 1.25"
+          },
+          {
+            "name": "M2",
+            "year": "F87 LCI",
+            "pcd": "2018–2021",
+            "offset": "5x120",
+            "cb": "19x9 ET29 front, 19x10 ET40 rear",
+            "thread": "72.6 mm",
+            "torque": "M14 x 1.25"
+          },
+          {
+            "name": "M2",
+            "year": "F87",
+            "pcd": "2015–2018",
+            "offset": "5x120",
+            "cb": "19x9 ET29 front, 19x10 ET40 rear",
+            "thread": "72.6 mm",
+            "torque": "M14 x 1.25"
+          },
+          {
+            "name": "M3",
+            "year": "G80/G81",
+            "pcd": "2021–2027",
+            "offset": "5x112",
+            "cb": "19x9.5 ET25 front, 20x10.5 ET40 rear",
+            "thread": "66.6 mm",
+            "torque": "M14 x 1.25"
+          },
+          {
+            "name": "M3",
+            "year": "F80 LCI",
+            "pcd": "2017–2019",
+            "offset": "5x120",
+            "cb": "18x9 ET29, 19x9.5 ET23, 20x10 ET40",
+            "thread": "72.6 mm",
+            "torque": "M14 x 1.25"
+          },
+          {
+            "name": "M3",
+            "year": "F80",
+            "pcd": "2014–2017",
+            "offset": "5x120",
+            "cb": "18x9 ET29, 19x9.5 ET23, 20x10 ET40",
+            "thread": "72.6 mm",
+            "torque": "M14 x 1.25"
+          },
+          {
+            "name": "M3",
+            "year": "E90/E92/E93",
+            "pcd": "2007–2013",
+            "offset": "5x120",
+            "cb": "Various",
+            "thread": "72.6 mm",
+            "torque": "M14 x 1.25"
+          },
+          {
+            "name": "M4",
+            "year": "G82/G83",
+            "pcd": "2021–2027",
+            "offset": "5x112",
+            "cb": "19x9.5 ET25 front, 20x10.5 ET40 rear",
+            "thread": "66.6 mm",
+            "torque": "M14 x 1.25"
+          },
+          {
+            "name": "M4",
+            "year": "F82/F83",
+            "pcd": "2014–2020",
+            "offset": "5x120",
+            "cb": "18x9 ET29, 19x9.5 ET23, 20x10 ET40",
+            "thread": "72.6 mm",
+            "torque": "M14 x 1.25"
+          }
+        ],
+        "tyreSizes": [
+          "- M2 (G87): 275/35R19 front",
+          "285/30R20 rear"
+        ],
+        "rimSizes": []
+      }
+    ]
+  },
+  "Chinese EVs": {
+    "models": [
+      {
+        "name": "Atto 3",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "1st Gen EV",
+            "year": "2021–2026",
+            "pcd": "5×114.3",
+            "offset": "7Jx18 ET40 (OEM 18″)",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "~120 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/60 R17",
+          "215/55 R18",
+          "235/50 R18"
+        ],
+        "rimSizes": [
+          "17×7",
+          "18×7",
+          "18×7.5"
+        ]
+      },
+      {
+        "name": "Seal",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "1st Gen EV",
+            "year": "2022–2026",
+            "pcd": "5×120",
+            "offset": "8Jx20 ET40 (20″)",
+            "cb": "64.1 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/50 R18",
+          "235/45 R19",
+          "245/45 R20 (performance)"
+        ],
+        "rimSizes": [
+          "18×7.5",
+          "19×8",
+          "20×8"
+        ]
+      },
+      {
+        "name": "Dolphin",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "1st Gen EV",
+            "year": "2023–",
+            "pcd": "5×114.3",
+            "offset": "6.5Jx16 ET45",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "~120 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "205/55 R16",
+          "205/50 R17"
+        ],
+        "rimSizes": [
+          "16×6.5",
+          "17×6.5"
+        ]
+      },
+      {
+        "name": "Han",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "1st Gen EV",
+            "year": "2020–",
+            "pcd": "5×120",
+            "offset": "—",
+            "cb": "64.1 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "245/45 R19",
+          "245/40 R20"
+        ],
+        "rimSizes": [
+          "19×8",
+          "20×8.5"
+        ]
+      },
+      {
+        "name": "001",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "1st Gen",
+            "year": "2021–",
+            "pcd": "5×108",
+            "offset": "8.5Jx21 ET40–45, 9.5Jx22 ET48",
+            "cb": "63.4 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/55 R19",
+          "255/55 R19",
+          "255/45 R21",
+          "275/40 R21",
+          "265/40 R22",
+          "295/35 R22"
+        ],
+        "rimSizes": [
+          "19×8",
+          "19×8.5",
+          "21×8.5",
+          "22×9.5"
+        ]
+      },
+      {
+        "name": "007",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "1st Gen",
+            "year": "2024–",
+            "pcd": "5×108",
+            "offset": "—",
+            "cb": "63.4 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "245/45 R19",
+          "265/40 R20"
+        ],
+        "rimSizes": [
+          "19×8.5",
+          "20×9"
+        ]
+      },
+      {
+        "name": "X",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "1st Gen",
+            "year": "2023–",
+            "pcd": "5×108",
+            "offset": "—",
+            "cb": "63.4 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/50 R19",
+          "245/45 R20"
+        ],
+        "rimSizes": [
+          "19×7.5",
+          "20×8"
+        ]
+      },
+      {
+        "name": "009",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "1st Gen MPV",
+            "year": "2023–",
+            "pcd": "5×108",
+            "offset": "—",
+            "cb": "63.4 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "265/40 R22 front",
+          "295/35 R22 rear"
+        ],
+        "rimSizes": [
+          "22×9.5"
+        ]
+      },
+      {
+        "name": "ET5 / ET5T",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "NT2.0",
+            "year": "2023–",
+            "pcd": "5×120",
+            "offset": "8.5Jx19 ET43, 8.5Jx20 ET43",
+            "cb": "62.6 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "245/45 R19",
+          "245/40 R20"
+        ],
+        "rimSizes": [
+          "19×8.5",
+          "20×8.5"
+        ]
+      },
+      {
+        "name": "ET7",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "NT2.0",
+            "year": "2022–",
+            "pcd": "5×120",
+            "offset": "—",
+            "cb": "62.6 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "245/50 R19",
+          "255/45 R20",
+          "265/40 R21"
+        ],
+        "rimSizes": [
+          "19×8",
+          "20×8.5",
+          "21×9"
+        ]
+      },
+      {
+        "name": "ES6 / EL6",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "NT2.0",
+            "year": "2023–",
+            "pcd": "5×120",
+            "offset": "—",
+            "cb": "62.6 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "255/50 R20",
+          "265/45 R21"
+        ],
+        "rimSizes": [
+          "20×8.5",
+          "21×9"
+        ]
+      },
+      {
+        "name": "ES8 / EL8",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "NT2.0",
+            "year": "2023–",
+            "pcd": "5×120",
+            "offset": "—",
+            "cb": "62.6 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "255/50 R20",
+          "265/45 R21",
+          "265/40 R22"
+        ],
+        "rimSizes": [
+          "20×8.5",
+          "21×9",
+          "22×9.5"
+        ]
+      },
+      {
+        "name": "G6",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "1st Gen",
+            "year": "2023–",
+            "pcd": "5×112",
+            "offset": "—",
+            "cb": "60.1 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/60 R18",
+          "255/45 R21",
+          "255/50 R19"
+        ],
+        "rimSizes": [
+          "18×7.5",
+          "19×7.5",
+          "20×8.5",
+          "21×8.5"
+        ]
+      },
+      {
+        "name": "G9",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "1st Gen",
+            "year": "2022–",
+            "pcd": "5×112",
+            "offset": "—",
+            "cb": "60.1 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "255/55 R19",
+          "255/45 R21"
+        ],
+        "rimSizes": [
+          "19×8",
+          "21×8.5"
+        ]
+      },
+      {
+        "name": "P7",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "P7",
+            "year": "2020–2025",
+            "pcd": "5×112",
+            "offset": "—",
+            "cb": "60.1 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          },
+          {
+            "name": "P7+",
+            "year": "2024–",
+            "pcd": "5×112",
+            "offset": "—",
+            "cb": "60.1 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [],
+        "rimSizes": [
+          "18×7.5",
+          "19×8.5",
+          "21×8.5"
+        ]
+      },
+      {
+        "name": "X9",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "1st Gen MPV",
+            "year": "2024–",
+            "pcd": "5×112",
+            "offset": "—",
+            "cb": "60.1 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/55 R19",
+          "245/50 R20"
+        ],
+        "rimSizes": [
+          "19×7.5",
+          "20×8"
+        ]
+      },
+      {
+        "name": "SU7 / SU7 Max",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "1st Gen",
+            "year": "2024–",
+            "pcd": "5×114.3",
+            "offset": "—",
+            "cb": "64.5 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "245/45 R19",
+          "245/40 R20",
+          "265/40 R20 (rear)",
+          "245/35 R21",
+          "265/35 R21 (rear)",
+          "275/35 R21 (rear Ultra)"
+        ],
+        "rimSizes": [
+          "19×8.5",
+          "20×9",
+          "21×9.5"
+        ]
+      },
+      {
+        "name": "SU7 Ultra",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "1st Gen",
+            "year": "2025–",
+            "pcd": "5×114.3",
+            "offset": "—",
+            "cb": "64.5 mm",
+            "thread": "M14×1.5",
+            "torque": "~140 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "265/35 R21 front",
+          "305/30 R21 rear"
+        ],
+        "rimSizes": [
+          "21×9.5 front",
+          "21×10.5 rear"
+        ]
+      }
+    ]
+  },
+  "Honda": {
+    "models": [
+      {
+        "name": "Jazz / Fit",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "GD/GE (1/2)",
+            "year": "2002–2008",
+            "pcd": "4×100",
+            "offset": "ET45",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "GE/GG/GP (3)",
+            "year": "2008–2015",
+            "pcd": "4×100",
+            "offset": "ET45",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "GK (3FL)",
+            "year": "2014–2019",
+            "pcd": "4×100",
+            "offset": "ET45",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "GR (4)",
+            "year": "2020–2023",
+            "pcd": "4×100",
+            "offset": "ET45",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "GR Facelift",
+            "year": "2022–2027",
+            "pcd": "4×100",
+            "offset": "ET45",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "175/65R14",
+          "185/55R15",
+          "185/60R15",
+          "195/55R15",
+          "195/50R16"
+        ],
+        "rimSizes": [
+          "14×5.5J",
+          "15×6J",
+          "16×6J"
+        ]
+      },
+      {
+        "name": "Civic",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "VI (EJ/EK/EM)",
+            "year": "1995–2000",
+            "pcd": "4×100",
+            "offset": "ET45",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "VII (ES/EP/EM/EU)",
+            "year": "2000–2005",
+            "pcd": "4×100",
+            "offset": "ET45",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "VIII (FD)",
+            "year": "2005–2012",
+            "pcd": "5×114.3",
+            "offset": "ET55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "IX (FB/FG)",
+            "year": "2011–2016",
+            "pcd": "5×114.3",
+            "offset": "ET55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "X (FC)",
+            "year": "2016–2022",
+            "pcd": "5×114.3",
+            "offset": "ET55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "XI",
+            "year": "2021–2027",
+            "pcd": "5×114.3",
+            "offset": "ET55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "185/65R14",
+          "195/60R15",
+          "205/55R16",
+          "215/55R16",
+          "225/45R17",
+          "235/40R18"
+        ],
+        "rimSizes": [
+          "14×5.5J",
+          "15×6J",
+          "16×6.5J",
+          "17×7J",
+          "18×8J"
+        ]
+      },
+      {
+        "name": "CR-V",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "I (RD1/RD2/RD3)",
+            "year": "1995–2001",
+            "pcd": "5×114.3",
+            "offset": "ET45–50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "II (RD4/RD5/RD6/RD7/RD9)",
+            "year": "2001–2006",
+            "pcd": "5×114.3",
+            "offset": "ET45–50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "III (RE)",
+            "year": "2006–2012",
+            "pcd": "5×114.3",
+            "offset": "ET45–55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "IV (RM1/RM3/RM4)",
+            "year": "2011–2016",
+            "pcd": "5×114.3",
+            "offset": "ET50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "V (RW/RT)",
+            "year": "2017–2022",
+            "pcd": "5×114.3",
+            "offset": "ET45–55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "VI (RS)",
+            "year": "2022–2027",
+            "pcd": "5×114.3",
+            "offset": "ET50–55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "205/70R15",
+          "225/65R17",
+          "235/65R17",
+          "235/60R18",
+          "235/55R19"
+        ],
+        "rimSizes": [
+          "15×6J",
+          "17×7J",
+          "18×7.5J",
+          "19×8J"
+        ]
+      },
+      {
+        "name": "HR-V / Vezel",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "GH (1st gen)",
+            "year": "1998–2006",
+            "pcd": "5×114.3",
+            "offset": "ET55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RU (2nd gen)",
+            "year": "2015–2023",
+            "pcd": "5×114.3",
+            "offset": "ET55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RV (3rd gen)",
+            "year": "2021–2027",
+            "pcd": "5×114.3",
+            "offset": "ET55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "RU",
+            "year": "2013–2021",
+            "pcd": "5×114.3",
+            "offset": "ET46–55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RV",
+            "year": "2021–2027",
+            "pcd": "5×114.3",
+            "offset": "ET55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/55R17",
+          "215/60R16",
+          "225/50R18",
+          "225/55R18"
+        ],
+        "rimSizes": [
+          "16×6.5J",
+          "17×7J",
+          "18×7.5J"
+        ]
+      },
+      {
+        "name": "Stepwgn",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "RF1/RF2",
+            "year": "1996–2001",
+            "pcd": "5×114.3",
+            "offset": "ET50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RF3/RF4",
+            "year": "2001–2005",
+            "pcd": "5×114.3",
+            "offset": "ET49–50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RG",
+            "year": "2005–2009",
+            "pcd": "5×114.3",
+            "offset": "ET50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RK",
+            "year": "2009–2015",
+            "pcd": "5×114.3",
+            "offset": "ET50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RP1/RP2/RP3/RP4",
+            "year": "2015–2017",
+            "pcd": "5×114.3",
+            "offset": "ET50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RP Facelift",
+            "year": "2017–2021",
+            "pcd": "5×114.3",
+            "offset": "ET50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RP6/RP7/RP8",
+            "year": "2022–2027",
+            "pcd": "5×114.3",
+            "offset": "ET50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "195/65R15",
+          "205/65R15",
+          "205/60R16",
+          "205/55R17"
+        ],
+        "rimSizes": [
+          "15×6J",
+          "16×6J",
+          "17×6.5J"
+        ]
+      },
+      {
+        "name": "Odyssey — JDM / Asia",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "RA1–RA5",
+            "year": "1994–1999",
+            "pcd": "5×114.3",
+            "offset": "ET45–50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RA6–RA9",
+            "year": "1999–2003",
+            "pcd": "5×114.3",
+            "offset": "ET45–50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RB1/RB2 (Absolute)",
+            "year": "2003–2008",
+            "pcd": "5×114.3",
+            "offset": "ET50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RB3/RB4",
+            "year": "2008–2013",
+            "pcd": "5×114.3",
+            "offset": "ET50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RC1/RC2/RC4",
+            "year": "2013–2021",
+            "pcd": "5×114.3",
+            "offset": "ET50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RC Facelift",
+            "year": "2020–2027",
+            "pcd": "5×114.3",
+            "offset": "ET50",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          }
+        ],
+        "tyreSizes": [],
+        "rimSizes": []
+      },
+      {
+        "name": "Odyssey — North America",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "RL1",
+            "year": "1999–2004",
+            "pcd": "5×115",
+            "offset": "ET45",
+            "cb": "70.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RL3/RL4",
+            "year": "2005–2010",
+            "pcd": "5×120",
+            "offset": "ET45–50",
+            "cb": "64.1 mm",
+            "thread": "M14×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RL5",
+            "year": "2011–2013",
+            "pcd": "5×120",
+            "offset": "ET50",
+            "cb": "64.1 mm",
+            "thread": "M14×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RL6",
+            "year": "2017–2024",
+            "pcd": "5×120",
+            "offset": "ET50",
+            "cb": "64.1 mm",
+            "thread": "M14×1.5",
+            "torque": "108 Nm"
+          }
+        ],
+        "tyreSizes": [],
+        "rimSizes": []
+      },
+      {
+        "name": "Freed",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "GB1–GB4",
+            "year": "2008–2016",
+            "pcd": "4×100",
+            "offset": "ET45",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "GB5–GB8",
+            "year": "2016–2024",
+            "pcd": "4×100",
+            "offset": "ET45",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "185/65R15",
+          "195/60R15",
+          "185/60R16"
+        ],
+        "rimSizes": [
+          "15×5.5J",
+          "15×6J",
+          "16×6J"
+        ]
+      },
+      {
+        "name": "Accord",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "CL/CM (7th)",
+            "year": "2003–2008",
+            "pcd": "5×114.3",
+            "offset": "ET51–55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "CU/CW (8th)",
+            "year": "2008–2012",
+            "pcd": "5×114.3",
+            "offset": "ET46–55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "CR (9th)",
+            "year": "2013–2017",
+            "pcd": "5×114.3",
+            "offset": "ET50–55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "CV (10th)",
+            "year": "2018–2022",
+            "pcd": "5×114.3",
+            "offset": "ET50–55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "CZ (11th)",
+            "year": "2023–2026",
+            "pcd": "5×114.3",
+            "offset": "ET50–55",
+            "cb": "64.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "205/60R16",
+          "215/60R16",
+          "225/50R17",
+          "235/45R18",
+          "235/40R19"
+        ],
+        "rimSizes": [
+          "16×6.5J",
+          "17×7J",
+          "18×8J",
+          "19×8J"
+        ]
+      },
+      {
+        "name": "Stream",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "RN1–RN6",
+            "year": "2001–2007",
+            "pcd": "5×114.3",
+            "offset": "ET50",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "RN7–RN10",
+            "year": "2007–2014",
+            "pcd": "5×114.3",
+            "offset": "ET50",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "195/65R15",
+          "205/55R16",
+          "215/50R17"
+        ],
+        "rimSizes": [
+          "15×6J",
+          "16×6.5J",
+          "17×6.5J"
+        ]
+      },
+      {
+        "name": "City",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "GD (6th)",
+            "year": "2002–2008",
+            "pcd": "4×100",
+            "offset": "ET45",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "GM (7th)",
+            "year": "2008–2014",
+            "pcd": "4×100",
+            "offset": "ET45",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "GP (8th)",
+            "year": "2014–2020",
+            "pcd": "4×100",
+            "offset": "ET45",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          },
+          {
+            "name": "GN (9th)",
+            "year": "2020–2027",
+            "pcd": "4×100",
+            "offset": "ET45",
+            "cb": "56.1 mm",
+            "thread": "M12×1.5",
+            "torque": "108 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "175/65R14",
+          "185/55R15",
+          "185/60R15"
+        ],
+        "rimSizes": [
+          "14×5.5J",
+          "15×6J"
+        ]
+      }
+    ]
+  },
+  "Hyundai": {
+    "models": [
+      {
+        "name": "Hyundai Tucson",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "TL",
+            "year": "2015-2020",
+            "pcd": "5x114.3",
+            "offset": "ET40-55",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "115Nm"
+          },
+          {
+            "name": "NX4",
+            "year": "2021+",
+            "pcd": "5x114.3",
+            "offset": "ET40-55",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "115Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/70R16",
+          "225/60R17",
+          "245/45R19"
+        ],
+        "rimSizes": [
+          "6.5Jx16",
+          "7Jx17",
+          "7.5Jx19"
+        ]
+      },
+      {
+        "name": "Hyundai Santa Fe",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "TM",
+            "year": "2018+",
+            "pcd": "5x114.3",
+            "offset": "ET40-55",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "115Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/65R17",
+          "235/55R19",
+          "245/45R20"
+        ],
+        "rimSizes": [
+          "7Jx17",
+          "7.5Jx19",
+          "8Jx20"
+        ]
+      },
+      {
+        "name": "Hyundai Ioniq 5",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "All",
+            "year": "2021+",
+            "pcd": "5x114.3",
+            "offset": "ET40-50",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "115Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/60R18",
+          "235/55R19",
+          "255/45R20"
+        ],
+        "rimSizes": [
+          "7.5Jx18",
+          "8Jx19",
+          "8.5Jx20"
+        ]
+      },
+      {
+        "name": "Hyundai Ioniq 6",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "All",
+            "year": "2023+",
+            "pcd": "5x114.3",
+            "offset": "ET40-50",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "115Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/55R18",
+          "245/40R20"
+        ],
+        "rimSizes": [
+          "7.5Jx18",
+          "8.5Jx20"
+        ]
+      },
+      {
+        "name": "Kia Sportage",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "QL",
+            "year": "2016-2021",
+            "pcd": "5x114.3",
+            "offset": "ET40-55",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "115Nm"
+          },
+          {
+            "name": "NQ5",
+            "year": "2022+",
+            "pcd": "5x114.3",
+            "offset": "ET40-55",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "115Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/70R16",
+          "225/60R17",
+          "235/55R18",
+          "245/45R19"
+        ],
+        "rimSizes": [
+          "6.5Jx16",
+          "7Jx17",
+          "7.5Jx18",
+          "8Jx19"
+        ]
+      },
+      {
+        "name": "Kia Sorento",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "MQ4",
+            "year": "2020+",
+            "pcd": "5x114.3",
+            "offset": "ET40-55",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "115Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/65R17",
+          "235/55R19",
+          "245/45R20"
+        ],
+        "rimSizes": [
+          "7Jx17",
+          "7.5Jx19",
+          "8Jx20"
+        ]
+      },
+      {
+        "name": "Kia EV6",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "All",
+            "year": "2022+",
+            "pcd": "5x114.3",
+            "offset": "ET40-50",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "115Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/55R19",
+          "255/45R20",
+          "255/40R21"
+        ],
+        "rimSizes": [
+          "7.5Jx19",
+          "8.5Jx20",
+          "8.5Jx21"
+        ]
+      },
+      {
+        "name": "Kia Carnival",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "KA4",
+            "year": "2021+",
+            "pcd": "5x114.3",
+            "offset": "ET40-55",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "115Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/60R17",
+          "235/55R18",
+          "235/55R19"
+        ],
+        "rimSizes": [
+          "7Jx17",
+          "7.5Jx18",
+          "7.5Jx19"
+        ]
+      },
+      {
+        "name": "Hyundai Staria",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "All",
+            "year": "2022+",
+            "pcd": "5x114.3",
+            "offset": "ET40-55",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "115Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/65R17"
+        ],
+        "rimSizes": [
+          "7Jx17"
+        ]
+      }
+    ]
+  },
+  "Lexus": {
+    "models": [
+      {
+        "name": "Lexus ES",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "XZ10",
+            "year": "2018+",
+            "pcd": "5x114.3",
+            "offset": "ET40-50",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/55R17",
+          "235/45R18",
+          "235/40R19"
+        ],
+        "rimSizes": [
+          "7Jx17 ET45",
+          "8Jx18 ET45",
+          "8Jx19 ET45"
+        ]
+      },
+      {
+        "name": "Lexus NX",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "AZ10",
+            "year": "2014-2021",
+            "pcd": "5x114.3",
+            "offset": "ET35-45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          },
+          {
+            "name": "AZ20",
+            "year": "2022+",
+            "pcd": "5x114.3",
+            "offset": "ET35-45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/60R17",
+          "225/55R18",
+          "235/50R19"
+        ],
+        "rimSizes": [
+          "6.5Jx17 ET35",
+          "7Jx18 ET35",
+          "7.5Jx19 ET40"
+        ]
+      },
+      {
+        "name": "Lexus RX",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "AL20",
+            "year": "2016-2022",
+            "pcd": "5x114.3",
+            "offset": "ET35-45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          },
+          {
+            "name": "AL30",
+            "year": "2023+",
+            "pcd": "5x114.3",
+            "offset": "ET35-45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/60R18",
+          "235/55R19",
+          "235/50R20"
+        ],
+        "rimSizes": [
+          "7.5Jx18 ET40",
+          "8Jx19 ET40",
+          "8Jx20 ET40"
+        ]
+      },
+      {
+        "name": "Lexus LM",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "All",
+            "year": "2020+",
+            "pcd": "5x114.3",
+            "offset": "ET35-45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/55R19"
+        ],
+        "rimSizes": [
+          "7.5Jx19 ET45"
+        ]
+      },
+      {
+        "name": "Lexus UX",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "All",
+            "year": "2019+",
+            "pcd": "5x114.3",
+            "offset": "ET40-50",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/60R17",
+          "225/50R18"
+        ],
+        "rimSizes": [
+          "6.5Jx17 ET45",
+          "7Jx18 ET45"
+        ]
+      }
+    ]
+  },
+  "Mazda": {
+    "models": [
+      {
+        "name": "Mazda 2",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "DJ",
+            "year": "2015+",
+            "pcd": "4x100",
+            "offset": "ET40-50",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          }
+        ],
+        "tyreSizes": [
+          "185/65R15",
+          "185/55R16"
+        ],
+        "rimSizes": [
+          "5.5Jx15 ET45",
+          "6Jx16 ET45"
+        ]
+      },
+      {
+        "name": "Mazda 3",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "BM/BN",
+            "year": "2014-2019",
+            "pcd": "5x114.3",
+            "offset": "ET45-55",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          },
+          {
+            "name": "BP",
+            "year": "2019+",
+            "pcd": "5x114.3",
+            "offset": "ET45-50",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          }
+        ],
+        "tyreSizes": [
+          "205/60R16",
+          "215/45R18"
+        ],
+        "rimSizes": [
+          "6.5Jx16 ET50",
+          "7Jx18 ET50"
+        ]
+      },
+      {
+        "name": "Mazda 6",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "GJ/GL",
+            "year": "2013-2024",
+            "pcd": "5x114.3",
+            "offset": "ET45-55",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/55R17",
+          "225/45R19"
+        ],
+        "rimSizes": [
+          "7Jx17 ET50",
+          "7.5Jx19 ET50"
+        ]
+      },
+      {
+        "name": "Mazda CX-5",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "KF",
+            "year": "2017+",
+            "pcd": "5x114.3",
+            "offset": "ET45-55",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/65R17",
+          "225/55R19"
+        ],
+        "rimSizes": [
+          "7Jx17 ET50",
+          "7Jx19 ET50"
+        ]
+      },
+      {
+        "name": "Mazda CX-3",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "All",
+            "year": "2015+",
+            "pcd": "5x114.3",
+            "offset": "ET45-50",
+            "cb": "67.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/60R16",
+          "215/50R18"
+        ],
+        "rimSizes": [
+          "6.5Jx16 ET45",
+          "7Jx18 ET45"
+        ]
+      },
+      {
+        "name": "Mazda MX-5",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "ND",
+            "year": "2016+",
+            "pcd": "4x100",
+            "offset": "ET35-45",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "105Nm"
+          }
+        ],
+        "tyreSizes": [
+          "195/50R16",
+          "205/45R17"
+        ],
+        "rimSizes": [
+          "6.5Jx16 ET40",
+          "7Jx17 ET35"
+        ]
+      }
+    ]
+  },
+  "Mercedes-Benz": {
+    "models": [
+      {
+        "name": "C-Class",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "W203 [2000–2007]",
+            "year": "2000–2007",
+            "pcd": "5×112",
+            "offset": "ET34–ET56",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110 Nm"
+          },
+          {
+            "name": "W204 [2007–2014]",
+            "year": "2007–2014",
+            "pcd": "5×112",
+            "offset": "ET34–ET56",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110 Nm"
+          },
+          {
+            "name": "W205 [2014–2021]",
+            "year": "2014–2021",
+            "pcd": "5×112",
+            "offset": "ET34–ET58",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110 Nm"
+          },
+          {
+            "name": "W206 [2021–present]",
+            "year": "2021–",
+            "pcd": "5×112",
+            "offset": "ET34–ET58",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 205/55 R17",
+          "225/50 R17",
+          "225/45 R18",
+          "225/40 R19 (front)",
+          "245/40 R18 (rear)",
+          "255/35 R19 (rear)"
+        ],
+        "rimSizes": [
+          "- 17×6.5 ET34.5",
+          "17×7 ET44.5",
+          "18×7.5 ET40",
+          "18×8.5 ET52",
+          "19×7.5 ET40",
+          "19×9 ET58"
+        ]
+      },
+      {
+        "name": "E-Class",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "W212 [2009–2016]",
+            "year": "2009–2016",
+            "pcd": "5×112",
+            "offset": "ET32–ET54",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110–120 Nm"
+          },
+          {
+            "name": "W213 [2016–2023]",
+            "year": "2016–2023",
+            "pcd": "5×112",
+            "offset": "ET32–ET54",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110–120 Nm"
+          },
+          {
+            "name": "W214 [2023–present]",
+            "year": "2023–",
+            "pcd": "5×112",
+            "offset": "ET40–ET53",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110–120 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 225/55 R17",
+          "245/45 R18",
+          "245/40 R19",
+          "275/40 R18 (rear)",
+          "275/35 R19 (rear)"
+        ],
+        "rimSizes": [
+          "- 16×7 ET32",
+          "17×7.5 ET40",
+          "17×8 ET48",
+          "18×8 ET43",
+          "19×8 ET43",
+          "19×9 ET49"
+        ]
+      },
+      {
+        "name": "S-Class",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "W221 [2005–2013]",
+            "year": "2005–2013",
+            "pcd": "5×112",
+            "offset": "ET36–ET48",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110–130 Nm"
+          },
+          {
+            "name": "W222 [2013–2020]",
+            "year": "2013–2020",
+            "pcd": "5×112",
+            "offset": "ET36–ET48",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110–130 Nm"
+          },
+          {
+            "name": "W223 [2020–present]",
+            "year": "2020–",
+            "pcd": "5×112",
+            "offset": "ET29–ET48",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110–130 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 235/55 R18",
+          "255/50 R18",
+          "255/45 R19",
+          "285/40 R19 (rear)",
+          "255/40 R20",
+          "285/35 R20 (rear)"
+        ],
+        "rimSizes": [
+          "- 18×8 ET29–ET37.5",
+          "19×8.5 ET31.5",
+          "19×10 ET48",
+          "20×9 ET34",
+          "20×10 ET48"
+        ]
+      },
+      {
+        "name": "GLC-Class",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "X253 [2015–2022]",
+            "year": "2015–2022",
+            "pcd": "5×112",
+            "offset": "ET20–ET40",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "130 Nm"
+          },
+          {
+            "name": "X254 [2022–present]",
+            "year": "2022–",
+            "pcd": "5×112",
+            "offset": "ET20–ET40",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "130 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 235/65 R17",
+          "235/60 R18",
+          "235/55 R19",
+          "255/45 R20",
+          "255/50 R19 (rear)"
+        ],
+        "rimSizes": [
+          "- 17×7.5 ET36",
+          "18×8 ET38",
+          "19×8 ET38",
+          "19×9 ET20 (rear)",
+          "20×8.5 ET40",
+          "20×9.5 ET22 (rear)"
+        ]
+      },
+      {
+        "name": "GLE-Class",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "W166 [2015–2019]",
+            "year": "2015–2019",
+            "pcd": "5×112",
+            "offset": "ET56–ET59",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "130–150 Nm"
+          },
+          {
+            "name": "V167 [2019–present]",
+            "year": "2019–",
+            "pcd": "5×112",
+            "offset": "ET56–ET59",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "130–150 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 255/60 R18",
+          "255/55 R19",
+          "275/50 R20",
+          "275/45 R21"
+        ],
+        "rimSizes": [
+          "- 18×8 ET56",
+          "19×8.5 ET59",
+          "20×9 ET59",
+          "21×9.5 ET59"
+        ]
+      },
+      {
+        "name": "A-Class",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "W176 [2012–2018]",
+            "year": "2012–2018",
+            "pcd": "5×112",
+            "offset": "ET44–ET52",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110 Nm"
+          },
+          {
+            "name": "W177 [2018–present]",
+            "year": "2018–",
+            "pcd": "5×112",
+            "offset": "ET44–ET52",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 205/60 R16",
+          "205/55 R17",
+          "225/45 R18",
+          "225/40 R19"
+        ],
+        "rimSizes": [
+          "- 16×6.5 ET44",
+          "17×6.5 ET44",
+          "17×7 ET45",
+          "18×7.5 ET49"
+        ]
+      },
+      {
+        "name": "CLA-Class",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "C117 [2013–2019]",
+            "year": "2013–2019",
+            "pcd": "5×112",
+            "offset": "ET44–ET52",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110 Nm"
+          },
+          {
+            "name": "C118 [2019–present]",
+            "year": "2019–",
+            "pcd": "5×112",
+            "offset": "ET44–ET52",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "110 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 205/55 R17",
+          "225/45 R18",
+          "225/40 R19"
+        ],
+        "rimSizes": [
+          "- 17×7 ET44",
+          "18×7.5 ET49",
+          "19×8 ET52"
+        ]
+      },
+      {
+        "name": "GLA-Class",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "X156 [2013–2020]",
+            "year": "2013–2020",
+            "pcd": "5×112",
+            "offset": "ET44–ET53",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "120 Nm"
+          },
+          {
+            "name": "H247 [2020–present]",
+            "year": "2020–",
+            "pcd": "5×112",
+            "offset": "ET44–ET53",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "120 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 215/65 R17",
+          "235/55 R18",
+          "235/50 R19",
+          "235/45 R20"
+        ],
+        "rimSizes": [
+          "- 17×6.5 ET44",
+          "18×7.5 ET53",
+          "19×7.5 ET53",
+          "20×8 ET48"
+        ]
+      },
+      {
+        "name": "GLB-Class",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "X247 [2019–present]",
+            "year": "2019–",
+            "pcd": "5×112",
+            "offset": "ET44–ET53",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "120 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 215/65 R17",
+          "235/55 R18",
+          "235/50 R19",
+          "235/45 R20"
+        ],
+        "rimSizes": [
+          "- 17×6.5 ET44",
+          "18×7.5 ET53",
+          "19×7.5 ET53",
+          "20×8 ET48"
+        ]
+      },
+      {
+        "name": "G-Class",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "W463 [1990–2018]",
+            "year": "1990–2018",
+            "pcd": "5×130",
+            "offset": "ET43–ET63",
+            "cb": "84.1 mm",
+            "thread": "M14 × 1.5",
+            "torque": "130 Nm"
+          },
+          {
+            "name": "W463 Facelift [2018–present]",
+            "year": "2018–",
+            "pcd": "5×130",
+            "offset": "ET32–ET52",
+            "cb": "84.1 mm",
+            "thread": "M14 × 1.5",
+            "torque": "130 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 265/60 R18",
+          "265/55 R19",
+          "275/55 R19",
+          "275/50 R20"
+        ],
+        "rimSizes": [
+          "- 18×7.5 ET43",
+          "19×8.5 ET52",
+          "20×8.5 ET32"
+        ]
+      },
+      {
+        "name": "V-Class",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "W447 [2014–2023]",
+            "year": "2014–2023",
+            "pcd": "5×112",
+            "offset": "ET50–ET52",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "130 Nm"
+          },
+          {
+            "name": "W447 Facelift [2023–present]",
+            "year": "2023–",
+            "pcd": "5×112",
+            "offset": "ET50–ET52",
+            "cb": "66.6 mm",
+            "thread": "M14 × 1.5",
+            "torque": "130 Nm"
+          }
+        ],
+        "tyreSizes": [
+          "- 195/65 R16",
+          "205/65 R16",
+          "225/55 R17",
+          "245/45 R18",
+          "245/45 R19"
+        ],
+        "rimSizes": [
+          "- 16×6.5 ET52",
+          "17×6.5 ET50",
+          "17×7 ET51",
+          "18×7.5 ET52",
+          "19×8 ET52"
+        ]
+      }
+    ]
+  },
+  "Nissan": {
+    "models": [
+      {
+        "name": "Elgrand",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "III (E52) Facelift",
+            "year": "2014–2025",
+            "pcd": "5x114.3",
+            "offset": "ET45–55",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "III (E52)",
+            "year": "2010–2013",
+            "pcd": "5x114.3",
+            "offset": "ET45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "II (E51) Facelift",
+            "year": "2004–2010",
+            "pcd": "5x114.3",
+            "offset": "ET45–50",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "II (E51)",
+            "year": "2002–2004",
+            "pcd": "5x114.3",
+            "offset": "ET50–55",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "I (E50) Facelift",
+            "year": "2000–2002",
+            "pcd": "5x114.3",
+            "offset": "ET35",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "I (E50)",
+            "year": "1997–2000",
+            "pcd": "5x114.3",
+            "offset": "ET35",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/65R16",
+          "215/60R17",
+          "225/55R18"
+        ],
+        "rimSizes": [
+          "6.5Jx16 ET45",
+          "6.5Jx17 ET45",
+          "7.5Jx18 ET55"
+        ]
+      },
+      {
+        "name": "Serena",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "VI (C28)",
+            "year": "2022–Present",
+            "pcd": "5x114.3",
+            "offset": "ET45–50",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "V (C27) Facelift",
+            "year": "2019–2022",
+            "pcd": "5x114.3",
+            "offset": "ET45–50",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "V (C27)",
+            "year": "2016–2019",
+            "pcd": "5x114.3",
+            "offset": "ET45–50",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "IV (C26)",
+            "year": "2010–2016",
+            "pcd": "5x114.3",
+            "offset": "ET45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "III (C25)",
+            "year": "2005–2010",
+            "pcd": "5x114.3",
+            "offset": "ET45",
+            "cb": "66.1mm (older)",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          }
+        ],
+        "tyreSizes": [
+          "195/65R15",
+          "205/65R16",
+          "215/65R16",
+          "205/55R17"
+        ],
+        "rimSizes": [
+          "5.5Jx15 ET45",
+          "6Jx16 ET45",
+          "6.5Jx17 ET40"
+        ]
+      },
+      {
+        "name": "Note",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "III (E13)",
+            "year": "2020–Present",
+            "pcd": "4x100",
+            "offset": "ET40–50",
+            "cb": "60.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "II (E12) Facelift",
+            "year": "2016–2020",
+            "pcd": "4x100",
+            "offset": "ET40",
+            "cb": "60.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "II (E12)",
+            "year": "2012–2016",
+            "pcd": "4x100",
+            "offset": "ET40",
+            "cb": "60.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "I (E11)",
+            "year": "2005–2012",
+            "pcd": "4x100",
+            "offset": "ET45",
+            "cb": "60.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "175/65R15",
+          "185/65R15",
+          "185/60R16",
+          "205/50R17"
+        ],
+        "rimSizes": [
+          "5.5Jx15 ET45",
+          "5.5Jx16 ET50",
+          "6.5Jx15 ET60",
+          "4.5Jx17 ET40"
+        ]
+      },
+      {
+        "name": "X-Trail",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "IV (T33)",
+            "year": "2022–Present",
+            "pcd": "5x114.3",
+            "offset": "ET40–45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "III (T32) Facelift",
+            "year": "2017–2022",
+            "pcd": "5x114.3",
+            "offset": "ET40–45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "III (T32)",
+            "year": "2013–2017",
+            "pcd": "5x114.3",
+            "offset": "ET40–45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "II (T31) Facelift",
+            "year": "2010–2013",
+            "pcd": "5x114.3",
+            "offset": "ET40",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "II (T31)",
+            "year": "2007–2010",
+            "pcd": "5x114.3",
+            "offset": "ET40",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "I (T30)",
+            "year": "2000–2007",
+            "pcd": "5x114.3",
+            "offset": "ET40",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/65R16",
+          "215/60R17",
+          "225/60R18",
+          "225/55R19"
+        ],
+        "rimSizes": [
+          "6.5Jx16 ET40",
+          "7Jx17 ET45",
+          "7.5Jx18 ET40",
+          "7Jx19 ET40"
+        ]
+      },
+      {
+        "name": "Juke",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "II (F16) Facelift",
+            "year": "2024–Present",
+            "pcd": "5x114.3",
+            "offset": "ET35–38",
+            "cb": "66.1mm",
+            "thread": "M12x1.5",
+            "torque": "113Nm"
+          },
+          {
+            "name": "II (F16)",
+            "year": "2019–2024",
+            "pcd": "5x114.3",
+            "offset": "ET35",
+            "cb": "66.1mm",
+            "thread": "M12x1.5",
+            "torque": "113Nm"
+          },
+          {
+            "name": "I (F15) Facelift",
+            "year": "2014–2019",
+            "pcd": "5x114.3",
+            "offset": "ET40–47",
+            "cb": "66.1mm",
+            "thread": "M12x1.5",
+            "torque": "113Nm"
+          },
+          {
+            "name": "I (F15)",
+            "year": "2010–2014",
+            "pcd": "5x114.3",
+            "offset": "ET40–47",
+            "cb": "66.1mm",
+            "thread": "M12x1.5",
+            "torque": "113Nm"
+          }
+        ],
+        "tyreSizes": [
+          "205/60R16",
+          "215/55R17",
+          "225/45R18",
+          "225/45R19"
+        ],
+        "rimSizes": [
+          "6.5Jx16 ET40",
+          "7Jx17 ET47",
+          "7Jx18 ET47",
+          "7.5Jx19 ET35"
+        ]
+      },
+      {
+        "name": "Qashqai",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "III (J12) Facelift",
+            "year": "2024–Present",
+            "pcd": "5x114.3",
+            "offset": "ET40",
+            "cb": "66.1mm",
+            "thread": "M12x1.5",
+            "torque": "113Nm"
+          },
+          {
+            "name": "III (J12)",
+            "year": "2021–2024",
+            "pcd": "5x114.3",
+            "offset": "ET40",
+            "cb": "66.1mm",
+            "thread": "M12x1.5",
+            "torque": "113Nm"
+          },
+          {
+            "name": "II (J11) Facelift",
+            "year": "2017–2021",
+            "pcd": "5x114.3",
+            "offset": "ET40",
+            "cb": "66.1mm",
+            "thread": "M12x1.5",
+            "torque": "113Nm"
+          },
+          {
+            "name": "II (J11)",
+            "year": "2013–2017",
+            "pcd": "5x114.3",
+            "offset": "ET40",
+            "cb": "66.1mm",
+            "thread": "M12x1.5",
+            "torque": "113Nm"
+          },
+          {
+            "name": "I (J10) Facelift",
+            "year": "2010–2013",
+            "pcd": "5x114.3",
+            "offset": "ET40",
+            "cb": "66.1mm",
+            "thread": "M12x1.5",
+            "torque": "113Nm"
+          },
+          {
+            "name": "I (J10)",
+            "year": "2007–2010",
+            "pcd": "5x114.3",
+            "offset": "ET40",
+            "cb": "66.1mm",
+            "thread": "M12x1.5",
+            "torque": "113Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/65R16",
+          "215/60R17",
+          "215/55R18",
+          "225/45R19"
+        ],
+        "rimSizes": [
+          "6.5Jx16 ET40",
+          "7Jx17 ET40",
+          "7Jx18 ET40",
+          "7Jx19 ET40"
+        ]
+      },
+      {
+        "name": "Tiida",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "III (C13)",
+            "year": "2015–Present",
+            "pcd": "5x114.3",
+            "offset": "ET40–45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "II (C12) Facelift",
+            "year": "2014–2019",
+            "pcd": "5x114.3",
+            "offset": "ET40–45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "II (C12)",
+            "year": "2011–2014",
+            "pcd": "5x114.3",
+            "offset": "ET40–43",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "I (C11) Facelift",
+            "year": "2008–2012",
+            "pcd": "5x114.3",
+            "offset": "ET40",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "I (C11)",
+            "year": "2004–2008",
+            "pcd": "4x100",
+            "offset": "ET40",
+            "cb": "60.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "185/65R15",
+          "195/60R16",
+          "205/50R17",
+          "215/45R18"
+        ],
+        "rimSizes": [
+          "5.5Jx15 ET40",
+          "6.5Jx16 ET40",
+          "6.5Jx17 ET45",
+          "7Jx18 ET47"
+        ]
+      },
+      {
+        "name": "Sylphy / Bluebird Sylphy",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "B18 (4th) Facelift",
+            "year": "2023–Present",
+            "pcd": "5x114.3",
+            "offset": "ET40–48",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "B18 (4th)",
+            "year": "2019–2023",
+            "pcd": "5x114.3",
+            "offset": "ET40–48",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "B17 (3rd) Facelift",
+            "year": "2018–2019",
+            "pcd": "5x114.3",
+            "offset": "ET45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "B17 (3rd)",
+            "year": "2012–2018",
+            "pcd": "5x114.3",
+            "offset": "ET45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "G11 (2nd)",
+            "year": "2006–2012",
+            "pcd": "5x114.3",
+            "offset": "ET40–45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "195/60R16",
+          "205/50R17",
+          "215/50R17",
+          "205/60R16"
+        ],
+        "rimSizes": [
+          "6.5Jx16 ET45",
+          "6.5Jx17 ET45",
+          "7Jx17 ET48",
+          "6.5Jx16 ET40"
+        ]
+      },
+      {
+        "name": "Patrol",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "VII (Y63)",
+            "year": "2024–Present",
+            "pcd": "6x139.7",
+            "offset": "ET35–45",
+            "cb": "78.1mm",
+            "thread": "M14x1.5",
+            "torque": "140Nm"
+          },
+          {
+            "name": "VI (Y62) Facelift",
+            "year": "2019–2024",
+            "pcd": "6x139.7",
+            "offset": "ET35",
+            "cb": "78.1mm",
+            "thread": "M14x1.5",
+            "torque": "140Nm"
+          },
+          {
+            "name": "VI (Y62)",
+            "year": "2010–2019",
+            "pcd": "6x139.7",
+            "offset": "ET35",
+            "cb": "78.1mm",
+            "thread": "M14x1.5",
+            "torque": "140Nm"
+          },
+          {
+            "name": "V (Y61)",
+            "year": "1997–2010",
+            "pcd": "6x139.7",
+            "offset": "ET5–35",
+            "cb": "78.1mm",
+            "thread": "M12x1.25 / M14x1.5",
+            "torque": "113–140Nm"
+          }
+        ],
+        "tyreSizes": [
+          "265/70R18",
+          "275/60R20",
+          "275/50R22"
+        ],
+        "rimSizes": [
+          "8Jx18 ET35",
+          "8Jx20 ET35",
+          "8.5Jx22 ET45"
+        ]
+      },
+      {
+        "name": "Teana / Maxima",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "III (L33) Facelift",
+            "year": "2017–2020",
+            "pcd": "5x114.3",
+            "offset": "ET50",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "III (L33)",
+            "year": "2014–2017",
+            "pcd": "5x114.3",
+            "offset": "ET50",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "II (J32) Facelift",
+            "year": "2011–2014",
+            "pcd": "5x114.3",
+            "offset": "ET40–45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "II (J32)",
+            "year": "2008–2011",
+            "pcd": "5x114.3",
+            "offset": "ET40–45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "I (J31) Facelift",
+            "year": "2005–2008",
+            "pcd": "5x114.3",
+            "offset": "ET50–55",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "I (J31)",
+            "year": "2003–2005",
+            "pcd": "5x114.3",
+            "offset": "ET50",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          }
+        ],
+        "tyreSizes": [
+          "205/65R16",
+          "215/60R16",
+          "215/55R17",
+          "225/50R17"
+        ],
+        "rimSizes": [
+          "6.5Jx16 ET50",
+          "7Jx16 ET50",
+          "7.5Jx17 ET50",
+          "7Jx17 ET55"
+        ]
+      },
+      {
+        "name": "Leaf",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "III (ZE2)",
+            "year": "2026–Present",
+            "pcd": "5x114.3",
+            "offset": "ET40–45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "II (ZE1)",
+            "year": "2017–2025",
+            "pcd": "5x114.3",
+            "offset": "ET40–45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "I (ZE0)",
+            "year": "2010–2017",
+            "pcd": "5x114.3",
+            "offset": "ET40",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          }
+        ],
+        "tyreSizes": [
+          "205/55R16",
+          "215/50R17",
+          "225/45R18"
+        ],
+        "rimSizes": [
+          "6.5Jx16 ET40",
+          "6.5Jx17 ET45",
+          "7Jx18 ET45"
+        ]
+      },
+      {
+        "name": "Kicks",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "II (P16)",
+            "year": "2025–Present",
+            "pcd": "5x114.3",
+            "offset": "ET35–45",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "I (P15) Facelift",
+            "year": "2020–2025",
+            "pcd": "5x114.3",
+            "offset": "ET35",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "I (P15)",
+            "year": "2016–2020",
+            "pcd": "5x114.3",
+            "offset": "ET35",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          }
+        ],
+        "tyreSizes": [
+          "205/60R16",
+          "215/60R17",
+          "225/45R19"
+        ],
+        "rimSizes": [
+          "6Jx16 ET45",
+          "7Jx17 ET35",
+          "7.5Jx19 ET35"
+        ]
+      },
+      {
+        "name": "Sunny / Almera",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "Almera (N18) Facelift",
+            "year": "2023–Present",
+            "pcd": "4x100",
+            "offset": "ET40–50",
+            "cb": "60.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "Almera (N18)",
+            "year": "2020–2023",
+            "pcd": "4x100",
+            "offset": "ET40–50",
+            "cb": "60.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "Sunny (N17) Facelift",
+            "year": "2015–2020",
+            "pcd": "4x100",
+            "offset": "ET40",
+            "cb": "60.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "Sunny (N17)",
+            "year": "2011–2014",
+            "pcd": "4x100",
+            "offset": "ET40",
+            "cb": "60.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "Sunny (N16) Facelift",
+            "year": "2005–2011",
+            "pcd": "4x100",
+            "offset": "ET35–40",
+            "cb": "60.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          },
+          {
+            "name": "Sunny (N16)",
+            "year": "2000–2005",
+            "pcd": "4x100",
+            "offset": "ET35–40",
+            "cb": "60.1mm",
+            "thread": "M12x1.25",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "175/70R14",
+          "185/65R15",
+          "195/65R15",
+          "205/55R16"
+        ],
+        "rimSizes": [
+          "5Jx14 ET35",
+          "5.5Jx15 ET40",
+          "5.5Jx15 ET0",
+          "6Jx16 ET50"
+        ]
+      },
+      {
+        "name": "NV350 / Urvan",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "V (E26)",
+            "year": "2021–Present",
+            "pcd": "6x139.7",
+            "offset": "ET45",
+            "cb": "100.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "IV (E25) Facelift",
+            "year": "2012–2021",
+            "pcd": "6x139.7",
+            "offset": "ET45",
+            "cb": "100.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "IV (E25)",
+            "year": "2004–2012",
+            "pcd": "6x139.7",
+            "offset": "ET45",
+            "cb": "100.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          }
+        ],
+        "tyreSizes": [
+          "195/80R15",
+          "195/75R16"
+        ],
+        "rimSizes": [
+          "5Jx15 ET45",
+          "5.5Jx15 ET45"
+        ]
+      },
+      {
+        "name": "GT-R",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "R35 Facelift",
+            "year": "2017–Present",
+            "pcd": "5x114.3",
+            "offset": "ET45 (F) / ET25 (R)",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "R35",
+            "year": "2007–2016",
+            "pcd": "5x114.3",
+            "offset": "ET45 (F) / ET25 (R)",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          }
+        ],
+        "tyreSizes": [
+          "255/40R20 (F) / 285/35R20 (R)"
+        ],
+        "rimSizes": [
+          "9.5Jx20 ET45 (F) / 10.5Jx20 ET25 (R)"
+        ]
+      },
+      {
+        "name": "Fairlady Z / 350Z / 370Z / Z",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "VII (RZ34)",
+            "year": "2022–Present",
+            "pcd": "5x114.3",
+            "offset": "ET45–55",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "VI (Z34 / 370Z)",
+            "year": "2008–2020",
+            "pcd": "5x114.3",
+            "offset": "ET15–30 (F) / ET30 (R)",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          },
+          {
+            "name": "V (Z33 / 350Z)",
+            "year": "2002–2008",
+            "pcd": "5x114.3",
+            "offset": "ET25–30",
+            "cb": "66.1mm",
+            "thread": "M12x1.25",
+            "torque": "113Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/45R18 (F) / 245/45R18 (R)",
+          "255/40R19 (F) / 275/35R19 (R)"
+        ],
+        "rimSizes": [
+          "9Jx18 ET34 (F) / 9Jx18 ET15 (R)",
+          "9.5Jx19 ET40 (F) / 10Jx19 ET30 (R)"
+        ]
+      }
+    ]
+  },
+  "Porsche": {
+    "models": [
+      {
+        "name": "Porsche 911",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "992",
+            "year": "2019+",
+            "pcd": "5x130",
+            "offset": "ET25-40F / ET40-55R",
+            "cb": "70.1mm",
+            "thread": "M14x1.5",
+            "torque": "160Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/40R19F 295/35R19R",
+          "245/35R20F 305/30R20R",
+          "245/35R21F 315/30R21R"
+        ],
+        "rimSizes": [
+          "8.5Jx19F 11.5Jx19R",
+          "9Jx20F 11.5Jx20R",
+          "9Jx21F 12Jx21R"
+        ]
+      },
+      {
+        "name": "Porsche Cayenne",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "E3",
+            "year": "2018+",
+            "pcd": "5x112",
+            "offset": "ET35-50",
+            "cb": "66.6mm",
+            "thread": "M14x1.5",
+            "torque": "160Nm"
+          }
+        ],
+        "tyreSizes": [
+          "255/55R19",
+          "255/50R20",
+          "285/40R21",
+          "285/35R22"
+        ],
+        "rimSizes": [
+          "8.5Jx19",
+          "9Jx20",
+          "9.5Jx21",
+          "10Jx22"
+        ]
+      },
+      {
+        "name": "Porsche Macan",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "All",
+            "year": "2014+",
+            "pcd": "5x112",
+            "offset": "ET30-45",
+            "cb": "66.6mm",
+            "thread": "M14x1.5",
+            "torque": "160Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/60R18",
+          "245/55R19",
+          "265/45R20",
+          "265/40R21"
+        ],
+        "rimSizes": [
+          "8Jx18",
+          "8.5Jx19",
+          "9Jx20",
+          "9Jx21"
+        ]
+      },
+      {
+        "name": "Porsche Taycan",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "All",
+            "year": "2020+",
+            "pcd": "5x130",
+            "offset": "ET30-45",
+            "cb": "70.1mm",
+            "thread": "M14x1.5",
+            "torque": "160Nm"
+          }
+        ],
+        "tyreSizes": [
+          "245/45R19F 285/40R19R",
+          "245/40R20F 285/35R20R",
+          "245/35R21F 305/30R21R"
+        ],
+        "rimSizes": [
+          "8.5Jx19F 11Jx19R",
+          "9Jx20F 11.5Jx20R",
+          "9.5Jx21F 12Jx21R"
+        ]
+      },
+      {
+        "name": "Porsche Panamera",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "All",
+            "year": "2017+",
+            "pcd": "5x112",
+            "offset": "ET30-45F / ET35-55R",
+            "cb": "66.6mm",
+            "thread": "M14x1.5",
+            "torque": "160Nm"
+          }
+        ],
+        "tyreSizes": [
+          "265/45R19F 295/40R19R",
+          "265/40R20F 295/35R20R"
+        ],
+        "rimSizes": [
+          "8.5Jx19F 10Jx19R",
+          "9Jx20F 11Jx20R"
+        ]
+      }
+    ]
+  },
+  "Tesla": {
+    "models": [
+      {
+        "name": "Model 3",
+        "generations": [],
+        "tyreSizes": [
+          "235/45R18",
+          "235/40R19",
+          "235/35R20"
+        ],
+        "rimSizes": [
+          "8Jx18 ET40",
+          "8.5Jx19 ET35",
+          "8.5Jx20 ET35"
+        ]
+      },
+      {
+        "name": "Model Y",
+        "generations": [],
+        "tyreSizes": [
+          "255/45R19",
+          "255/40R20",
+          "255/35R21"
+        ],
+        "rimSizes": [
+          "9.5Jx19 ET45",
+          "9.5Jx20 ET45",
+          "9.5Jx21 ET45"
+        ]
+      },
+      {
+        "name": "Model S",
+        "generations": [],
+        "tyreSizes": [
+          "265/40R19",
+          "265/35R21",
+          "295/30R21"
+        ],
+        "rimSizes": [
+          "8.5Jx19 ET35",
+          "9.5Jx21 ET35"
+        ]
+      },
+      {
+        "name": "Model X",
+        "generations": [],
+        "tyreSizes": [
+          "265/45R20",
+          "265/40R21",
+          "275/35R22"
+        ],
+        "rimSizes": [
+          "9Jx20 ET40",
+          "9.5Jx21 ET40"
+        ]
+      },
+      {
+        "name": "Cybertruck",
+        "generations": [],
+        "tyreSizes": [
+          "285/65R18 (all-terrain)",
+          "285/50R20 (all-season)"
+        ],
+        "rimSizes": [
+          "8.5Jx18",
+          "9Jx20"
+        ]
+      }
+    ]
+  },
+  "Toyota": {
+    "models": [
+      {
+        "name": "Alphard / Vellfire",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "IV (AH40)",
+            "year": "2023–Present",
+            "pcd": "5x114.3",
+            "offset": "ET33–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "III (AH30) Facelift",
+            "year": "2018–2023",
+            "pcd": "5x114.3",
+            "offset": "ET33–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "III (AH30)",
+            "year": "2015–2018",
+            "pcd": "5x114.3",
+            "offset": "ET33–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "II (AH20)",
+            "year": "2008–2015",
+            "pcd": "5x114.3",
+            "offset": "ET33–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "I (AH10)",
+            "year": "2002–2008",
+            "pcd": "5x114.3",
+            "offset": "ET33–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/65R16",
+          "225/60R17",
+          "235/50R18"
+        ],
+        "rimSizes": [
+          "6.5Jx16 ET33",
+          "6.5Jx17 ET33",
+          "7.5Jx18 ET45"
+        ]
+      },
+      {
+        "name": "Corolla",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "XII (E210) Facelift",
+            "year": "2022–Present",
+            "pcd": "5x100 (hybrid) / 5x114.3",
+            "offset": "ET39–50",
+            "cb": "54.1mm / 60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "XII (E210)",
+            "year": "2019–2023",
+            "pcd": "5x100 (hybrid) / 5x114.3",
+            "offset": "ET39–50",
+            "cb": "54.1mm / 60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "XI (E180)",
+            "year": "2013–2023",
+            "pcd": "5x100",
+            "offset": "ET39–45",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "X (E150)",
+            "year": "2007–2013",
+            "pcd": "5x100",
+            "offset": "ET39–45",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "IX (E120/E130)",
+            "year": "2000–2007",
+            "pcd": "4x100 / 5x100",
+            "offset": "ET39–45",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "VIII (E110)",
+            "year": "1995–2000",
+            "pcd": "4x100",
+            "offset": "ET38–42",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "195/65R15",
+          "205/55R16",
+          "225/45R17"
+        ],
+        "rimSizes": [
+          "6Jx15 ET39",
+          "6.5Jx16 ET45",
+          "7Jx17 ET45"
+        ]
+      },
+      {
+        "name": "Camry",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "IX (XV80)",
+            "year": "2023–Present",
+            "pcd": "5x114.3",
+            "offset": "ET40–50",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "VIII (XV70) Facelift",
+            "year": "2020–2024",
+            "pcd": "5x114.3",
+            "offset": "ET40–50",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "VIII (XV70)",
+            "year": "2017–2022",
+            "pcd": "5x114.3",
+            "offset": "ET40–50",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "VII (XV50)",
+            "year": "2011–2018",
+            "pcd": "5x114.3",
+            "offset": "ET40–50",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "VI (XV40)",
+            "year": "2006–2011",
+            "pcd": "5x114.3",
+            "offset": "ET40–50",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "V (XV30)",
+            "year": "2001–2006",
+            "pcd": "5x114.3",
+            "offset": "ET40–50",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "215/60R16",
+          "215/55R17",
+          "235/45R18",
+          "235/40R19"
+        ],
+        "rimSizes": [
+          "6.5Jx16 ET40",
+          "7Jx17 ET45",
+          "7.5Jx18 ET45",
+          "8Jx19 ET50"
+        ]
+      },
+      {
+        "name": "RAV4",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "VI (XA60)",
+            "year": "2025–Present",
+            "pcd": "5x114.3",
+            "offset": "ET35–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "V (XA50)",
+            "year": "2019–Present",
+            "pcd": "5x114.3",
+            "offset": "ET35–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "IV (XA40) Facelift",
+            "year": "2015–2019",
+            "pcd": "5x114.3",
+            "offset": "ET35–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "IV (XA40)",
+            "year": "2012–2023",
+            "pcd": "5x114.3",
+            "offset": "ET35–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "III (XA30)",
+            "year": "2005–2016",
+            "pcd": "5x114.3",
+            "offset": "ET35–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/65R17",
+          "235/55R18",
+          "235/55R19",
+          "245/45R20"
+        ],
+        "rimSizes": [
+          "6.5Jx17 ET39",
+          "7Jx18 ET39",
+          "7.5Jx19 ET45"
+        ]
+      },
+      {
+        "name": "Noah / Voxy",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "4th Gen (R90)",
+            "year": "2022–Present",
+            "pcd": "5x114.3",
+            "offset": "ET50",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "3rd Gen (R80)",
+            "year": "2014–2022",
+            "pcd": "5x114.3",
+            "offset": "ET50",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "2nd Gen (R70)",
+            "year": "2004–2014",
+            "pcd": "5x114.3",
+            "offset": "ET50",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "1st Gen (R60)",
+            "year": "2001–2004",
+            "pcd": "5x114.3",
+            "offset": "ET50",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "195/65R15",
+          "205/60R16",
+          "205/55R17",
+          "215/45R18"
+        ],
+        "rimSizes": [
+          "6Jx15 ET50",
+          "6.5Jx16 ET50",
+          "7Jx17 ET50"
+        ]
+      },
+      {
+        "name": "Sienta",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "2nd Gen",
+            "year": "2023–Present",
+            "pcd": "4x100 / 5x100",
+            "offset": "ET33–45",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "1st Gen",
+            "year": "2015–2023",
+            "pcd": "4x100 / 5x100",
+            "offset": "ET33–45",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "XP80 (older)",
+            "year": "2003–2015",
+            "pcd": "4x100",
+            "offset": "ET39–45",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "175/70R14",
+          "185/60R15",
+          "195/50R16",
+          "195/55R16"
+        ],
+        "rimSizes": [
+          "5.5Jx14 ET39",
+          "6Jx15 ET45",
+          "6.5Jx16 ET45"
+        ]
+      },
+      {
+        "name": "Hiace",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "H300",
+            "year": "2019–Present",
+            "pcd": "6x139.7",
+            "offset": "ET35",
+            "cb": "106.1mm",
+            "thread": "M14x1.5",
+            "torque": "140Nm"
+          },
+          {
+            "name": "H200",
+            "year": "2004–2019",
+            "pcd": "6x139.7",
+            "offset": "ET35",
+            "cb": "106.1mm (rear) / 75mm (front)",
+            "thread": "M12x1.5 / M14x1.5",
+            "torque": "113–140Nm"
+          }
+        ],
+        "tyreSizes": [
+          "195/80R15",
+          "205/70R15",
+          "195/75R16",
+          "205/70R16"
+        ],
+        "rimSizes": [
+          "6Jx15 ET35",
+          "6Jx16 ET35"
+        ]
+      },
+      {
+        "name": "Harrier",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "4th Gen (XU80)",
+            "year": "2020–Present",
+            "pcd": "5x114.3",
+            "offset": "ET35–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "3rd Gen (XU60)",
+            "year": "2013–2020",
+            "pcd": "5x114.3",
+            "offset": "ET35–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "2nd Gen (XU40)",
+            "year": "2008–2013",
+            "pcd": "5x114.3",
+            "offset": "ET35–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "1st Gen (XU20)",
+            "year": "1997–2003",
+            "pcd": "5x114.3",
+            "offset": "ET35–45",
+            "cb": "60.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "225/65R17",
+          "235/55R18",
+          "225/55R19",
+          "235/50R19"
+        ],
+        "rimSizes": [
+          "6.5Jx17 ET39",
+          "7Jx18 ET45",
+          "7.5Jx19 ET40"
+        ]
+      },
+      {
+        "name": "Vios",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "3rd Gen (XP150)",
+            "year": "2013–Present",
+            "pcd": "4x100",
+            "offset": "ET39–45",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "2nd Gen (XP90)",
+            "year": "2007–2013",
+            "pcd": "4x100",
+            "offset": "ET39–45",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "1st Gen",
+            "year": "2003–2007",
+            "pcd": "4x100",
+            "offset": "ET39–45",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "175/65R14",
+          "185/60R15",
+          "185/55R15",
+          "195/50R16"
+        ],
+        "rimSizes": [
+          "5.5Jx14 ET39",
+          "6Jx15 ET45",
+          "6.5Jx16 ET45"
+        ]
+      },
+      {
+        "name": "Prius",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "5th Gen (XW60)",
+            "year": "2023–Present",
+            "pcd": "5x100",
+            "offset": "ET40–50",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "4th Gen (XW50)",
+            "year": "2015–2023",
+            "pcd": "5x100",
+            "offset": "ET40–50",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "3rd Gen (XW30)",
+            "year": "2009–2015",
+            "pcd": "5x100",
+            "offset": "ET40–50",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "2nd Gen (XW20)",
+            "year": "2003–2009",
+            "pcd": "5x100",
+            "offset": "ET40–50",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "195/65R15",
+          "195/55R16",
+          "215/45R17"
+        ],
+        "rimSizes": [
+          "6Jx15 ET45",
+          "6.5Jx16 ET45",
+          "7Jx17 ET50"
+        ]
+      },
+      {
+        "name": "Land Cruiser Prado",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "J250",
+            "year": "2023–Present",
+            "pcd": "6x139.7",
+            "offset": "ET25",
+            "cb": "106.1mm",
+            "thread": "M14x1.5",
+            "torque": "140Nm"
+          },
+          {
+            "name": "J150 Facelift",
+            "year": "2017–2023",
+            "pcd": "6x139.7",
+            "offset": "ET25",
+            "cb": "106.1mm",
+            "thread": "M12x1.5",
+            "torque": "140Nm"
+          },
+          {
+            "name": "J150",
+            "year": "2009–2017",
+            "pcd": "6x139.7",
+            "offset": "ET25",
+            "cb": "106.1mm",
+            "thread": "M12x1.5",
+            "torque": "140Nm"
+          }
+        ],
+        "tyreSizes": [
+          "265/65R17",
+          "265/60R18",
+          "265/55R19"
+        ],
+        "rimSizes": [
+          "7.5Jx17 ET25",
+          "8Jx18 ET25",
+          "8Jx19 ET25"
+        ]
+      },
+      {
+        "name": "Wish (ZGE/NZE, 2003–2017) — Discontinued",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "2nd Gen (ZGE20)",
+            "year": "2009–2017",
+            "pcd": "5x100",
+            "offset": "ET40–50",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "1st Gen (ZGE10)",
+            "year": "2003–2009",
+            "pcd": "5x100",
+            "offset": "ET40–50",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "195/65R15",
+          "195/60R16",
+          "215/50R17"
+        ],
+        "rimSizes": [
+          "6Jx15 ET45",
+          "6.5Jx16 ET45",
+          "7Jx17 ET50"
+        ]
+      },
+      {
+        "name": "Yaris / Yaris Cross",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "4th Gen (XP210)",
+            "year": "2020–Present",
+            "pcd": "4x100 / 5x100",
+            "offset": "ET39–51",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "3rd Gen (XP130)",
+            "year": "2010–2020",
+            "pcd": "4x100",
+            "offset": "ET39–45",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "2nd Gen (XP90)",
+            "year": "2005–2010",
+            "pcd": "4x100",
+            "offset": "ET39–45",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          },
+          {
+            "name": "1st Gen (XP10)",
+            "year": "1999–2005",
+            "pcd": "4x100",
+            "offset": "ET39–45",
+            "cb": "54.1mm",
+            "thread": "M12x1.5",
+            "torque": "103Nm"
+          }
+        ],
+        "tyreSizes": [
+          "175/65R14",
+          "185/60R15",
+          "195/50R16",
+          "205/45R17"
+        ],
+        "rimSizes": [
+          "5.5Jx14 ET39",
+          "6Jx15 ET45",
+          "6.5Jx16 ET51"
+        ]
+      }
+    ]
+  },
+  "Volvo": {
+    "models": [
+      {
+        "name": "Volvo XC60",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "SPA",
+            "year": "2017+",
+            "pcd": "5x108",
+            "offset": "ET42-55",
+            "cb": "63.4mm",
+            "thread": "M14x1.5",
+            "torque": "130Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/60R18",
+          "235/55R19",
+          "255/45R20",
+          "255/40R21"
+        ],
+        "rimSizes": [
+          "7.5Jx18 ET48",
+          "8Jx19 ET45",
+          "8.5Jx20 ET42",
+          "8.5Jx21 ET40"
+        ]
+      },
+      {
+        "name": "Volvo XC40",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "CMA",
+            "year": "2018+",
+            "pcd": "5x108",
+            "offset": "ET42-50",
+            "cb": "63.4mm",
+            "thread": "M14x1.5",
+            "torque": "130Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/55R18",
+          "235/50R19",
+          "245/45R20"
+        ],
+        "rimSizes": [
+          "7.5Jx18",
+          "8Jx19",
+          "8Jx20"
+        ]
+      },
+      {
+        "name": "Volvo XC90",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "SPA",
+            "year": "2015+",
+            "pcd": "5x108",
+            "offset": "ET42-50",
+            "cb": "63.4mm",
+            "thread": "M14x1.5",
+            "torque": "130Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/60R18",
+          "235/55R19",
+          "275/45R20",
+          "275/40R21"
+        ],
+        "rimSizes": [
+          "7.5Jx18",
+          "8Jx19",
+          "8.5Jx20",
+          "8.5Jx21"
+        ]
+      },
+      {
+        "name": "Volvo S60/V60",
+        "generations": [
+          {
+            "name": "------------",
+            "year": "------",
+            "pcd": "-----",
+            "offset": "--------",
+            "cb": "-------------",
+            "thread": "--------",
+            "torque": "--------"
+          },
+          {
+            "name": "SPA",
+            "year": "2019+",
+            "pcd": "5x108",
+            "offset": "ET42-50",
+            "cb": "63.4mm",
+            "thread": "M14x1.5",
+            "torque": "130Nm"
+          }
+        ],
+        "tyreSizes": [
+          "235/45R18",
+          "235/40R19"
+        ],
+        "rimSizes": [
+          "7.5Jx18",
+          "8Jx19"
+        ]
+      }
+    ]
+  },
+  "Land Rover": {
+    "models": [
+      {
+        "name": "Range Rover Evoque",
+        "g": [
+          {
+            "n": "L538/L551",
+            "y": "2011+",
+            "p": "5x108",
+            "o": "ET42-50",
+            "c": "63.4mm",
+            "t": "M14x1.5",
+            "q": "130Nm"
+          }
+        ],
+        "ts": [
+          "235/60R18",
+          "235/55R19"
+        ],
+        "rs": [
+          "7.5Jx18 ET45",
+          "8Jx18 ET40"
+        ]
+      },
+      {
+        "name": "Range Rover Velar",
+        "g": [
+          {
+            "n": "L560",
+            "y": "2017+",
+            "p": "5x108",
+            "o": "ET42-50",
+            "c": "63.4mm",
+            "t": "M14x1.5",
+            "q": "130Nm"
+          }
+        ],
+        "ts": [
+          "255/55R19",
+          "265/45R21"
+        ],
+        "rs": [
+          "8Jx19 ET45",
+          "8.5Jx21 ET42"
+        ]
+      },
+      {
+        "name": "Discovery Sport",
+        "g": [
+          {
+            "n": "L550",
+            "y": "2014+",
+            "p": "5x108",
+            "o": "ET42-50",
+            "c": "63.4mm",
+            "t": "M14x1.5",
+            "q": "130Nm"
+          }
+        ],
+        "ts": [
+          "235/60R18",
+          "235/55R19"
+        ],
+        "rs": [
+          "7.5Jx18 ET45",
+          "8Jx18 ET40"
+        ]
+      }
+    ]
+  },
+  "Mini": {
+    "models": [
+      {
+        "name": "Cooper",
+        "g": [
+          {
+            "n": "F55/F56",
+            "y": "2014+",
+            "p": "5x112",
+            "o": "ET42-55",
+            "c": "66.6mm",
+            "t": "M12x1.5",
+            "q": "120Nm"
+          }
+        ],
+        "ts": [
+          "195/55R16",
+          "205/45R17"
+        ],
+        "rs": [
+          "6.5Jx16 ET54",
+          "7Jx17 ET48"
+        ]
+      },
+      {
+        "name": "Countryman",
+        "g": [
+          {
+            "n": "F60",
+            "y": "2017+",
+            "p": "5x112",
+            "o": "ET42-55",
+            "c": "66.6mm",
+            "t": "M12x1.5",
+            "q": "120Nm"
+          }
+        ],
+        "ts": [
+          "225/55R17",
+          "225/45R19"
+        ],
+        "rs": [
+          "7Jx17 ET48",
+          "7.5Jx19 ET48"
+        ]
+      }
+    ]
+  },
+  "MG": {
+    "models": [
+      {
+        "name": "MG4",
+        "g": [
+          {
+            "n": "EH32",
+            "y": "2022+",
+            "p": "5x108",
+            "o": "ET38-45",
+            "c": "65.1mm",
+            "t": "M12x1.5",
+            "q": "120Nm"
+          }
+        ],
+        "ts": [
+          "215/55R17",
+          "235/45R18"
+        ],
+        "rs": [
+          "7Jx17 ET42",
+          "7.5Jx18 ET38"
+        ]
+      },
+      {
+        "name": "ZS",
+        "g": [
+          {
+            "n": "IS1",
+            "y": "2017+",
+            "p": "5x114.3",
+            "o": "ET40-50",
+            "c": "67.1mm",
+            "t": "M12x1.5",
+            "q": "115Nm"
+          }
+        ],
+        "ts": [
+          "215/50R17",
+          "215/45R18"
+        ],
+        "rs": [
+          "6.5Jx17 ET43",
+          "7Jx18 ET43"
+        ]
+      },
+      {
+        "name": "HS",
+        "g": [
+          {
+            "n": "IS3",
+            "y": "2019+",
+            "p": "5x108",
+            "o": "ET38-45",
+            "c": "65.1mm",
+            "t": "M12x1.5",
+            "q": "120Nm"
+          }
+        ],
+        "ts": [
+          "235/50R18",
+          "235/45R19"
+        ],
+        "rs": [
+          "7Jx18 ET42",
+          "7.5Jx19 ET42"
+        ]
+      }
+    ]
+  },
+  "Mitsubishi": {
+    "models": [
+      {
+        "name": "Outlander",
+        "g": [
+          {
+            "n": "GF7W",
+            "y": "2013+",
+            "p": "5x114.3",
+            "o": "ET35-45",
+            "c": "67.1mm",
+            "t": "M12x1.5",
+            "q": "100Nm"
+          }
+        ],
+        "ts": [
+          "215/70R16",
+          "225/55R18"
+        ],
+        "rs": [
+          "6.5Jx16 ET45",
+          "7Jx18 ET38"
+        ]
+      },
+      {
+        "name": "Eclipse Cross",
+        "g": [
+          {
+            "n": "GK",
+            "y": "2018+",
+            "p": "5x114.3",
+            "o": "ET35-45",
+            "c": "67.1mm",
+            "t": "M12x1.5",
+            "q": "100Nm"
+          }
+        ],
+        "ts": [
+          "225/55R18"
+        ],
+        "rs": [
+          "7Jx18 ET38"
+        ]
+      }
+    ]
+  },
+  "Suzuki": {
+    "models": [
+      {
+        "name": "Swift",
+        "g": [
+          {
+            "n": "ZC83S",
+            "y": "2017+",
+            "p": "4x100",
+            "o": "ET45-55",
+            "c": "54.1mm",
+            "t": "M12x1.5",
+            "q": "100Nm"
+          }
+        ],
+        "ts": [
+          "185/55R16",
+          "195/45R17"
+        ],
+        "rs": [
+          "6Jx16 ET50",
+          "6.5Jx17 ET50"
+        ]
+      },
+      {
+        "name": "Jimny",
+        "g": [
+          {
+            "n": "JB64/JB74",
+            "y": "2018+",
+            "p": "5x139.7",
+            "o": "ET0-10",
+            "c": "108mm",
+            "t": "M12x1.25",
+            "q": "100Nm"
+          }
+        ],
+        "ts": [
+          "195/80R15",
+          "205/70R15"
+        ],
+        "rs": [
+          "5.5Jx15 ET5",
+          "6Jx15 ET0"
+        ]
+      },
+      {
+        "name": "Vitara",
+        "g": [
+          {
+            "n": "LY",
+            "y": "2015+",
+            "p": "5x114.3",
+            "o": "ET40-50",
+            "c": "60.1mm",
+            "t": "M12x1.5",
+            "q": "105Nm"
+          }
+        ],
+        "ts": [
+          "215/60R16",
+          "215/55R17"
+        ],
+        "rs": [
+          "6Jx16 ET50",
+          "6.5Jx17 ET45"
+        ]
+      }
+    ]
+  },
+  "Subaru": {
+    "models": [
+      {
+        "name": "Forester",
+        "g": [
+          {
+            "n": "SJ/SK",
+            "y": "2013+",
+            "p": "5x114.3",
+            "o": "ET45-55",
+            "c": "56.1mm",
+            "t": "M12x1.25",
+            "q": "120Nm"
+          }
+        ],
+        "ts": [
+          "225/60R17",
+          "225/55R18"
+        ],
+        "rs": [
+          "7Jx17 ET48",
+          "7Jx18 ET48"
+        ]
+      },
+      {
+        "name": "Outback",
+        "g": [
+          {
+            "n": "BS/BT",
+            "y": "2015+",
+            "p": "5x114.3",
+            "o": "ET45-55",
+            "c": "56.1mm",
+            "t": "M12x1.25",
+            "q": "120Nm"
+          }
+        ],
+        "ts": [
+          "225/65R17",
+          "225/60R18"
+        ],
+        "rs": [
+          "7Jx17 ET48",
+          "7Jx18 ET48"
+        ]
+      },
+      {
+        "name": "WRX",
+        "g": [
+          {
+            "n": "VB",
+            "y": "2022+",
+            "p": "5x114.3",
+            "o": "ET45-55",
+            "c": "56.1mm",
+            "t": "M12x1.25",
+            "q": "120Nm"
+          }
+        ],
+        "ts": [
+          "245/40R18"
+        ],
+        "rs": [
+          "8.5Jx18 ET55"
+        ]
+      }
+    ]
+  },
+  "Ford": {
+    "models": [
+      {
+        "name": "Focus",
+        "g": [
+          {
+            "n": "MK4",
+            "y": "2019+",
+            "p": "5x108",
+            "o": "ET45-55",
+            "c": "63.4mm",
+            "t": "M12x1.5",
+            "q": "110Nm"
+          }
+        ],
+        "ts": [
+          "205/60R16",
+          "235/40R18"
+        ],
+        "rs": [
+          "6.5Jx16 ET50",
+          "8Jx18 ET50"
+        ]
+      },
+      {
+        "name": "Ranger",
+        "g": [
+          {
+            "n": "T6",
+            "y": "2011+",
+            "p": "6x139.7",
+            "o": "ET0-25",
+            "c": "93.1mm",
+            "t": "M14x1.5",
+            "q": "140Nm"
+          }
+        ],
+        "ts": [
+          "265/65R17",
+          "265/60R18"
+        ],
+        "rs": [
+          "7.5Jx17 ET20",
+          "8Jx18 ET20"
+        ]
+      },
+      {
+        "name": "Mustang",
+        "g": [
+          {
+            "n": "S550",
+            "y": "2015+",
+            "p": "5x114.3",
+            "o": "ET30-45",
+            "c": "70.5mm",
+            "t": "M14x1.5",
+            "q": "130Nm"
+          }
+        ],
+        "ts": [
+          "235/55R17",
+          "255/40R19"
+        ],
+        "rs": [
+          "8Jx17 ET40",
+          "9Jx19 ET45"
+        ]
+      }
+    ]
+  },
+  "Peugeot": {
+    "models": [
+      {
+        "name": "308",
+        "g": [
+          {
+            "n": "T9",
+            "y": "2014+",
+            "p": "5x108",
+            "o": "ET35-45",
+            "c": "65.1mm",
+            "t": "M12x1.25",
+            "q": "100Nm"
+          }
+        ],
+        "ts": [
+          "205/55R16",
+          "225/40R18"
+        ],
+        "rs": [
+          "6.5Jx16 ET45",
+          "7.5Jx18 ET40"
+        ]
+      },
+      {
+        "name": "3008",
+        "g": [
+          {
+            "n": "P84",
+            "y": "2016+",
+            "p": "5x108",
+            "o": "ET35-45",
+            "c": "65.1mm",
+            "t": "M12x1.25",
+            "q": "100Nm"
+          }
+        ],
+        "ts": [
+          "215/65R17",
+          "235/50R19"
+        ],
+        "rs": [
+          "7Jx17 ET43",
+          "7.5Jx19 ET40"
+        ]
+      }
+    ]
+  },
+  "Fiat": {
+    "models": [
+      {
+        "name": "500",
+        "g": [
+          {
+            "n": "312",
+            "y": "2007+",
+            "p": "4x98",
+            "o": "ET35-45",
+            "c": "58.1mm",
+            "t": "M12x1.25",
+            "q": "100Nm"
+          }
+        ],
+        "ts": [
+          "175/65R15",
+          "195/45R16"
+        ],
+        "rs": [
+          "5.5Jx15 ET35",
+          "6.5Jx16 ET35"
+        ]
+      }
+    ]
+  }
+}

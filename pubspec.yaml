@@ -1,0 +1,27 @@
+name: tyre_stock
+description: 呔妹輪胎庫存 App
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  excel: ^4.0.0
+  http: ^1.2.0
+  shared_preferences: ^2.3.0
+  path_provider: ^2.1.0
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/stock.xlsx
+    - assets/fitment_data.json
