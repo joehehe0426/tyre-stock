@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:html' as html;
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:excel/excel.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -202,70 +204,35 @@ class _StockPageState extends State<StockPage> {
   }
 
   void _pickFile() {
-    final input = html.FileUploadInputElement()..accept = '.xlsx,.xls,.csv';
+    final input = html.FileUploadInputElement()..accept = '.xlsx,.xls';
     input.click();
     input.onChange.listen((_) async {
       try {
         final files = input.files;
         if (files == null || files.isEmpty) return;
+        final file = files[0];
         final reader = html.FileReader();
-        reader.readAsText(files[0]);
-        await reader.onLoad.first;
-        final text = reader.result;
-        if (text == null || text is! String) throw '無法讀取檔案';
-        final rows = text.split('\n')
-            .map((r) => r.trim()).where((r) => r.isNotEmpty).toList();
-        if (rows.length < 2) throw '檔案內容不足';
-        _all.clear();
-        final n = rows.length;
-        for (int r = 1; r < n; r++) {
-          final cells = _splitCsv(rows[r]);
-          if (cells.length < 2) continue;
-          final brand = cells[0].trim();
-          final pattern = cells[1].trim();
-          // Try to parse size from the first field if it looks like a size
-          int w = 0, a = 0, ri = 0;
-          double price = 0;
-          String desc = pattern;
-          // Check all cells for a size like "245/40/18" or "245/40R18"
-          for (int ci = 0; ci < cells.length; ci++) {
-            final cell = cells[ci].replaceAll(' ', '');
-            final parts = cell.split(RegExp(r'[/Rr]'));
-            if (parts.length >= 3) {
-              final tw = int.tryParse(parts[0]);
-              final ta = int.tryParse(parts[1]);
-              final tr = int.tryParse(parts[2]);
-              if (tw != null && tw > 100 && ta != null && ta > 0 && tr != null && tr > 10) {
-                w = tw; a = ta; ri = tr;
-                break;
-              }
-            }
+        reader.readAsArrayBuffer(file);
+        await reader.onLoad.first.timeout(const Duration(seconds: 10));
+        final result = reader.result;
+        if (result == null) throw '讀取結果為空';
+        List<int> bytes;
+        if (result is List<int>) {
+          bytes = result;
+        } else {
+          // Convert ArrayBuffer/ByteBuffer to bytes
+          final len = (result is ByteBuffer)
+              ? result.lengthInBytes
+              : (result as dynamic).byteLength as int;
+          bytes = Uint8List(len);
+          // Use the for-await-compatible byte extraction
+          for (int i = 0; i < len; i++) {
+            (bytes as List<dynamic>)[i] = (result as dynamic)[i];
           }
-          // Try brand + pattern from cells
-          String br = brand;
-          String pt = pattern;
-          if (br.isEmpty || pt.isEmpty) {
-            br = cells.length > 1 ? cells[1].trim() : '';
-            pt = cells.length > 2 ? cells[2].trim() : '';
-          }
-          // Try price from last numeric cell
-          for (int ci = cells.length - 1; ci >= 0; ci--) {
-            final pv = double.tryParse(cells[ci].replaceAll(RegExp(r'[^0-9.]'), ''));
-            if (pv != null && pv > 0) { price = pv; break; }
-          }
-          // Try description from a cell that doesn't look like brand/pattern/size
-          for (int ci = 0; ci < cells.length; ci++) {
-            final c = cells[ci].trim();
-            if (c.isNotEmpty && c != br && c != pt && !c.contains('/')) {
-              desc = c;
-            }
-          }
-          _all.add({'br': br, 'pt': pt, 'w': w, 'a': a, 'ri': ri, 'sp': price, 'st': 1, 'su': '', 'de': desc});
         }
-        if (_all.isEmpty) throw '找不到有效數據 (檢查檔案格式)';
+        await _parseXlsxFromBytes(bytes);
         await (await SharedPreferences.getInstance()).setString('d', jsonEncode(_all));
-        _err = null;
-        _reload();
+        _err = null; _reload();
         if (mounted) setState(() {});
         if (mounted) ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('已載入 ${_all.length} 款'), backgroundColor: Colors.green));
@@ -274,6 +241,50 @@ class _StockPageState extends State<StockPage> {
           SnackBar(content: Text('錯誤: $e'), backgroundColor: Colors.red));
       }
     });
+  }
+
+  Future<void> _parseXlsxFromBytes(List<int> bytes) async {
+    final ex = Excel.decodeBytes(bytes);
+    var sh = ex.tables['工作表1'];
+    if (sh == null) sh = ex.tables.values.isNotEmpty ? ex.tables.values.first : null;
+    if (sh == null || sh.rows.length < 2) throw '無數據';
+    _all.clear();
+    // Check header for detection
+    final hdr = sh.rows[0];
+    final hasSize = hdr.isNotEmpty && (hdr[1]?.value?.toString() ?? '').contains('Size');
+    for (int r = 1; r < sh.rows.length; r++) {
+      final row = sh.rows[r];
+      if (hasSize) {
+        final sz = (row[1]?.value?.toString() ?? '').replaceAll(' ', '');
+        final pp = sz.split('/');
+        if (pp.length < 3) continue;
+        final w = int.tryParse(pp[0]) ?? 0;
+        final a = int.tryParse(pp[1]) ?? 0;
+        final ri = int.tryParse(pp[2]) ?? 0;
+        if (w == 0) continue;
+        final b = (row[2]?.value?.toString() ?? '').trim();
+        final d = (row[3]?.value?.toString() ?? '').trim();
+        String pt = d;
+        if (pt.toUpperCase().startsWith(b.toUpperCase())) pt = pt.substring(b.length).trim();
+        if (pt.isEmpty) pt = d;
+        final pr = double.tryParse((row[5]?.value?.toString() ?? '').replaceAll(RegExp(r'[^\d.]'), '')) ?? 0;
+        _all.add({'br': b, 'pt': pt, 'w': w, 'a': a, 'ri': ri, 'sp': pr, 'st': 1, 'su': '', 'de': d});
+      } else {
+        final c0 = row[0]?.value?.toString() ?? '';
+        if (c0.isEmpty) continue;
+        _all.add({
+          'br': c0, 'pt': row[1]?.value?.toString() ?? '',
+          'w': int.tryParse(row[2]?.value?.toString() ?? '0') ?? 0,
+          'a': int.tryParse(row[3]?.value?.toString() ?? '0') ?? 0,
+          'ri': int.tryParse(row[4]?.value?.toString() ?? '0') ?? 0,
+          'bp': double.tryParse(row[5]?.value?.toString() ?? '0') ?? 0,
+          'sp': double.tryParse(row[6]?.value?.toString() ?? '0') ?? 0,
+          'st': int.tryParse(row[7]?.value?.toString() ?? '0') ?? 0,
+          'su': row[9]?.value?.toString() ?? '', 'de': row[10]?.value?.toString() ?? '',
+        });
+      }
+    }
+    if (_all.isEmpty) throw '找不到有效數據';
   }
 
   List<String> _splitCsv(String row) {
