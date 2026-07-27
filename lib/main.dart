@@ -192,15 +192,62 @@ class _StockPageState extends State<StockPage> {
       final s = p.getString('d');
       if (s != null && s.isNotEmpty) {
         final parsed = jsonDecode(s);
-        if (parsed is List) _all = parsed.cast<Map<String, dynamic>>();
+        if (parsed is List) {
+          final cleaned = <Map<String, dynamic>>[];
+          for (final item in parsed) {
+            if (item is! Map) continue;
+            final m = Map<String, dynamic>.from(item);
+            if (_isValidTyre(m)) cleaned.add(m);
+          }
+          _all = cleaned;
+          // Drop corrupted cache (e.g. JS source leaked into brand fields).
+          if (cleaned.length != parsed.length) {
+            if (cleaned.isEmpty) {
+              await p.remove('d');
+            } else {
+              await p.setString('d', jsonEncode(cleaned));
+            }
+          }
+        }
       }
       if (_all.isEmpty) {
         final ok = await _loadFromSheet();
         if (!ok) { _err = '上傳 stock.xlsx 開始使用'; }
       }
-    } catch (_) { _err = '載入失敗'; }
+    } catch (_) {
+      try {
+        await (await SharedPreferences.getInstance()).remove('d');
+      } catch (_) {}
+      _all = [];
+      _err = '本機資料損壞，已清除。請重新上傳 stock.xlsx';
+    }
     _reload();
     if (mounted) setState(() => _loaded = true);
+  }
+
+  /// Reject junk entries (minified JS, empty brand, impossible sizes).
+  bool _isValidTyre(Map<String, dynamic> m) {
+    final br = '${m['br'] ?? ''}'.trim();
+    final pt = '${m['pt'] ?? ''}'.trim();
+    if (br.isEmpty) return false;
+    if (br.length > 80 || pt.length > 120) return false;
+    final blob = '$br $pt'.toLowerCase();
+    if (blob.contains('function') ||
+        blob.contains('globalthis') ||
+        blob.contains('prototype') ||
+        blob.contains('__proto__') ||
+        blob.contains('=>') ||
+        blob.contains('{') ||
+        blob.contains('}')) {
+      return false;
+    }
+    final w = m['w'];
+    final ri = m['ri'];
+    final wi = w is num ? w.toInt() : int.tryParse('$w') ?? 0;
+    final rii = ri is num ? ri.toInt() : int.tryParse('$ri') ?? 0;
+    // Allow 0 size only if brand looks normal; prefer real sizes when present.
+    if (wi < 0 || wi > 500 || rii < 0 || rii > 40) return false;
+    return true;
   }
 
   /// Read uploaded file as bytes via Data URL (most reliable on Flutter web).
@@ -541,6 +588,34 @@ class _StockPageState extends State<StockPage> {
   void _apply() { _reload(); setState(() {}); }
   Future<void> _reloadAll() async { setState(() => _loaded = false); await _init(); }
 
+  Future<void> _clearLocal() async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('清除本機庫存？'),
+        content: const Text('會刪除瀏覽器內已儲存的輪胎資料，不會影響你的 Excel 檔。'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('取消')),
+          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('清除')),
+        ],
+      ),
+    );
+    if (ok != true) return;
+    final p = await SharedPreferences.getInstance();
+    await p.remove('d');
+    _all = [];
+    _filtered = [];
+    _brandF = '';
+    _rimF = '';
+    _err = '上傳 stock.xlsx 開始使用';
+    if (mounted) setState(() {});
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('已清除本機庫存'), backgroundColor: Colors.green),
+      );
+    }
+  }
+
   @override Widget build(BuildContext context) {
     if (!_loaded) return Scaffold(
       appBar: AppBar(title: const Text('呔妹輪胎'), actions: [
@@ -571,6 +646,7 @@ class _StockPageState extends State<StockPage> {
             child: Padding(padding: const EdgeInsets.only(right: 4), child: Icon(Icons.cloud_done, size: 18, color: Colors.green.shade300))),
         IconButton(icon: const Icon(Icons.file_upload), tooltip: '上傳 stock.xlsx', onPressed: _pickFile),
         IconButton(icon: const Icon(Icons.link), tooltip: 'Google Sheet', onPressed: _setSheetUrl),
+        IconButton(icon: const Icon(Icons.delete_outline), tooltip: '清除本機庫存', onPressed: _clearLocal),
         IconButton(icon: const Icon(Icons.refresh), tooltip: '重新載入', onPressed: _reloadAll),
         Padding(padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text('${_all.length}款', style: Theme.of(context).textTheme.bodySmall)),
