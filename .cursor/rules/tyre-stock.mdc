@@ -1,0 +1,14 @@
+---
+description: tyre-stock Flutter web deploy and import landmines
+alwaysApply: true
+---
+
+# tyre-stock agent rules
+
+- Stack: Flutter Web. Main logic in `lib/main.dart`; XLSX in `lib/xlsx_reader.dart`.
+- **Never reintroduce the `excel` package** — use custom ZIP/XML reader.
+- Duplicate tyres merge via `_upsertTyre` (brand+size+pattern+year); sum `st`.
+- Live site is **`gh-pages`**, not `master`. Build with:
+  `flutter build web --base-href /tyre-stock/`
+- UI copy: Traditional Chinese. Default PIN `250183418`.
+- See root `AGENTS.md` for full deploy/landmine notes.

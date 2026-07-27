@@ -65,11 +65,15 @@ class PinGate extends StatefulWidget {
 }
 class _PinGateState extends State<PinGate> {
   bool _authed = false;
-  static const String _defPin = 'tyre888';
+  static const String _defPin = '250183418';
+  static const String _oldDefPin = 'tyre888';
   @override void initState() { super.initState(); _check(); }
   Future<void> _check() async {
     final p = await SharedPreferences.getInstance();
-    if (p.getString('pin') == null) await p.setString('pin', _defPin);
+    final existing = p.getString('pin');
+    if (existing == null || existing == _oldDefPin) {
+      await p.setString('pin', _defPin);
+    }
     if (mounted) setState(() => _authed = (p.getBool('authed') ?? false));
   }
   Future<bool> _tryPin(String pin) async {
@@ -142,7 +146,7 @@ class _PinFormState extends State<_PinForm> {
       FilledButton.icon(onPressed: _submit, icon: const Icon(Icons.login), label: const Text('登入'),
         style: FilledButton.styleFrom(minimumSize: const Size(double.infinity, 48))),
       const SizedBox(height: 12),
-      Text('🔑 預設密碼: tyre888', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey)),
+      Text('🔑 預設密碼: 250183418', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey)),
     ]),
   );
 }

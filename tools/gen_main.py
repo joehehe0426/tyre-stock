@@ -15,9 +15,9 @@ void main() => runApp(MaterialApp(title:'呔妹輪胎',debugShowCheckedModeBanne
 // PIN GATE
 class PinGate extends StatefulWidget { const PinGate({super.key}); @override State<PinGate> createState() => _PinGateState(); }
 class _PinGateState extends State<PinGate> {
-  bool _authed=false; static const _defPin='tyre888';
+  bool _authed=false; static const _defPin='250183418';
   @override void initState(){super.initState();_check();}
-  Future<void>_check()async{final p=await SharedPreferences.getInstance();if(p.getString('pin')==null)await p.setString('pin',_defPin);if(mounted)setState(()=>_authed=p.getBool('authed')??false);}
+  Future<void>_check()async{final p=await SharedPreferences.getInstance();final e=p.getString('pin');if(e==null||e=='tyre888')await p.setString('pin',_defPin);if(mounted)setState(()=>_authed=p.getBool('authed')??false);}
   Future<bool>_tryPin(String pin)async{final p=await SharedPreferences.getInstance();final s=p.getString('pin')??_defPin;if(pin==s){await p.setBool('authed',true);return true;}return false;}
   Future<void>_changePin(BuildContext ctx)async{final ctrl=TextEditingController();final r=await showDialog<String>(ctx:ctx,builder:(c)=>AlertDialog(title:const Text('更改密碼'),content:TextField(controller:ctrl,obscureText:true,decoration:const InputDecoration(labelText:'新密碼',border:OutlineInputBorder(),isDense:true)),actions:[TextButton(onPressed:()=>Navigator.pop(c),child:const Text('取消')),FilledButton(onPressed:()=>Navigator.pop(c,ctrl.text.trim()),child:const Text('確定'))]));ctrl.dispose();if(r!=null&&r.isNotEmpty){(await SharedPreferences.getInstance()).setString('pin',r);if(ctx.mounted)ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(content:Text('密碼已更改'),backgroundColor:Colors.green));}}
   @override Widget build(BuildContext context){if(_authed)return HomePage(onChangePin:()=>_changePin(context));return Scaffold(body:Center(child:_PinForm(onPin:(pin)async{final ok=await _tryPin(pin);if(ok&&mounted)setState(()=>_authed=true);return ok;})));}
@@ -30,7 +30,7 @@ class _PinFormState extends State<_PinForm>{final _c=TextEditingController();boo
     TextField(controller:_c,obscureText:true,autofocus:true,textAlign:TextAlign.center,style:TextStyle(fontSize:24,letterSpacing:8),
       decoration:InputDecoration(border:OutlineInputBorder(borderRadius:BorderRadius.circular(12)),isDense:true,contentPadding:EdgeInsets.symmetric(vertical:14,horizontal:16),errorText:_wrong?'密碼錯誤':null),onSubmitted:(_)=>_submit()),
     SizedBox(height:12),FilledButton.icon(onPressed:_submit,icon:Icon(Icons.login),label:Text('登入'),style:FilledButton.styleFrom(minimumSize:Size(double.infinity,48))),
-    SizedBox(height:12),Text('🔑 密碼: tyre888',style:Theme.of(context).textTheme.bodySmall?.copyWith(color:Colors.grey)),
+    SizedBox(height:12),Text('🔑 密碼: 250183418',style:Theme.of(context).textTheme.bodySmall?.copyWith(color:Colors.grey)),
   ]));
 }
 
