@@ -178,7 +178,7 @@ class StockPage extends StatefulWidget {
 class _StockPageState extends State<StockPage> {
   List<Map<String, dynamic>> _all = [];
   List<Map<String, dynamic>> _filtered = [];
-  String _search = '', _brandF = '', _rimF = '';
+  String _search = '', _brandF = '', _widthF = '', _aspectF = '', _rimF = '';
   String? _sheetUrl;
   bool _loaded = false;
   String? _err;
@@ -574,11 +574,15 @@ class _StockPageState extends State<StockPage> {
   void _reload() {
     _filtered = _all.where((t) {
       if (_brandF.isNotEmpty && t['br'] != _brandF) return false;
-      if (_rimF.isNotEmpty && (t['ri']?.toString() ?? '') != _rimF.replaceAll('"', '')) return false;
+      if (_widthF.isNotEmpty && '${t['w'] ?? ''}' != _widthF) return false;
+      if (_aspectF.isNotEmpty && '${t['a'] ?? ''}' != _aspectF) return false;
+      if (_rimF.isNotEmpty && '${t['ri'] ?? ''}' != _rimF.replaceAll('"', '')) {
+        return false;
+      }
       if (_search.isNotEmpty) {
         final q = _search.toLowerCase();
-        final br = t['br']?.toString()?.toLowerCase() ?? '';
-        final pt = t['pt']?.toString()?.toLowerCase() ?? '';
+        final br = t['br']?.toString().toLowerCase() ?? '';
+        final pt = t['pt']?.toString().toLowerCase() ?? '';
         final sz = _size(t).toLowerCase();
         return br.contains(q) || pt.contains(q) || sz.contains(q);
       }
@@ -606,7 +610,10 @@ class _StockPageState extends State<StockPage> {
     _all = [];
     _filtered = [];
     _brandF = '';
+    _widthF = '';
+    _aspectF = '';
     _rimF = '';
+    _search = '';
     _err = '上傳 stock.xlsx 開始使用';
     if (mounted) setState(() {});
     if (mounted) {
@@ -635,8 +642,29 @@ class _StockPageState extends State<StockPage> {
         : const CircularProgressIndicator()),
     );
     final brands = _all.map((t) => t['br']?.toString() ?? '').where((b) => b.isNotEmpty).toSet().toList()..sort();
-    final rims = _all.map((t) => t['ri']?.toString() ?? '').where((r) => r.isNotEmpty).toSet().toList()
-      ..sort((a, b) => (int.tryParse(a) ?? 0).compareTo(int.tryParse(b) ?? 0));
+    List<String> _uniqNums(String key) {
+      final vals = _all
+          .map((t) {
+            final v = t[key];
+            if (v is num && v > 0) return '${v.toInt()}';
+            final p = int.tryParse('${v ?? ''}');
+            return (p != null && p > 0) ? '$p' : '';
+          })
+          .where((s) => s.isNotEmpty)
+          .toSet()
+          .toList();
+      vals.sort((a, b) => (int.tryParse(a) ?? 0).compareTo(int.tryParse(b) ?? 0));
+      return vals;
+    }
+    final widths = _uniqNums('w');
+    final aspects = _uniqNums('a');
+    final rims = _uniqNums('ri');
+    final hasSizeFilters = widths.isNotEmpty || aspects.isNotEmpty || rims.isNotEmpty;
+    final hasAnyFilter = _brandF.isNotEmpty ||
+        _widthF.isNotEmpty ||
+        _aspectF.isNotEmpty ||
+        _rimF.isNotEmpty ||
+        _search.isNotEmpty;
     return Scaffold(
       appBar: AppBar(title: const Text('呔妹輪胎'), actions: [
         if (widget.onChangePin != null)
@@ -649,36 +677,107 @@ class _StockPageState extends State<StockPage> {
         IconButton(icon: const Icon(Icons.delete_outline), tooltip: '清除本機庫存', onPressed: _clearLocal),
         IconButton(icon: const Icon(Icons.refresh), tooltip: '重新載入', onPressed: _reloadAll),
         Padding(padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text('${_all.length}款', style: Theme.of(context).textTheme.bodySmall)),
+          child: Text('${_filtered.length}/${_all.length}款', style: Theme.of(context).textTheme.bodySmall)),
       ]),
       body: Column(children: [
         Padding(padding: const EdgeInsets.fromLTRB(12, 8, 12, 0), child: TextField(
-          decoration: InputDecoration(hintText: '搜索...', prefixIcon: const Icon(Icons.search),
+          decoration: InputDecoration(hintText: '搜索品牌／型號／尺寸...', prefixIcon: const Icon(Icons.search),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             isDense: true, contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12)),
           onChanged: (v) { _search = v; _apply(); })),
-        if (brands.isNotEmpty || rims.isNotEmpty)
-          Padding(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), child: Row(children: [
-            if (brands.isNotEmpty) Expanded(child: DropdownButtonFormField<String>(
+        if (brands.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+            child: DropdownButtonFormField<String>(
               value: _brandF.isEmpty ? '' : _brandF,
-              decoration: const InputDecoration(labelText: '品牌', isDense: true,
-                contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8)),
+              decoration: const InputDecoration(
+                labelText: '品牌',
+                isDense: true,
+                contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              ),
               items: [
                 const DropdownMenuItem<String>(value: '', child: Text('全部')),
                 ...brands.map((b) => DropdownMenuItem(value: b, child: Text(b))),
               ],
-              onChanged: (v) { _brandF = v ?? ''; _apply(); })),
-            if (brands.isNotEmpty) const SizedBox(width: 8),
-            if (rims.isNotEmpty) Expanded(child: DropdownButtonFormField<String>(
-              value: _rimF.isEmpty ? '' : _rimF,
-              decoration: const InputDecoration(labelText: '鈴', isDense: true,
-                contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8)),
-              items: [
-                const DropdownMenuItem<String>(value: '', child: Text('全部')),
-                ...rims.map((r) => DropdownMenuItem(value: r, child: Text('${r}\"'))),
-              ],
-              onChanged: (v) { _rimF = v ?? ''; _apply(); })),
-          ])),
+              onChanged: (v) { _brandF = v ?? ''; _apply(); },
+            ),
+          ),
+        if (hasSizeFilters)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+            child: Row(children: [
+              if (widths.isNotEmpty)
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: _widthF.isEmpty ? '' : _widthF,
+                    decoration: const InputDecoration(
+                      labelText: '闊度',
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    ),
+                    items: [
+                      const DropdownMenuItem<String>(value: '', child: Text('全部')),
+                      ...widths.map((w) => DropdownMenuItem(value: w, child: Text(w))),
+                    ],
+                    onChanged: (v) { _widthF = v ?? ''; _apply(); },
+                  ),
+                ),
+              if (widths.isNotEmpty && (aspects.isNotEmpty || rims.isNotEmpty))
+                const SizedBox(width: 8),
+              if (aspects.isNotEmpty)
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: _aspectF.isEmpty ? '' : _aspectF,
+                    decoration: const InputDecoration(
+                      labelText: '扁平比',
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    ),
+                    items: [
+                      const DropdownMenuItem<String>(value: '', child: Text('全部')),
+                      ...aspects.map((a) => DropdownMenuItem(value: a, child: Text(a))),
+                    ],
+                    onChanged: (v) { _aspectF = v ?? ''; _apply(); },
+                  ),
+                ),
+              if (aspects.isNotEmpty && rims.isNotEmpty) const SizedBox(width: 8),
+              if (rims.isNotEmpty)
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: _rimF.isEmpty ? '' : _rimF,
+                    decoration: const InputDecoration(
+                      labelText: '吋徑',
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    ),
+                    items: [
+                      const DropdownMenuItem<String>(value: '', child: Text('全部')),
+                      ...rims.map((r) => DropdownMenuItem(value: r, child: Text('${r}"'))),
+                    ],
+                    onChanged: (v) { _rimF = v ?? ''; _apply(); },
+                  ),
+                ),
+            ]),
+          ),
+        if (hasAnyFilter)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: TextButton.icon(
+                onPressed: () {
+                  _search = '';
+                  _brandF = '';
+                  _widthF = '';
+                  _aspectF = '';
+                  _rimF = '';
+                  _apply();
+                },
+                icon: const Icon(Icons.filter_alt_off, size: 18),
+                label: Text('清除篩選（顯示 ${_filtered.length} 款）'),
+              ),
+            ),
+          ),
         Expanded(child: _filtered.isEmpty
           ? const Center(child: Text('無匹配'))
           : ListView.builder(itemCount: _filtered.length, itemBuilder: (_, i) {
