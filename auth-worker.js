@@ -153,7 +153,8 @@ function withCors(request, response) {
 }
 
 async function handleWsApi(url, env) {
-  const key = env && env.WHEEL_SIZE_USER_KEY;
+  const key =
+    (env && (env.WHEEL_SIZE_USER_KEY || env.WHEEL_SIZE_API_KEY)) || "";
   if (!key) {
     return json(
       {

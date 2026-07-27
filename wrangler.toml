@@ -2,8 +2,9 @@ name = "tyre-stock-auth"
 main = "auth-worker.js"
 compatibility_date = "2026-07-27"
 
+# Must include /* or only "/" is handled by the Worker.
 routes = [
-  { pattern = "tyre.autragroupltd.com", zone_id = "ceb5d3b82cd6b792a75586c33fc07c47" }
+  { pattern = "tyre.autragroupltd.com/*", zone_id = "ceb5d3b82cd6b792a75586c33fc07c47" }
 ]
 
 [env.production]
