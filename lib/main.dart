@@ -145,8 +145,6 @@ class _PinFormState extends State<_PinForm> {
       const SizedBox(height: 12),
       FilledButton.icon(onPressed: _submit, icon: const Icon(Icons.login), label: const Text('登入'),
         style: FilledButton.styleFrom(minimumSize: const Size(double.infinity, 48))),
-      const SizedBox(height: 12),
-      Text('🔑 預設密碼: 250183418', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey)),
     ]),
   );
 }

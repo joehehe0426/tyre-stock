@@ -30,7 +30,6 @@ class _PinFormState extends State<_PinForm>{final _c=TextEditingController();boo
     TextField(controller:_c,obscureText:true,autofocus:true,textAlign:TextAlign.center,style:TextStyle(fontSize:24,letterSpacing:8),
       decoration:InputDecoration(border:OutlineInputBorder(borderRadius:BorderRadius.circular(12)),isDense:true,contentPadding:EdgeInsets.symmetric(vertical:14,horizontal:16),errorText:_wrong?'密碼錯誤':null),onSubmitted:(_)=>_submit()),
     SizedBox(height:12),FilledButton.icon(onPressed:_submit,icon:Icon(Icons.login),label:Text('登入'),style:FilledButton.styleFrom(minimumSize:Size(double.infinity,48))),
-    SizedBox(height:12),Text('🔑 密碼: 250183418',style:Theme.of(context).textTheme.bodySmall?.copyWith(color:Colors.grey)),
   ]));
 }
 
