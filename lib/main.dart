@@ -1096,7 +1096,12 @@ class _FitmentPageState extends State<FitmentPage> {
       final slug = '${item['slug'] ?? ''}'.trim();
       final name = '${item['name'] ?? item['name_en'] ?? slug}'.trim();
       if (slug.isEmpty) continue;
-      out.add({'slug': slug, 'name': name.isEmpty ? slug : name});
+      final logo = '${item['logo'] ?? ''}'.trim();
+      out.add({
+        'slug': slug,
+        'name': name.isEmpty ? slug : name,
+        if (logo.isNotEmpty) 'logo': logo,
+      });
     }
     out.sort((a, b) => a['name']!.compareTo(b['name']!));
     return out;
@@ -1254,14 +1259,14 @@ class _FitmentPageState extends State<FitmentPage> {
       if (data is! List || data.isEmpty) {
         throw '找不到此車規格（可試其他年份／改裝）';
       }
-      Map<String, dynamic>? hit;
+      Map<String, dynamic>? matched;
       for (final row in data) {
         if (row is Map && '${row['slug']}' == _oMod) {
-          hit = Map<String, dynamic>.from(row);
+          matched = Map<String, dynamic>.from(row);
           break;
         }
       }
-      hit ??= Map<String, dynamic>.from(data.first as Map);
+      final hit = matched ?? Map<String, dynamic>.from(data.first as Map);
       final tech = hit['technical'] is Map
           ? Map<String, dynamic>.from(hit['technical'] as Map)
           : <String, dynamic>{};
@@ -1284,6 +1289,35 @@ class _FitmentPageState extends State<FitmentPage> {
         }
       }
       final torque = tech['wheel_tightening_torque'];
+      // Car body photos from Wheel Size CDN
+      final photos = <String>[];
+      final gen = hit['generation'];
+      if (gen is Map) {
+        final bodies = gen['bodies'];
+        if (bodies is List) {
+          for (final b in bodies) {
+            if (b is! Map) continue;
+            final img = '${b['image'] ?? ''}'.trim();
+            if (img.startsWith('http') && !photos.contains(img)) {
+              photos.add(img);
+            }
+          }
+        }
+      }
+      String? makeLogo;
+      final make = hit['make'];
+      if (make is Map) {
+        final l = '${make['logo'] ?? ''}'.trim();
+        if (l.startsWith('http')) makeLogo = l;
+      }
+      if (makeLogo == null) {
+        for (final e in _oMakes) {
+          if (e['slug'] == _oMake && (e['logo'] ?? '').startsWith('http')) {
+            makeLogo = e['logo'];
+            break;
+          }
+        }
+      }
       if (!mounted) return;
       setState(() {
         _oResult = {
@@ -1292,7 +1326,10 @@ class _FitmentPageState extends State<FitmentPage> {
           'cb': '${tech['centre_bore'] ?? '-'}',
           'torque': torque == null ? '-' : '$torque',
           'tires': tires.toList()..sort(),
-          'name': '${hit?['name'] ?? hit?['trim'] ?? ''}',
+          'name': '${hit['name'] ?? hit['trim'] ?? ''}',
+          'photos': photos,
+          'logo': makeLogo,
+          'gen': gen is Map ? '${gen['name'] ?? ''}' : '',
         };
       });
     } catch (e) {
@@ -1493,7 +1530,17 @@ class _FitmentPageState extends State<FitmentPage> {
               labelText: '品牌', border: OutlineInputBorder(), isDense: true),
           items: _oMakes
               .map((m) => DropdownMenuItem(
-                  value: m['slug'], child: Text(m['name'] ?? '')))
+                    value: m['slug'],
+                    child: Row(children: [
+                      if ((m['logo'] ?? '').startsWith('http')) ...[
+                        Image.network(m['logo']!, width: 28, height: 28,
+                            errorBuilder: (_, __, ___) =>
+                                const SizedBox(width: 28)),
+                        const SizedBox(width: 8),
+                      ],
+                      Expanded(child: Text(m['name'] ?? '')),
+                    ]),
+                  ))
               .toList(),
           onChanged: _busy ? null : _onOnlineMake,
         ),
@@ -1653,6 +1700,8 @@ class _FitmentPageState extends State<FitmentPage> {
   Widget _buildOnlineResult() {
     final r = _oResult!;
     final tires = (r['tires'] as List?) ?? const [];
+    final photos = (r['photos'] as List?)?.map((e) => '$e').toList() ?? const [];
+    final logo = '${r['logo'] ?? ''}';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -1663,6 +1712,52 @@ class _FitmentPageState extends State<FitmentPage> {
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).colorScheme.primary)),
+        if (photos.isNotEmpty) ...[
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 180,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: photos.length,
+              separatorBuilder: (_, __) => const SizedBox(width: 8),
+              itemBuilder: (ctx, i) {
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Image.network(
+                      photos[i],
+                      fit: BoxFit.cover,
+                      loadingBuilder: (c, child, prog) {
+                        if (prog == null) return child;
+                        return Container(
+                          color: Colors.grey.shade200,
+                          alignment: Alignment.center,
+                          child: const CircularProgressIndicator(strokeWidth: 2),
+                        );
+                      },
+                      errorBuilder: (_, __, ___) => Container(
+                        color: Colors.grey.shade200,
+                        alignment: Alignment.center,
+                        child: const Icon(Icons.directions_car, size: 48),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 12),
+        ] else if (logo.startsWith('http')) ...[
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Image.network(logo, height: 48,
+                errorBuilder: (_, __, ___) => const SizedBox.shrink()),
+          ),
+          const SizedBox(height: 8),
+        ],
+        if ('${r['gen']}'.isNotEmpty) _sr('世代', '${r['gen']}'),
         if ('${r['name']}'.isNotEmpty) _sr('改裝', '${r['name']}'),
         _sr('Bolt Pattern', '${r['bolt']}'),
         _sr('PCD', '${r['pcd']}'),
