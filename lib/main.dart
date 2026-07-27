@@ -3,9 +3,9 @@ import 'dart:html' as html;
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:excel/excel.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'xlsx_reader.dart';
 
 void main() => runApp(ErrorBoundary(child: MaterialApp(
   title: '呔妹輪胎', debugShowCheckedModeBanner: false,
@@ -220,37 +220,9 @@ class _StockPageState extends State<StockPage> {
     }
   }
 
-  String _cellText(dynamic cell) {
-    if (cell == null) return '';
-    try {
-      final dynamic value = cell is Data ? cell.value : null;
-      if (value == null) return '';
-      // excel 4.x typed cell values
-      if (value is FormulaCellValue) {
-        // Uploaded xlsx usually has no cached formula result; ignore formula text.
-        return '';
-      }
-      if (value is TextCellValue) return value.value.trim();
-      if (value is IntCellValue) return '${value.value}';
-      if (value is DoubleCellValue) {
-        final n = value.value;
-        return n == n.roundToDouble() ? '${n.toInt()}' : '$n';
-      }
-      if (value is BoolCellValue) return value.value ? 'true' : 'false';
-      if (value is DateCellValue) {
-        return '${value.year}-${value.month}-${value.day}';
-      }
-      final s = value.toString().trim();
-      if (s.startsWith('=')) return '';
-      return s;
-    } catch (_) {
-      return '';
-    }
-  }
-
-  String _safeCell(List<Data?> row, int idx) {
+  String _rowCell(List<String> row, int idx) {
     if (idx < 0 || idx >= row.length) return '';
-    return _cellText(row[idx]);
+    return row[idx].trim();
   }
 
   /// Parse tyre size: 255/55/19, 255/55/R19, 235/40 /18, /195/65/15, 215/70/16C
@@ -277,9 +249,9 @@ class _StockPageState extends State<StockPage> {
     return (w: w, a: a, ri: ri);
   }
 
-  int _findHeaderCol(List<Data?> hdr, List<String> aliases) {
+  int _findHeaderCol(List<String> hdr, List<String> aliases) {
     for (int i = 0; i < hdr.length; i++) {
-      final h = _cellText(hdr[i]).toLowerCase();
+      final h = hdr[i].trim().toLowerCase();
       for (final a in aliases) {
         if (h == a || h.contains(a)) return i;
       }
@@ -335,28 +307,13 @@ class _StockPageState extends State<StockPage> {
   }
 
   Future<void> _parseXlsxFromBytes(Uint8List bytes) async {
-    Excel ex;
+    late final List<List<String>> rows;
     try {
-      ex = Excel.decodeBytes(bytes);
+      rows = XlsxReader.readSheetMatrix(bytes);
     } catch (e) {
       throw 'Excel 解碼失敗: $e';
     }
-
-    Sheet? sh;
-    try {
-      final tables = ex.tables;
-      sh = tables['工作表1'] ?? tables['Sheet1'];
-      if (sh == null && tables.isNotEmpty) {
-        sh = tables.values.first;
-      }
-    } catch (e) {
-      throw '讀取工作表失敗: $e';
-    }
-
-    final rows = sh?.rows;
-    if (sh == null || rows == null || rows.length < 2) {
-      throw '工作表無數據';
-    }
+    if (rows.length < 2) throw '工作表無數據';
 
     _all.clear();
 
@@ -373,17 +330,17 @@ class _StockPageState extends State<StockPage> {
 
     for (int r = 1; r < rows.length; r++) {
       final row = rows[r];
-      if (row.isEmpty) continue;
+      if (row.every((c) => c.trim().isEmpty)) continue;
 
       if (hasSizeLayout) {
-        final sz = _safeCell(row, sizeIdx);
+        final sz = _rowCell(row, sizeIdx);
         if (sz.isEmpty) continue;
         final parsed = _parseSize(sz);
         if (parsed == null) continue;
 
-        var b = _safeCell(row, brandIdx);
+        var b = _rowCell(row, brandIdx);
         if (b.startsWith('=')) b = '';
-        final d = _safeCell(row, descIdx);
+        final d = _rowCell(row, descIdx);
         if (b.isEmpty && d.isNotEmpty) {
           final parts = d.split(RegExp(r'\s+'));
           b = parts.isNotEmpty ? parts.first : '';
@@ -398,15 +355,13 @@ class _StockPageState extends State<StockPage> {
         }
         if (pt.isEmpty) pt = d.isNotEmpty ? d : b;
 
-        final priceRaw = priceIdx >= 0
-            ? _safeCell(row, priceIdx)
-            : _safeCell(row, 5);
+        final priceRaw =
+            priceIdx >= 0 ? _rowCell(row, priceIdx) : _rowCell(row, 5);
         final pr =
             double.tryParse(priceRaw.replaceAll(RegExp(r'[^\d.]'), '')) ?? 0;
-        final stRaw = _safeCell(row, stockIdx);
-        final st =
-            int.tryParse(stRaw.replaceAll(RegExp(r'[^\d]'), '')) ?? 1;
-        final year = _safeCell(row, yearIdx);
+        final stRaw = _rowCell(row, stockIdx);
+        final st = int.tryParse(stRaw.replaceAll(RegExp(r'[^\d]'), '')) ?? 1;
+        final year = _rowCell(row, yearIdx);
 
         _all.add({
           'br': b,
@@ -421,12 +376,12 @@ class _StockPageState extends State<StockPage> {
           'yr': year,
         });
       } else {
-        final c0 = _safeCell(row, 0);
+        final c0 = _rowCell(row, 0);
         if (c0.isEmpty || c0.startsWith('=')) continue;
         final maybeSize = _parseSize(c0);
         if (maybeSize != null) {
-          final b = _safeCell(row, 1);
-          final d = _safeCell(row, 2);
+          final b = _rowCell(row, 1);
+          final d = _rowCell(row, 2);
           final brand = (b.startsWith('=') || b.isEmpty)
               ? (d.isNotEmpty ? d.split(RegExp(r'\s+')).first : '')
               : b;
@@ -438,7 +393,7 @@ class _StockPageState extends State<StockPage> {
             'a': maybeSize.a,
             'ri': maybeSize.ri,
             'sp': double.tryParse(
-                    _safeCell(row, 4).replaceAll(RegExp(r'[^\d.]'), '')) ??
+                    _rowCell(row, 4).replaceAll(RegExp(r'[^\d.]'), '')) ??
                 0,
             'st': 1,
             'su': '',
@@ -448,15 +403,15 @@ class _StockPageState extends State<StockPage> {
         }
         _all.add({
           'br': c0,
-          'pt': _safeCell(row, 1),
-          'w': int.tryParse(_safeCell(row, 2)) ?? 0,
-          'a': int.tryParse(_safeCell(row, 3)) ?? 0,
-          'ri': int.tryParse(_safeCell(row, 4)) ?? 0,
-          'bp': double.tryParse(_safeCell(row, 5)) ?? 0,
-          'sp': double.tryParse(_safeCell(row, 6)) ?? 0,
-          'st': int.tryParse(_safeCell(row, 7)) ?? 0,
-          'su': _safeCell(row, 9),
-          'de': _safeCell(row, 10),
+          'pt': _rowCell(row, 1),
+          'w': int.tryParse(_rowCell(row, 2)) ?? 0,
+          'a': int.tryParse(_rowCell(row, 3)) ?? 0,
+          'ri': int.tryParse(_rowCell(row, 4)) ?? 0,
+          'bp': double.tryParse(_rowCell(row, 5)) ?? 0,
+          'sp': double.tryParse(_rowCell(row, 6)) ?? 0,
+          'st': int.tryParse(_rowCell(row, 7)) ?? 0,
+          'su': _rowCell(row, 9),
+          'de': _rowCell(row, 10),
         });
       }
     }
@@ -464,7 +419,6 @@ class _StockPageState extends State<StockPage> {
       throw '找不到有效數據（請確認有 Size／Brand 欄，尺寸如 245/40/18）';
     }
   }
-
   List<String> _splitCsv(String row) {
     final r = <String>[];
     bool q = false;
@@ -853,18 +807,39 @@ class _FitmentPageState extends State<FitmentPage> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           const Text('選擇車輛', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
-          DropdownButtonFormField<String>(value: _make,
+          DropdownButtonFormField<String>(
+            value: (_make != null && _makes.contains(_make)) ? _make : null,
+            hint: const Text('請選擇品牌'),
             decoration: const InputDecoration(labelText: '品牌', border: OutlineInputBorder(), isDense: true),
-            items: _makes.map((m) => DropdownMenuItem(value: m, child: Text(m))).toList(),
+            items: _makes
+                .map((m) => DropdownMenuItem(value: m, child: Text(m)))
+                .toList(),
             onChanged: _onMake),
           const SizedBox(height: 8),
-          DropdownButtonFormField<String>(value: _model,
+          DropdownButtonFormField<String>(
+            value: () {
+              final names = models
+                      ?.map((m) => m['name']?.toString() ?? '')
+                      .where((n) => n.isNotEmpty)
+                      .toList() ??
+                  const <String>[];
+              return (_model != null && names.contains(_model)) ? _model : null;
+            }(),
+            hint: const Text('請選擇型號'),
             decoration: const InputDecoration(labelText: '型號', border: OutlineInputBorder(), isDense: true),
-            items: models?.map((m) => DropdownMenuItem(
-              value: m['name']?.toString(), child: Text(m['name']?.toString() ?? ''))).toList() ?? [],
+            items: models
+                    ?.map((m) => m['name']?.toString() ?? '')
+                    .where((n) => n.isNotEmpty)
+                    .map((n) => DropdownMenuItem(value: n, child: Text(n)))
+                    .toList() ??
+                const [],
             onChanged: _make != null ? _onModel : null),
           const SizedBox(height: 8),
-          DropdownButtonFormField<int>(value: _gen,
+          DropdownButtonFormField<int>(
+            value: (gens != null && _gen != null && _gen! >= 0 && _gen! < gens.length)
+                ? _gen
+                : null,
+            hint: const Text('請選擇世代'),
             decoration: const InputDecoration(labelText: '世代 / 年份', border: OutlineInputBorder(), isDense: true),
             items: gens?.asMap().entries.map((e) {
               final y = e.value['year'] ?? '';
@@ -891,7 +866,7 @@ class _FitmentPageState extends State<FitmentPage> {
             const SizedBox(height: 12),
             if ((_result?['ts'] as List?)?.isNotEmpty == true) ...[
               const Text('適用輪胎尺寸', style: TextStyle(fontWeight: FontWeight.w600)),
-              ...(_result?['ts'] as List).map((s) => Card(
+              ...((_result?['ts'] as List?) ?? const []).map((s) => Card(
                 margin: const EdgeInsets.symmetric(vertical: 2),
                 child: ListTile(dense: true, title: Text('$s'),
                   trailing: Icon(Icons.check_circle, color: Colors.green.shade600)))),
