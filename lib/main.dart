@@ -203,42 +203,99 @@ class _StockPageState extends State<StockPage> {
     if (mounted) setState(() => _loaded = true);
   }
 
+  /// Convert FileReader ArrayBuffer / ByteBuffer into Uint8List.
+  Uint8List _bytesFromReaderResult(Object? result) {
+    if (result == null) throw '讀取結果為空';
+    if (result is Uint8List) return result;
+    if (result is ByteBuffer) return Uint8List.view(result);
+    if (result is TypedData) {
+      return Uint8List.view(
+        result.buffer,
+        result.offsetInBytes,
+        result.lengthInBytes,
+      );
+    }
+    if (result is List<int>) return Uint8List.fromList(result);
+    throw '無法解析檔案內容（請使用 .xlsx）';
+  }
+
+  String _cellText(dynamic cell) {
+    if (cell == null) return '';
+    final v = cell is Data ? cell.value : (cell as dynamic).value;
+    if (v == null) return '';
+    return v.toString().trim();
+  }
+
+  /// Parse tyre size: 255/55/19, 255/55/R19, 235/40 /18, /195/65/15, 215/70/16C
+  ({int w, int a, int ri})? _parseSize(String raw) {
+    var cleaned = raw.replaceAll(RegExp(r'\s+'), '').toUpperCase();
+    if (cleaned.isEmpty) return null;
+    // Normalize separators and commercial suffix (C)
+    cleaned = cleaned.replaceAll('*', '/').replaceAll('-', '/');
+    cleaned = cleaned.replaceFirst(RegExp(r'^/+'), '');
+    cleaned = cleaned.replaceFirst(RegExp(r'C+$'), '');
+
+    var m = RegExp(r'^(\d+)/(\d+)/R?(\d+)$').firstMatch(cleaned);
+    if (m == null) {
+      // e.g. 215/6017 -> 215/60/17
+      m = RegExp(r'^(\d+)/(\d{2})(\d{2})$').firstMatch(cleaned);
+    }
+    if (m == null) return null;
+    final w = int.tryParse(m.group(1)!) ?? 0;
+    final a = int.tryParse(m.group(2)!) ?? 0;
+    final ri = int.tryParse(m.group(3)!) ?? 0;
+    if (w == 0 || ri == 0) return null;
+    return (w: w, a: a, ri: ri);
+  }
+
+  int _findHeaderCol(List<dynamic> hdr, List<String> aliases) {
+    for (int i = 0; i < hdr.length; i++) {
+      final h = _cellText(hdr[i]).toLowerCase();
+      for (final a in aliases) {
+        if (h == a || h.contains(a)) return i;
+      }
+    }
+    return -1;
+  }
+
   void _pickFile() {
-    final input = html.FileUploadInputElement()..accept = '.xlsx,.xls';
+    final input = html.FileUploadInputElement()..accept = '.xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     input.click();
     input.onChange.listen((_) async {
       try {
         final files = input.files;
         if (files == null || files.isEmpty) return;
         final file = files[0];
+        final name = (file.name).toLowerCase();
+        if (name.endsWith('.xls') && !name.endsWith('.xlsx')) {
+          throw '請另存為 .xlsx 後再上傳（不支援舊版 .xls）';
+        }
         final reader = html.FileReader();
         reader.readAsArrayBuffer(file);
-        await reader.onLoad.first.timeout(const Duration(seconds: 10));
-        final result = reader.result;
-        if (result == null) throw '讀取結果為空';
-        List<int> bytes;
-        if (result is List<int>) {
-          bytes = result;
-        } else {
-          // Convert ArrayBuffer/ByteBuffer to bytes
-          final len = (result is ByteBuffer)
-              ? result.lengthInBytes
-              : (result as dynamic).byteLength as int;
-          bytes = Uint8List(len);
-          // Use the for-await-compatible byte extraction
-          for (int i = 0; i < len; i++) {
-            (bytes as List<dynamic>)[i] = (result as dynamic)[i];
-          }
+        await reader.onLoadEnd.first.timeout(const Duration(seconds: 30));
+        if (reader.error != null) throw '檔案讀取失敗';
+        final bytes = _bytesFromReaderResult(reader.result);
+        if (bytes.length < 4) throw '檔案太小或損壞';
+        // xlsx is a zip: starts with PK
+        if (bytes[0] != 0x50 || bytes[1] != 0x4B) {
+          throw '不是有效的 .xlsx 檔（請用 Excel「另存新檔」為 .xlsx）';
         }
         await _parseXlsxFromBytes(bytes);
         await (await SharedPreferences.getInstance()).setString('d', jsonEncode(_all));
-        _err = null; _reload();
+        _err = null;
+        _reload();
         if (mounted) setState(() {});
-        if (mounted) ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('已載入 ${_all.length} 款'), backgroundColor: Colors.green));
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('已載入 ${_all.length} 款'), backgroundColor: Colors.green),
+          );
+        }
       } catch (e) {
-        if (mounted) ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('錯誤: $e'), backgroundColor: Colors.red));
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('上傳失敗: $e'), backgroundColor: Colors.red),
+          );
+        }
       }
     });
   }
@@ -246,45 +303,107 @@ class _StockPageState extends State<StockPage> {
   Future<void> _parseXlsxFromBytes(List<int> bytes) async {
     final ex = Excel.decodeBytes(bytes);
     var sh = ex.tables['工作表1'];
-    if (sh == null) sh = ex.tables.values.isNotEmpty ? ex.tables.values.first : null;
-    if (sh == null || sh.rows.length < 2) throw '無數據';
+    sh ??= ex.tables['Sheet1'];
+    sh ??= ex.tables.values.isNotEmpty ? ex.tables.values.first : null;
+    if (sh == null || sh.rows.length < 2) throw '工作表無數據';
     _all.clear();
-    // Check header for detection
+
     final hdr = sh.rows[0];
-    final hasSize = hdr.isNotEmpty && (hdr[1]?.value?.toString() ?? '').contains('Size');
+    final sizeIdx = _findHeaderCol(hdr, ['size', '尺寸']);
+    final brandIdx = _findHeaderCol(hdr, ['brand', '品牌']);
+    final descIdx = _findHeaderCol(hdr, ['description', 'desc', '描述', '型號', 'pattern']);
+    final priceIdx = _findHeaderCol(hdr, ['price', '售價', '賣價', 'sp']);
+    final stockIdx = _findHeaderCol(hdr, ['stock', 'qty', 'quantity', '庫存', '數量']);
+    final yearIdx = _findHeaderCol(hdr, ['year', '年份', '年']);
+    final hasSizeLayout = sizeIdx >= 0;
+
     for (int r = 1; r < sh.rows.length; r++) {
       final row = sh.rows[r];
-      if (hasSize) {
-        final sz = (row[1]?.value?.toString() ?? '').replaceAll(' ', '');
-        final pp = sz.split('/');
-        if (pp.length < 3) continue;
-        final w = int.tryParse(pp[0]) ?? 0;
-        final a = int.tryParse(pp[1]) ?? 0;
-        final ri = int.tryParse(pp[2]) ?? 0;
-        if (w == 0) continue;
-        final b = (row[2]?.value?.toString() ?? '').trim();
-        final d = (row[3]?.value?.toString() ?? '').trim();
+      if (hasSizeLayout) {
+        final sz = sizeIdx < row.length ? _cellText(row[sizeIdx]) : '';
+        if (sz.isEmpty) continue;
+        final parsed = _parseSize(sz);
+        if (parsed == null) continue;
+
+        var b = brandIdx >= 0 && brandIdx < row.length ? _cellText(row[brandIdx]) : '';
+        // Brand column often stores Excel formulas (=PROPER(...)); ignore those.
+        if (b.startsWith('=')) b = '';
+        final d = descIdx >= 0 && descIdx < row.length ? _cellText(row[descIdx]) : '';
+        if (b.isEmpty && d.isNotEmpty) {
+          b = d.split(RegExp(r'\s+')).first;
+        }
+        if (b.isEmpty) continue;
+
         String pt = d;
-        if (pt.toUpperCase().startsWith(b.toUpperCase())) pt = pt.substring(b.length).trim();
-        if (pt.isEmpty) pt = d;
-        final pr = double.tryParse((row[5]?.value?.toString() ?? '').replaceAll(RegExp(r'[^\d.]'), '')) ?? 0;
-        _all.add({'br': b, 'pt': pt, 'w': w, 'a': a, 'ri': ri, 'sp': pr, 'st': 1, 'su': '', 'de': d});
-      } else {
-        final c0 = row[0]?.value?.toString() ?? '';
-        if (c0.isEmpty) continue;
+        if (pt.toUpperCase().startsWith(b.toUpperCase())) {
+          pt = pt.substring(b.length).trim();
+        }
+        if (pt.isEmpty) pt = d.isNotEmpty ? d : b;
+
+        final priceRaw = priceIdx >= 0 && priceIdx < row.length
+            ? _cellText(row[priceIdx])
+            : (row.length > 5 ? _cellText(row[5]) : '');
+        final pr = double.tryParse(priceRaw.replaceAll(RegExp(r'[^\d.]'), '')) ?? 0;
+        final stRaw = stockIdx >= 0 && stockIdx < row.length ? _cellText(row[stockIdx]) : '';
+        final st = int.tryParse(stRaw.replaceAll(RegExp(r'[^\d]'), '')) ?? 1;
+        final year = yearIdx >= 0 && yearIdx < row.length ? _cellText(row[yearIdx]) : '';
+
         _all.add({
-          'br': c0, 'pt': row[1]?.value?.toString() ?? '',
-          'w': int.tryParse(row[2]?.value?.toString() ?? '0') ?? 0,
-          'a': int.tryParse(row[3]?.value?.toString() ?? '0') ?? 0,
-          'ri': int.tryParse(row[4]?.value?.toString() ?? '0') ?? 0,
-          'bp': double.tryParse(row[5]?.value?.toString() ?? '0') ?? 0,
-          'sp': double.tryParse(row[6]?.value?.toString() ?? '0') ?? 0,
-          'st': int.tryParse(row[7]?.value?.toString() ?? '0') ?? 0,
-          'su': row[9]?.value?.toString() ?? '', 'de': row[10]?.value?.toString() ?? '',
+          'br': b,
+          'pt': pt,
+          'w': parsed.w,
+          'a': parsed.a,
+          'ri': parsed.ri,
+          'sp': pr,
+          'st': st,
+          'su': '',
+          'de': d.isNotEmpty ? d : (year.isNotEmpty ? year : sz),
+          'yr': year,
+        });
+      } else {
+        final c0 = row.isNotEmpty ? _cellText(row[0]) : '';
+        if (c0.isEmpty || c0.startsWith('=')) continue;
+        // Fallback: brand | pattern | width | aspect | rim | ...
+        final maybeSize = _parseSize(c0);
+        if (maybeSize != null) {
+          final b = row.length > 1 ? _cellText(row[1]) : '';
+          final d = row.length > 2 ? _cellText(row[2]) : '';
+          final brand = (b.startsWith('=') || b.isEmpty)
+              ? (d.isNotEmpty ? d.split(RegExp(r'\s+')).first : '')
+              : b;
+          if (brand.isEmpty) continue;
+          _all.add({
+            'br': brand,
+            'pt': d,
+            'w': maybeSize.w,
+            'a': maybeSize.a,
+            'ri': maybeSize.ri,
+            'sp': row.length > 4
+                ? (double.tryParse(_cellText(row[4]).replaceAll(RegExp(r'[^\d.]'), '')) ?? 0)
+                : 0,
+            'st': 1,
+            'su': '',
+            'de': d,
+          });
+          continue;
+        }
+        _all.add({
+          'br': c0,
+          'pt': row.length > 1 ? _cellText(row[1]) : '',
+          'w': row.length > 2 ? (int.tryParse(_cellText(row[2])) ?? 0) : 0,
+          'a': row.length > 3 ? (int.tryParse(_cellText(row[3])) ?? 0) : 0,
+          'ri': row.length > 4 ? (int.tryParse(_cellText(row[4])) ?? 0) : 0,
+          'bp': row.length > 5 ? (double.tryParse(_cellText(row[5])) ?? 0) : 0,
+          'sp': row.length > 6 ? (double.tryParse(_cellText(row[6])) ?? 0) : 0,
+          'st': row.length > 7 ? (int.tryParse(_cellText(row[7])) ?? 0) : 0,
+          'su': row.length > 9 ? _cellText(row[9]) : '',
+          'de': row.length > 10 ? _cellText(row[10]) : '',
         });
       }
     }
-    if (_all.isEmpty) throw '找不到有效數據';
+    if (_all.isEmpty) {
+      throw '找不到有效數據（請確認有 Size／Brand 欄，尺寸如 245/40/18）';
+    }
   }
 
   List<String> _splitCsv(String row) {
@@ -316,21 +435,33 @@ class _StockPageState extends State<StockPage> {
       final hasSize = lines[0].toLowerCase().contains('size');
       for (int r = 1; r < lines.length; r++) {
         final cells = _splitCsv(lines[r]);
-        if (hasSize && cells.length >= 5) {
-          final sz = cells[0].replaceAll(' ', '');
-          final pp = sz.split(RegExp(r'[/Rr]'));
-          if (pp.length >= 3) {
-            final w = int.tryParse(pp[0]) ?? 0;
-            final a = int.tryParse(pp[1]) ?? 0;
-            final ri = int.tryParse(pp[2]) ?? 0;
-            if (w == 0 && a == 0) continue;
-            final b = cells[1].trim();
-            final d = cells[2].trim();
+        if (hasSize && cells.length >= 3) {
+          final parsed = _parseSize(cells[0]);
+          if (parsed != null) {
+            final b = cells.length > 1 ? cells[1].trim() : '';
+            final d = cells.length > 2 ? cells[2].trim() : '';
+            var brand = b.startsWith('=') ? '' : b;
+            if (brand.isEmpty && d.isNotEmpty) {
+              brand = d.split(RegExp(r'\s+')).first;
+            }
+            if (brand.isEmpty) continue;
             String pt = d;
-            if (pt.toUpperCase().startsWith(b.toUpperCase())) pt = pt.substring(b.length).trim();
+            if (pt.toUpperCase().startsWith(brand.toUpperCase())) {
+              pt = pt.substring(brand.length).trim();
+            }
             if (pt.isEmpty) pt = d;
             final pr = double.tryParse(cells.last.replaceAll(RegExp(r'[^\d.]'), '')) ?? 0;
-            _all.add({'br': b, 'pt': pt, 'w': w, 'a': a, 'ri': ri, 'sp': pr, 'st': 1, 'su': '', 'de': d});
+            _all.add({
+              'br': brand,
+              'pt': pt,
+              'w': parsed.w,
+              'a': parsed.a,
+              'ri': parsed.ri,
+              'sp': pr,
+              'st': 1,
+              'su': '',
+              'de': d,
+            });
           }
         } else if (cells.length >= 3) {
           _all.add({
@@ -709,7 +840,7 @@ class _FitmentPageState extends State<FitmentPage> {
   Widget _sr(String l, String? v) => Padding(
     padding: const EdgeInsets.symmetric(vertical: 2),
     child: Row(children: [
-      const SizedBox(width: 110, child: Text('PCD', style: TextStyle(fontWeight: FontWeight.w500))),
+      SizedBox(width: 110, child: Text(l, style: const TextStyle(fontWeight: FontWeight.w500))),
       Text(v ?? '-'),
     ]),
   );
