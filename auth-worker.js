@@ -1,7 +1,11 @@
 /**
- * Cloudflare Worker: auth gate + Wheel Size API proxy.
- * Wheel Size key is ONLY used for requests on tyre.autragroupltd.com.
- * Secret: WHEEL_SIZE_USER_KEY (or WHEEL_SIZE_API_KEY)
+ * Cloudflare Worker: signed-session auth gate + Wheel Size API proxy.
+ * Wheel Size key is ONLY used on tyre.autragroupltd.com.
+ *
+ * Secrets:
+ *   WHEEL_SIZE_USER_KEY (or WHEEL_SIZE_API_KEY)
+ *   AUTH_PASS (optional; falls back to DEFAULT_PASS)
+ *   AUTH_USER (optional; falls back to DEFAULT_USER)
  */
 const DEFAULT_USER = "madam";
 const DEFAULT_PASS = "250183418";
@@ -9,6 +13,7 @@ const ORIGIN = "https://joehehe0426.github.io";
 const ORIGIN_PREFIX = "/tyre-stock";
 const WS_API = "https://api.wheel-size.com/v2";
 const AUTRA_HOST = "tyre.autragroupltd.com";
+const SESSION_TTL_SEC = 86400;
 /** HK has no hkdm slug — use common import markets. */
 const DEFAULT_REGIONS = ["jdm", "eudm", "sam"];
 
@@ -20,10 +25,9 @@ export default {
       return corsPreflight(request);
     }
 
-    const authed = isAuthed(request, env);
+    const authed = await isAuthed(request, env);
 
     if (url.pathname.startsWith("/api/ws/")) {
-      // API key must never be usable from GitHub Pages / other hosts.
       if (!isAutraHost(url)) {
         return json(
           { error: "Wheel Size API is only available on tyre.autragroupltd.com" },
@@ -31,10 +35,7 @@ export default {
         );
       }
       if (!isAutraClient(request)) {
-        return json(
-          { error: "Forbidden origin" },
-          403,
-        );
+        return json({ error: "Forbidden origin" }, 403);
       }
       if (!authed) {
         return json({ error: "Unauthorized" }, 401);
@@ -62,10 +63,7 @@ export default {
         if (u === user && p === pass) {
           const resp = await proxyToOrigin(request, url);
           const headers = new Headers(resp.headers);
-          headers.append(
-            "Set-Cookie",
-            "auth=ok; Path=/; Max-Age=86400; SameSite=Lax; Secure",
-          );
+          headers.append("Set-Cookie", await mintSessionCookie(env));
           headers.set("X-Tyre-Worker", "1");
           return new Response(resp.body, {
             status: resp.status,
@@ -93,10 +91,9 @@ function isAutraHost(url) {
   return url.hostname === AUTRA_HOST;
 }
 
-/** Same-origin Autra app only (no GitHub Pages CORS). */
 function isAutraClient(request) {
   const origin = request.headers.get("Origin") || "";
-  if (!origin) return true; // same-origin navigations / no Origin header
+  if (!origin) return true;
   try {
     return new URL(origin).hostname === AUTRA_HOST;
   } catch (_) {
@@ -104,9 +101,66 @@ function isAutraClient(request) {
   }
 }
 
-function isAuthed(request, env) {
-  const cookie = request.headers.get("Cookie") || "";
-  if (cookie.includes("auth=ok")) return true;
+function authSecret(env) {
+  return (env && env.AUTH_PASS) || DEFAULT_PASS;
+}
+
+async function hmacHex(secret, message) {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const sig = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    new TextEncoder().encode(message),
+  );
+  return [...new Uint8Array(sig)]
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+function timingSafeEqual(a, b) {
+  if (a.length !== b.length) return false;
+  let out = 0;
+  for (let i = 0; i < a.length; i++) out |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return out === 0;
+}
+
+async function mintSessionCookie(env) {
+  const exp = Math.floor(Date.now() / 1000) + SESSION_TTL_SEC;
+  const payload = `v1.${exp}`;
+  const sig = await hmacHex(authSecret(env), payload);
+  return `auth=${payload}.${sig}; Path=/; Max-Age=${SESSION_TTL_SEC}; SameSite=Lax; Secure; HttpOnly`;
+}
+
+function readAuthCookie(cookieHeader) {
+  const parts = (cookieHeader || "").split(";");
+  for (const part of parts) {
+    const trimmed = part.trim();
+    if (trimmed.startsWith("auth=")) return trimmed.slice(5);
+  }
+  return "";
+}
+
+async function isAuthed(request, env) {
+  const token = readAuthCookie(request.headers.get("Cookie") || "");
+  // Reject legacy forgeable "auth=ok"
+  if (token && token !== "ok") {
+    const bits = token.split(".");
+    if (bits.length === 3 && bits[0] === "v1") {
+      const exp = Number(bits[1]);
+      const payload = `${bits[0]}.${bits[1]}`;
+      const sig = bits[2];
+      if (Number.isFinite(exp) && exp > Date.now() / 1000) {
+        const expected = await hmacHex(authSecret(env), payload);
+        if (timingSafeEqual(sig, expected)) return true;
+      }
+    }
+  }
 
   const auth = request.headers.get("Authorization");
   if (!auth || !auth.startsWith("Basic ")) return false;
@@ -142,19 +196,19 @@ function allowedOrigin(request) {
 
 function corsPreflight(request) {
   const origin = allowedOrigin(request);
-  if (!origin) {
-    return json({ error: "Forbidden origin" }, 403);
-  }
-  const headers = new Headers({
-    "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Credentials": "true",
-    "Access-Control-Allow-Methods": "GET, OPTIONS",
-    "Access-Control-Allow-Headers": "Authorization, Content-Type",
-    "Access-Control-Max-Age": "86400",
-    "X-Tyre-Worker": "1",
-    Vary: "Origin",
+  if (!origin) return json({ error: "Forbidden origin" }, 403);
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Authorization, Content-Type",
+      "Access-Control-Max-Age": "86400",
+      "X-Tyre-Worker": "1",
+      Vary: "Origin",
+    },
   });
-  return new Response(null, { status: 204, headers });
 }
 
 async function handleWsApi(url, env) {
@@ -171,13 +225,8 @@ async function handleWsApi(url, env) {
   }
 
   const parts = url.pathname.replace(/\/+$/, "").split("/").filter(Boolean);
-  // ["api","ws","makes"] or ["api","ws","search"]
   const action = parts[2] || "";
   const q = url.searchParams;
-
-  const upstream = new URL(WS_API + "/");
-  const params = new URLSearchParams();
-  params.set("user_key", key);
 
   const map = {
     makes: "makes/",
@@ -191,9 +240,12 @@ async function handleWsApi(url, env) {
   if (!map[action]) {
     return json({ error: "Unknown endpoint", allowed: Object.keys(map) }, 404);
   }
-  upstream.pathname = "/v2/" + map[action];
 
-  // Forward selected query params
+  const upstream = new URL(WS_API + "/");
+  upstream.pathname = "/v2/" + map[action];
+  const params = new URLSearchParams();
+  params.set("user_key", key);
+
   for (const name of [
     "make",
     "model",
@@ -205,12 +257,12 @@ async function handleWsApi(url, env) {
     "limit",
     "offset",
     "ordering",
+    "add_configurator",
   ]) {
     const v = q.get(name);
     if (v != null && v !== "") params.set(name, v);
   }
 
-  // List endpoints: apply default multi-region if none provided
   const multiRegionActions = new Set([
     "makes",
     "models",
@@ -221,13 +273,11 @@ async function handleWsApi(url, env) {
   if (multiRegionActions.has(action) && !q.has("region")) {
     for (const r of DEFAULT_REGIONS) params.append("region", r);
   }
-  // search/by_model allows only one region
   if (action === "search" && !q.get("region")) {
     params.set("region", "jdm");
   }
 
   upstream.search = params.toString();
-
   const resp = await fetch(upstream.toString(), {
     method: "GET",
     headers: { Accept: "application/json" },

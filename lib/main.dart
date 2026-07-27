@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:html' as html;
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -49,12 +48,21 @@ class FlutterErrorOnDetails extends StatefulWidget {
   @override State<FlutterErrorOnDetails> createState() => _FlutterErrorOnDetailsState();
 }
 class _FlutterErrorOnDetailsState extends State<FlutterErrorOnDetails> {
+  void Function(FlutterErrorDetails)? _prev;
   @override void initState() {
     super.initState();
+    _prev = FlutterError.onError;
     FlutterError.onError = (d) {
-      widget.onError(d);
+      _prev?.call(d);
       FlutterError.presentError(d);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) widget.onError(d);
+      });
     };
+  }
+  @override void dispose() {
+    FlutterError.onError = _prev;
+    super.dispose();
   }
   @override Widget build(BuildContext context) => widget.child;
 }
@@ -296,15 +304,15 @@ class _StockPageState extends State<StockPage> {
     return double.tryParse('$v') ?? fallback;
   }
 
-  /// Insert or merge into [_all]: identical keys sum stock; keep non-empty fields.
-  void _upsertTyre(Map<String, dynamic> row) {
+  /// Insert or merge into [list]: identical keys sum stock; keep non-empty fields.
+  void _upsertInto(List<Map<String, dynamic>> list, Map<String, dynamic> row) {
     final key = _tyreKey(row);
-    final i = _all.indexWhere((x) => _tyreKey(x) == key);
+    final i = list.indexWhere((x) => _tyreKey(x) == key);
     if (i < 0) {
-      _all.add(Map<String, dynamic>.from(row));
+      list.add(Map<String, dynamic>.from(row));
       return;
     }
-    final cur = _all[i];
+    final cur = list[i];
     cur['st'] = _asInt(cur['st']) + _asInt(row['st'], 1);
     final rowSp = _asDouble(row['sp']);
     if (rowSp > 0) cur['sp'] = rowSp;
@@ -312,34 +320,32 @@ class _StockPageState extends State<StockPage> {
     if (rowDe.isNotEmpty) cur['de'] = rowDe;
     final rowSu = '${row['su'] ?? ''}'.trim();
     if (rowSu.isNotEmpty) cur['su'] = rowSu;
-    _all[i] = cur;
+    final rowYr = '${row['yr'] ?? ''}'.trim();
+    if (rowYr.isNotEmpty && '${cur['yr'] ?? ''}'.trim().isEmpty) {
+      cur['yr'] = rowYr;
+    }
+    list[i] = cur;
   }
+
+  void _upsertTyre(Map<String, dynamic> row) => _upsertInto(_all, row);
 
   /// Collapse any existing duplicates in [_all]. Returns how many rows were removed.
   int _mergeAllDuplicates() {
     if (_all.length < 2) return 0;
     final before = _all.length;
     final merged = <Map<String, dynamic>>[];
-    final indexByKey = <String, int>{};
     for (final row in _all) {
-      final key = _tyreKey(row);
-      final existing = indexByKey[key];
-      if (existing == null) {
-        indexByKey[key] = merged.length;
-        merged.add(Map<String, dynamic>.from(row));
-        continue;
-      }
-      final cur = merged[existing];
-      cur['st'] = _asInt(cur['st']) + _asInt(row['st'], 1);
-      final rowSp = _asDouble(row['sp']);
-      if (rowSp > 0) cur['sp'] = rowSp;
-      final rowDe = '${row['de'] ?? ''}'.trim();
-      if (rowDe.isNotEmpty) cur['de'] = rowDe;
-      final rowSu = '${row['su'] ?? ''}'.trim();
-      if (rowSu.isNotEmpty) cur['su'] = rowSu;
+      _upsertInto(merged, row);
     }
     _all = merged;
     return before - _all.length;
+  }
+
+  int _parseStockQty(String raw, [int fallback = 1]) {
+    final m = RegExp(r'-?\d+').firstMatch(raw.replaceAll(',', ''));
+    if (m == null) return fallback;
+    final v = int.tryParse(m.group(0)!) ?? fallback;
+    return v < 0 ? 0 : v;
   }
 
   /// Parse tyre size: 255/55/19, 255/55/R19, 235/40 /18, /195/65/15, 215/70/16C
@@ -392,6 +398,7 @@ class _StockPageState extends State<StockPage> {
         }
         final bytes = await _readFileAsBytes(file);
         if (bytes.length < 4) throw '檔案太小或損壞';
+        if (bytes.length > 15 * 1024 * 1024) throw '檔案過大（上限 15MB）';
         if (bytes[0] != 0x50 || bytes[1] != 0x4B) {
           throw '不是有效的 .xlsx 檔（請用 Excel「另存新檔」為 .xlsx）';
         }
@@ -427,6 +434,7 @@ class _StockPageState extends State<StockPage> {
   }
 
   /// Returns how many data rows were read before duplicate merge.
+  /// Builds into a staging list so a failed parse never wipes existing stock.
   Future<int> _parseXlsxFromBytes(Uint8List bytes) async {
     late final List<List<String>> rows;
     try {
@@ -436,7 +444,7 @@ class _StockPageState extends State<StockPage> {
     }
     if (rows.length < 2) throw '工作表無數據';
 
-    _all.clear();
+    final staging = <Map<String, dynamic>>[];
     var rawCount = 0;
 
     final hdr = rows[0];
@@ -481,12 +489,11 @@ class _StockPageState extends State<StockPage> {
             priceIdx >= 0 ? _rowCell(row, priceIdx) : _rowCell(row, 5);
         final pr =
             double.tryParse(priceRaw.replaceAll(RegExp(r'[^\d.]'), '')) ?? 0;
-        final stRaw = _rowCell(row, stockIdx);
-        final st = int.tryParse(stRaw.replaceAll(RegExp(r'[^\d]'), '')) ?? 1;
+        final st = _parseStockQty(_rowCell(row, stockIdx), 1);
         final year = _rowCell(row, yearIdx);
 
         rawCount++;
-        _upsertTyre({
+        _upsertInto(staging, {
           'br': b,
           'pt': pt,
           'w': parsed.w,
@@ -510,7 +517,7 @@ class _StockPageState extends State<StockPage> {
               : b;
           if (brand.isEmpty) continue;
           rawCount++;
-          _upsertTyre({
+          _upsertInto(staging, {
             'br': brand,
             'pt': d,
             'w': maybeSize.w,
@@ -527,7 +534,7 @@ class _StockPageState extends State<StockPage> {
           continue;
         }
         rawCount++;
-        _upsertTyre({
+        _upsertInto(staging, {
           'br': c0,
           'pt': _rowCell(row, 1),
           'w': int.tryParse(_rowCell(row, 2)) ?? 0,
@@ -535,16 +542,17 @@ class _StockPageState extends State<StockPage> {
           'ri': int.tryParse(_rowCell(row, 4)) ?? 0,
           'bp': double.tryParse(_rowCell(row, 5)) ?? 0,
           'sp': double.tryParse(_rowCell(row, 6)) ?? 0,
-          'st': int.tryParse(_rowCell(row, 7)) ?? 0,
+          'st': _parseStockQty(_rowCell(row, 7), 0),
           'su': _rowCell(row, 9),
           'de': _rowCell(row, 10),
           'yr': '',
         });
       }
     }
-    if (_all.isEmpty) {
+    if (staging.isEmpty) {
       throw '找不到有效數據（請確認有 Size／Brand 欄，尺寸如 245/40/18）';
     }
+    _all = staging;
     return rawCount;
   }
   List<String> _splitCsv(String row) {
@@ -569,11 +577,17 @@ class _StockPageState extends State<StockPage> {
           : 'https://docs.google.com/spreadsheets/d/$_sheetUrl/export?format=csv';
       final res = await http.get(Uri.parse(url)).timeout(const Duration(seconds: 15));
       if (res.statusCode != 200) throw 'HTTP ${res.statusCode}';
-      _all.clear();
       final lines = res.body.split('\n')
           .map((l) => l.trim()).where((l) => l.isNotEmpty).toList();
       if (lines.length < 2) return false;
-      final hasSize = lines[0].toLowerCase().contains('size');
+      final hdr = lines[0].toLowerCase();
+      final hasSize = hdr.contains('size') || lines[0].contains('尺寸');
+      final hdrCells = _splitCsv(lines[0]);
+      final priceIdx = _findHeaderCol(hdrCells, ['price', '售價', '賣價', 'sp']);
+      final yearIdx = _findHeaderCol(hdrCells, ['year', '年份', '年']);
+      final stockIdx =
+          _findHeaderCol(hdrCells, ['stock', 'qty', 'quantity', '庫存', '數量']);
+      final staging = <Map<String, dynamic>>[];
       for (int r = 1; r < lines.length; r++) {
         final cells = _splitCsv(lines[r]);
         if (hasSize && cells.length >= 3) {
@@ -591,22 +605,32 @@ class _StockPageState extends State<StockPage> {
               pt = pt.substring(brand.length).trim();
             }
             if (pt.isEmpty) pt = d;
-            final pr = double.tryParse(cells.last.replaceAll(RegExp(r'[^\d.]'), '')) ?? 0;
-            _upsertTyre({
+            final priceRaw = priceIdx >= 0
+                ? (priceIdx < cells.length ? cells[priceIdx] : '')
+                : cells.last;
+            final pr =
+                double.tryParse(priceRaw.replaceAll(RegExp(r'[^\d.]'), '')) ?? 0;
+            final year = yearIdx >= 0 && yearIdx < cells.length
+                ? cells[yearIdx].trim()
+                : '';
+            final st = stockIdx >= 0 && stockIdx < cells.length
+                ? _parseStockQty(cells[stockIdx], 1)
+                : 1;
+            _upsertInto(staging, {
               'br': brand,
               'pt': pt,
               'w': parsed.w,
               'a': parsed.a,
               'ri': parsed.ri,
               'sp': pr,
-              'st': 1,
+              'st': st,
               'su': '',
               'de': d,
-              'yr': '',
+              'yr': year,
             });
           }
         } else if (cells.length >= 3) {
-          _upsertTyre({
+          _upsertInto(staging, {
             'br': cells[0].trim(),
             'pt': cells[1].trim(),
             'w': 0,
@@ -620,11 +644,11 @@ class _StockPageState extends State<StockPage> {
           });
         }
       }
-      if (_all.isNotEmpty) {
-        await (await SharedPreferences.getInstance()).setString('d', jsonEncode(_all));
-        _err = null;
-        return true;
-      }
+      if (staging.isEmpty) return false;
+      _all = staging;
+      await (await SharedPreferences.getInstance()).setString('d', jsonEncode(_all));
+      _err = null;
+      return true;
     } catch (e) { _err = 'Google Sheet error: $e'; }
     return false;
   }
@@ -658,7 +682,6 @@ class _StockPageState extends State<StockPage> {
     if ((w is int && w > 0) || (w is double && w > 0)) return '${w.toString()}/${a.toString()}R${ri.toString()}';
     return '';
   }
-  String _rimL(Map<String, dynamic> m) => '${m['ri']?.toString() ?? ''}"';
   Future<void> _save() async => (await SharedPreferences.getInstance()).setString('d', jsonEncode(_all));
   void _reload() {
     _filtered = _all.where((t) {
@@ -992,11 +1015,29 @@ class _StockPageState extends State<StockPage> {
         TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('取消')),
         FilledButton(onPressed: () {
           if (fk.currentState?.validate() != true) return;
+          if (w <= 0 || ri <= 0) {
+            ScaffoldMessenger.of(ctx).showSnackBar(
+              const SnackBar(content: Text('請輸入有效尺寸（闊／鈴）'), backgroundColor: Colors.red),
+            );
+            return;
+          }
+          final st = int.tryParse(sc.text) ?? 0;
+          if (st < 0) {
+            ScaffoldMessenger.of(ctx).showSnackBar(
+              const SnackBar(content: Text('庫存不可為負數'), backgroundColor: Colors.red),
+            );
+            return;
+          }
           Navigator.pop(ctx, {
-            'br': bc.text, 'pt': pc.text, 'w': w, 'a': a, 'ri': ri,
-            'sp': double.tryParse(spc.text) ?? 0,
-            'st': int.tryParse(sc.text) ?? 0,
-            'su': suc.text, 'de': dc.text,
+            'br': bc.text.trim(),
+            'pt': pc.text.trim(),
+            'w': w,
+            'a': a < 0 ? 0 : a,
+            'ri': ri,
+            'sp': (double.tryParse(spc.text) ?? 0).clamp(0, 999999).toDouble(),
+            'st': st.clamp(0, 99999).toInt(),
+            'su': suc.text.trim(),
+            'de': dc.text.trim(),
           });
         }, child: Text(isNew ? '新增' : '儲存')),
       ],

@@ -23,12 +23,8 @@ class XlsxReader {
     return _parseSheet(sheetXml, shared);
   }
 
-  static Uint8List _fileBytes(ArchiveFile file) {
-    final content = file.content;
-    if (content is Uint8List) return content;
-    if (content is List<int>) return Uint8List.fromList(content);
-    throw '無法讀取壓縮檔內容';
-  }
+  static Uint8List _fileBytes(ArchiveFile file) =>
+      Uint8List.fromList(file.content as List<int>);
 
   static List<String> _readSharedStrings(Archive archive) {
     final file = archive.findFile('xl/sharedStrings.xml');
