@@ -200,12 +200,13 @@ class _StockPageState extends State<StockPage> {
             if (_isValidTyre(m)) cleaned.add(m);
           }
           _all = cleaned;
-          // Drop corrupted cache (e.g. JS source leaked into brand fields).
-          if (cleaned.length != parsed.length) {
-            if (cleaned.isEmpty) {
+          final removed = _mergeAllDuplicates();
+          // Drop corrupted / duplicate cache
+          if (cleaned.length != parsed.length || removed > 0) {
+            if (_all.isEmpty) {
               await p.remove('d');
             } else {
-              await p.setString('d', jsonEncode(cleaned));
+              await p.setString('d', jsonEncode(_all));
             }
           }
         }
@@ -272,6 +273,73 @@ class _StockPageState extends State<StockPage> {
     return row[idx].trim();
   }
 
+  /// Same tyre = same brand + size + pattern + year (case-insensitive).
+  String _tyreKey(Map<String, dynamic> m) {
+    final br = '${m['br'] ?? ''}'.trim().toUpperCase();
+    final pt = '${m['pt'] ?? ''}'.trim().toUpperCase();
+    final yr = '${m['yr'] ?? ''}'.trim();
+    final w = m['w'] is num ? (m['w'] as num).toInt() : int.tryParse('${m['w']}') ?? 0;
+    final a = m['a'] is num ? (m['a'] as num).toInt() : int.tryParse('${m['a']}') ?? 0;
+    final ri = m['ri'] is num ? (m['ri'] as num).toInt() : int.tryParse('${m['ri']}') ?? 0;
+    return '$br|$w|$a|$ri|$pt|$yr';
+  }
+
+  int _asInt(dynamic v, [int fallback = 0]) {
+    if (v is num) return v.toInt();
+    return int.tryParse('$v') ?? fallback;
+  }
+
+  double _asDouble(dynamic v, [double fallback = 0]) {
+    if (v is num) return v.toDouble();
+    return double.tryParse('$v') ?? fallback;
+  }
+
+  /// Insert or merge into [_all]: identical keys sum stock; keep non-empty fields.
+  void _upsertTyre(Map<String, dynamic> row) {
+    final key = _tyreKey(row);
+    final i = _all.indexWhere((x) => _tyreKey(x) == key);
+    if (i < 0) {
+      _all.add(Map<String, dynamic>.from(row));
+      return;
+    }
+    final cur = _all[i];
+    cur['st'] = _asInt(cur['st']) + _asInt(row['st'], 1);
+    final rowSp = _asDouble(row['sp']);
+    if (rowSp > 0) cur['sp'] = rowSp;
+    final rowDe = '${row['de'] ?? ''}'.trim();
+    if (rowDe.isNotEmpty) cur['de'] = rowDe;
+    final rowSu = '${row['su'] ?? ''}'.trim();
+    if (rowSu.isNotEmpty) cur['su'] = rowSu;
+    _all[i] = cur;
+  }
+
+  /// Collapse any existing duplicates in [_all]. Returns how many rows were removed.
+  int _mergeAllDuplicates() {
+    if (_all.length < 2) return 0;
+    final before = _all.length;
+    final merged = <Map<String, dynamic>>[];
+    final indexByKey = <String, int>{};
+    for (final row in _all) {
+      final key = _tyreKey(row);
+      final existing = indexByKey[key];
+      if (existing == null) {
+        indexByKey[key] = merged.length;
+        merged.add(Map<String, dynamic>.from(row));
+        continue;
+      }
+      final cur = merged[existing];
+      cur['st'] = _asInt(cur['st']) + _asInt(row['st'], 1);
+      final rowSp = _asDouble(row['sp']);
+      if (rowSp > 0) cur['sp'] = rowSp;
+      final rowDe = '${row['de'] ?? ''}'.trim();
+      if (rowDe.isNotEmpty) cur['de'] = rowDe;
+      final rowSu = '${row['su'] ?? ''}'.trim();
+      if (rowSu.isNotEmpty) cur['su'] = rowSu;
+    }
+    _all = merged;
+    return before - _all.length;
+  }
+
   /// Parse tyre size: 255/55/19, 255/55/R19, 235/40 /18, /195/65/15, 215/70/16C
   ({int w, int a, int ri})? _parseSize(String raw) {
     var cleaned = raw.replaceAll(RegExp(r'\s+'), '').toUpperCase();
@@ -325,16 +393,19 @@ class _StockPageState extends State<StockPage> {
         if (bytes[0] != 0x50 || bytes[1] != 0x4B) {
           throw '不是有效的 .xlsx 檔（請用 Excel「另存新檔」為 .xlsx）';
         }
-        await _parseXlsxFromBytes(bytes);
+        final rawRows = await _parseXlsxFromBytes(bytes);
         await (await SharedPreferences.getInstance())
             .setString('d', jsonEncode(_all));
         _err = null;
         _reload();
         if (mounted) setState(() {});
         if (mounted) {
+          final merged = rawRows - _all.length;
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('已載入 ${_all.length} 款'),
+              content: Text(merged > 0
+                  ? '已載入 ${_all.length} 款（合併了 $merged 筆重複）'
+                  : '已載入 ${_all.length} 款'),
               backgroundColor: Colors.green,
             ),
           );
@@ -353,7 +424,8 @@ class _StockPageState extends State<StockPage> {
     });
   }
 
-  Future<void> _parseXlsxFromBytes(Uint8List bytes) async {
+  /// Returns how many data rows were read before duplicate merge.
+  Future<int> _parseXlsxFromBytes(Uint8List bytes) async {
     late final List<List<String>> rows;
     try {
       rows = XlsxReader.readSheetMatrix(bytes);
@@ -363,6 +435,7 @@ class _StockPageState extends State<StockPage> {
     if (rows.length < 2) throw '工作表無數據';
 
     _all.clear();
+    var rawCount = 0;
 
     final hdr = rows[0];
     final sizeIdx = _findHeaderCol(hdr, ['size', '尺寸']);
@@ -410,7 +483,8 @@ class _StockPageState extends State<StockPage> {
         final st = int.tryParse(stRaw.replaceAll(RegExp(r'[^\d]'), '')) ?? 1;
         final year = _rowCell(row, yearIdx);
 
-        _all.add({
+        rawCount++;
+        _upsertTyre({
           'br': b,
           'pt': pt,
           'w': parsed.w,
@@ -433,7 +507,8 @@ class _StockPageState extends State<StockPage> {
               ? (d.isNotEmpty ? d.split(RegExp(r'\s+')).first : '')
               : b;
           if (brand.isEmpty) continue;
-          _all.add({
+          rawCount++;
+          _upsertTyre({
             'br': brand,
             'pt': d,
             'w': maybeSize.w,
@@ -445,10 +520,12 @@ class _StockPageState extends State<StockPage> {
             'st': 1,
             'su': '',
             'de': d,
+            'yr': '',
           });
           continue;
         }
-        _all.add({
+        rawCount++;
+        _upsertTyre({
           'br': c0,
           'pt': _rowCell(row, 1),
           'w': int.tryParse(_rowCell(row, 2)) ?? 0,
@@ -459,12 +536,14 @@ class _StockPageState extends State<StockPage> {
           'st': int.tryParse(_rowCell(row, 7)) ?? 0,
           'su': _rowCell(row, 9),
           'de': _rowCell(row, 10),
+          'yr': '',
         });
       }
     }
     if (_all.isEmpty) {
       throw '找不到有效數據（請確認有 Size／Brand 欄，尺寸如 245/40/18）';
     }
+    return rawCount;
   }
   List<String> _splitCsv(String row) {
     final r = <String>[];
@@ -511,7 +590,7 @@ class _StockPageState extends State<StockPage> {
             }
             if (pt.isEmpty) pt = d;
             final pr = double.tryParse(cells.last.replaceAll(RegExp(r'[^\d.]'), '')) ?? 0;
-            _all.add({
+            _upsertTyre({
               'br': brand,
               'pt': pt,
               'w': parsed.w,
@@ -521,13 +600,21 @@ class _StockPageState extends State<StockPage> {
               'st': 1,
               'su': '',
               'de': d,
+              'yr': '',
             });
           }
         } else if (cells.length >= 3) {
-          _all.add({
-            'br': cells[0].trim(), 'pt': cells[1].trim(), 'w': 0, 'a': 0, 'ri': 0,
+          _upsertTyre({
+            'br': cells[0].trim(),
+            'pt': cells[1].trim(),
+            'w': 0,
+            'a': 0,
+            'ri': 0,
             'sp': double.tryParse(cells.last.replaceAll(RegExp(r'[^\d.]'), '')) ?? 0,
-            'st': 1, 'su': '', 'de': cells.length > 2 ? cells[2].trim() : '',
+            'st': 1,
+            'su': '',
+            'de': cells.length > 2 ? cells[2].trim() : '',
+            'yr': '',
           });
         }
       }
@@ -809,12 +896,39 @@ class _StockPageState extends State<StockPage> {
   void _edit(Map<String, dynamic> t) async {
     final r = await _dialog(t, false);
     if (r == null) return;
-    final i = _all.indexWhere((x) => x['br'] == t['br'] && x['pt'] == t['pt'] && x['ri'] == t['ri']);
-    if (i >= 0) { _all[i] = r; await _save(); _reload(); if (mounted) setState(() {}); }
+    r['yr'] = '${t['yr'] ?? ''}';
+    final i = _all.indexWhere((x) => identical(x, t));
+    if (i >= 0) {
+      _all.removeAt(i);
+    } else {
+      final oldKey = _tyreKey(t);
+      final i2 = _all.indexWhere((x) => _tyreKey(x) == oldKey);
+      if (i2 >= 0) _all.removeAt(i2);
+    }
+    _upsertTyre(r);
+    await _save();
+    _reload();
+    if (mounted) setState(() {});
   }
+
   void _add() async {
     final r = await _dialog(null, true);
-    if (r != null) { _all.add(r); await _save(); _reload(); if (mounted) setState(() {}); }
+    if (r == null) return;
+    r['yr'] = '';
+    final before = _all.length;
+    _upsertTyre(r);
+    final merged = _all.length == before;
+    await _save();
+    _reload();
+    if (mounted) setState(() {});
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(merged ? '相同規格已合併數量' : '已新增庫存'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
   }
 
   Future<Map<String, dynamic>?> _dialog(Map<String, dynamic>? t, bool isNew) async {
