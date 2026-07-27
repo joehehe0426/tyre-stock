@@ -25,7 +25,9 @@ export default {
       return corsPreflight(request);
     }
 
-    const authed = await isAuthed(request, env);
+    const cookieOk = await isCookieAuthed(request, env);
+    const basicOk = await isBasicAuthed(request, env);
+    const authed = cookieOk || basicOk;
 
     if (url.pathname.startsWith("/api/ws/")) {
       if (!isAutraHost(url)) {
@@ -48,32 +50,12 @@ export default {
     }
 
     if (authed) {
-      return proxyToOrigin(request, url);
-    }
-
-    const auth = request.headers.get("Authorization");
-    if (auth && auth.startsWith("Basic ")) {
-      try {
-        const decoded = atob(auth.slice(6));
-        const colon = decoded.indexOf(":");
-        const u = colon >= 0 ? decoded.slice(0, colon) : decoded;
-        const p = colon >= 0 ? decoded.slice(colon + 1) : "";
-        const user = (env && env.AUTH_USER) || DEFAULT_USER;
-        const pass = (env && env.AUTH_PASS) || DEFAULT_PASS;
-        if (u === user && p === pass) {
-          const resp = await proxyToOrigin(request, url);
-          const headers = new Headers(resp.headers);
-          headers.append("Set-Cookie", await mintSessionCookie(env));
-          headers.set("X-Tyre-Worker", "1");
-          return new Response(resp.body, {
-            status: resp.status,
-            statusText: resp.statusText,
-            headers,
-          });
-        }
-      } catch (_) {
-        /* fall through */
+      const resp = await proxyToOrigin(request, url);
+      // Login via Basic must mint a cookie, otherwise reload loses auth.
+      if (basicOk && !cookieOk) {
+        return withSessionCookie(resp, await mintSessionCookie(env));
       }
+      return resp;
     }
 
     return new Response(loginHtml(), {
@@ -146,22 +128,21 @@ function readAuthCookie(cookieHeader) {
   return "";
 }
 
-async function isAuthed(request, env) {
+async function isCookieAuthed(request, env) {
   const token = readAuthCookie(request.headers.get("Cookie") || "");
   // Reject legacy forgeable "auth=ok"
-  if (token && token !== "ok") {
-    const bits = token.split(".");
-    if (bits.length === 3 && bits[0] === "v1") {
-      const exp = Number(bits[1]);
-      const payload = `${bits[0]}.${bits[1]}`;
-      const sig = bits[2];
-      if (Number.isFinite(exp) && exp > Date.now() / 1000) {
-        const expected = await hmacHex(authSecret(env), payload);
-        if (timingSafeEqual(sig, expected)) return true;
-      }
-    }
-  }
+  if (!token || token === "ok") return false;
+  const bits = token.split(".");
+  if (bits.length !== 3 || bits[0] !== "v1") return false;
+  const exp = Number(bits[1]);
+  const payload = `${bits[0]}.${bits[1]}`;
+  const sig = bits[2];
+  if (!Number.isFinite(exp) || exp <= Date.now() / 1000) return false;
+  const expected = await hmacHex(authSecret(env), payload);
+  return timingSafeEqual(sig, expected);
+}
 
+async function isBasicAuthed(request, env) {
   const auth = request.headers.get("Authorization");
   if (!auth || !auth.startsWith("Basic ")) return false;
   try {
@@ -175,6 +156,20 @@ async function isAuthed(request, env) {
   } catch (_) {
     return false;
   }
+}
+
+function withSessionCookie(resp, cookie) {
+  const out = new Headers();
+  const ctype = resp.headers.get("content-type");
+  if (ctype) out.set("Content-Type", ctype);
+  out.set("Cache-Control", "no-store");
+  out.set("Set-Cookie", cookie);
+  out.set("X-Tyre-Worker", "1");
+  return new Response(resp.body, {
+    status: resp.status,
+    statusText: resp.statusText,
+    headers: out,
+  });
 }
 
 function json(body, status = 200) {
