@@ -1012,167 +1012,701 @@ class FitmentPage extends StatefulWidget {
   const FitmentPage({super.key});
   @override State<FitmentPage> createState() => _FitmentPageState();
 }
+
 class _FitmentPageState extends State<FitmentPage> {
-  Map<String, dynamic>? _data;
+  static const _wsProxyHost = 'https://tyre.autragroupltd.com';
+  /// Online = Wheel Size API via Cloudflare; local = bundled JSON.
+  bool _online = true;
+  Map<String, dynamic>? _localData;
   bool _loaded = false;
-  String? _make, _model;
-  int? _gen;
-  Map<String, dynamic>? _result;
+  String? _err;
+  bool _busy = false;
 
-  @override void initState() { super.initState(); _load(); }
-  Future<void> _load() async {
-    try { _data = jsonDecode(await rootBundle.loadString('assets/fitment_data.json')); } catch (_) {}
+  // Local mode
+  String? _lMake, _lModel;
+  int? _lGen;
+  Map<String, dynamic>? _lResult;
+
+  // Online mode (slugs / values from API)
+  List<Map<String, String>> _oMakes = [];
+  List<Map<String, String>> _oModels = [];
+  List<String> _oYears = [];
+  List<Map<String, String>> _oMods = [];
+  String? _oMake, _oModel, _oYear, _oMod;
+  Map<String, dynamic>? _oResult;
+
+  @override
+  void initState() {
+    super.initState();
+    _boot();
+  }
+
+  Future<void> _boot() async {
+    try {
+      _localData =
+          jsonDecode(await rootBundle.loadString('assets/fitment_data.json'));
+    } catch (_) {}
     if (mounted) setState(() => _loaded = true);
+    if (_online) {
+      await _loadOnlineMakes();
+    }
   }
 
-  List<String> get _makes {
-    final keys = _data?.keys;
-    if (keys == null) return [];
-    final list = keys.toList()..sort();
-    return list;
+  String get _apiBase {
+    final host = Uri.base.host;
+    if (host.contains('autragroupltd.com') ||
+        host == 'localhost' ||
+        host == '127.0.0.1') {
+      return Uri.base.origin;
+    }
+    return _wsProxyHost;
   }
+
+  Future<Map<String, String>> _authHeaders() async {
+    final p = await SharedPreferences.getInstance();
+    final pin = p.getString('pin') ?? '250183418';
+    final token = base64Encode(utf8.encode('madam:$pin'));
+    return {'Authorization': 'Basic $token', 'Accept': 'application/json'};
+  }
+
+  Future<dynamic> _wsGet(String path, [Map<String, String>? query]) async {
+    final uri = Uri.parse('$_apiBase/api/ws/$path')
+        .replace(queryParameters: query);
+    final res = await http
+        .get(uri, headers: await _authHeaders())
+        .timeout(const Duration(seconds: 20));
+    if (res.statusCode == 401) {
+      throw '未授權：請確認網站密碼／PIN';
+    }
+    if (res.statusCode == 503) {
+      throw '尚未設定 Wheel Size API Key（Cloudflare Secret）';
+    }
+    if (res.statusCode != 200) {
+      throw 'API ${res.statusCode}: ${res.body.length > 120 ? res.body.substring(0, 120) : res.body}';
+    }
+    return jsonDecode(res.body);
+  }
+
+  List<Map<String, String>> _slugNameList(dynamic raw) {
+    final data = raw is Map ? raw['data'] : raw;
+    if (data is! List) return [];
+    final out = <Map<String, String>>[];
+    for (final item in data) {
+      if (item is! Map) continue;
+      final slug = '${item['slug'] ?? ''}'.trim();
+      final name = '${item['name'] ?? item['name_en'] ?? slug}'.trim();
+      if (slug.isEmpty) continue;
+      out.add({'slug': slug, 'name': name.isEmpty ? slug : name});
+    }
+    out.sort((a, b) => a['name']!.compareTo(b['name']!));
+    return out;
+  }
+
+  Future<void> _loadOnlineMakes() async {
+    setState(() {
+      _busy = true;
+      _err = null;
+    });
+    try {
+      final raw = await _wsGet('makes');
+      if (!mounted) return;
+      setState(() {
+        _oMakes = _slugNameList(raw);
+        _oModels = [];
+        _oYears = [];
+        _oMods = [];
+        _oMake = _oModel = _oYear = _oMod = null;
+        _oResult = null;
+      });
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _err = '$e';
+          _online = false; // fall back UX hint — user can still toggle
+        });
+      }
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _onOnlineMake(String? slug) async {
+    setState(() {
+      _oMake = slug;
+      _oModel = _oYear = _oMod = null;
+      _oModels = [];
+      _oYears = [];
+      _oMods = [];
+      _oResult = null;
+      _err = null;
+    });
+    if (slug == null) return;
+    setState(() => _busy = true);
+    try {
+      final raw = await _wsGet('models', {'make': slug});
+      if (!mounted) return;
+      setState(() => _oModels = _slugNameList(raw));
+    } catch (e) {
+      if (mounted) setState(() => _err = '$e');
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _onOnlineModel(String? slug) async {
+    setState(() {
+      _oModel = slug;
+      _oYear = _oMod = null;
+      _oYears = [];
+      _oMods = [];
+      _oResult = null;
+      _err = null;
+    });
+    if (slug == null || _oMake == null) return;
+    setState(() => _busy = true);
+    try {
+      final raw = await _wsGet('years', {'make': _oMake!, 'model': slug});
+      final data = raw is Map ? raw['data'] : raw;
+      final years = <String>[];
+      if (data is List) {
+        for (final y in data) {
+          if (y is Map) {
+            final s = '${y['slug'] ?? y['name'] ?? ''}'.trim();
+            if (s.isNotEmpty) years.add(s);
+          } else {
+            final s = '$y'.trim();
+            if (s.isNotEmpty) years.add(s);
+          }
+        }
+      }
+      years.sort((a, b) => (int.tryParse(b) ?? 0).compareTo(int.tryParse(a) ?? 0));
+      if (!mounted) return;
+      setState(() => _oYears = years);
+    } catch (e) {
+      if (mounted) setState(() => _err = '$e');
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _onOnlineYear(String? year) async {
+    setState(() {
+      _oYear = year;
+      _oMod = null;
+      _oMods = [];
+      _oResult = null;
+      _err = null;
+    });
+    if (year == null || _oMake == null || _oModel == null) return;
+    setState(() => _busy = true);
+    try {
+      final raw = await _wsGet('modifications', {
+        'make': _oMake!,
+        'model': _oModel!,
+        'year': year,
+      });
+      final data = raw is Map ? raw['data'] : raw;
+      final mods = <Map<String, String>>[];
+      if (data is List) {
+        for (final item in data) {
+          if (item is! Map) continue;
+          final slug = '${item['slug'] ?? ''}'.trim();
+          if (slug.isEmpty) continue;
+          final name = '${item['name'] ?? item['trim'] ?? slug}'.trim();
+          final engine = item['engine'];
+          final engName = engine is Map
+              ? '${engine['name'] ?? engine['fuel'] ?? ''}'.trim()
+              : '';
+          final label = [
+            name,
+            if (engName.isNotEmpty) engName,
+          ].where((s) => s.isNotEmpty).join(' · ');
+          mods.add({'slug': slug, 'name': label.isEmpty ? slug : label});
+        }
+      }
+      if (!mounted) return;
+      setState(() => _oMods = mods);
+    } catch (e) {
+      if (mounted) setState(() => _err = '$e');
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _doOnlineLook() async {
+    if (_oMake == null || _oModel == null || _oYear == null || _oMod == null) {
+      return;
+    }
+    setState(() {
+      _busy = true;
+      _err = null;
+      _oResult = null;
+    });
+    try {
+      final raw = await _wsGet('search', {
+        'make': _oMake!,
+        'model': _oModel!,
+        'year': _oYear!,
+        'modification': _oMod!,
+        'region': 'jdm',
+      });
+      final data = raw is Map ? raw['data'] : null;
+      if (data is! List || data.isEmpty) {
+        throw '找不到此車規格（可試其他年份／改裝）';
+      }
+      Map<String, dynamic>? hit;
+      for (final row in data) {
+        if (row is Map && '${row['slug']}' == _oMod) {
+          hit = Map<String, dynamic>.from(row);
+          break;
+        }
+      }
+      hit ??= Map<String, dynamic>.from(data.first as Map);
+      final tech = hit['technical'] is Map
+          ? Map<String, dynamic>.from(hit['technical'] as Map)
+          : <String, dynamic>{};
+      final tires = <String>{};
+      final wheels = hit['wheels'];
+      if (wheels is List) {
+        for (final w in wheels) {
+          if (w is! Map) continue;
+          for (final side in ['front', 'rear']) {
+            final s = w[side];
+            if (s is! Map) continue;
+            final t = '${s['tire'] ?? s['tire_full'] ?? ''}'.trim();
+            if (t.isNotEmpty) tires.add(t);
+            final rim = '${s['rim'] ?? ''}'.trim();
+            final off = s['rim_offset'];
+            if (rim.isNotEmpty) {
+              tires.add(off != null ? '$rim ET$off' : rim);
+            }
+          }
+        }
+      }
+      final torque = tech['wheel_tightening_torque'];
+      if (!mounted) return;
+      setState(() {
+        _oResult = {
+          'bolt': '${tech['bolt_pattern'] ?? '-'}',
+          'pcd': '${tech['pcd'] ?? '-'}',
+          'cb': '${tech['centre_bore'] ?? '-'}',
+          'torque': torque == null ? '-' : '$torque',
+          'tires': tires.toList()..sort(),
+          'name': '${hit?['name'] ?? hit?['trim'] ?? ''}',
+        };
+      });
+    } catch (e) {
+      if (mounted) setState(() => _err = '$e');
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  // —— Local JSON helpers (unchanged behaviour) ——
+  List<String> get _lMakes {
+    final keys = _localData?.keys;
+    if (keys == null) return [];
+    return (keys.toList()..sort());
+  }
+
   List<Map<String, dynamic>>? _modelsForMake(String? make) {
-    if (make == null || _data == null) return null;
-    final models = _data![make]?['models'];
+    if (make == null || _localData == null) return null;
+    final models = _localData![make]?['models'];
     if (models is! List) return null;
     return models.cast<Map<String, dynamic>>();
   }
 
-  List<Map<String, dynamic>>? _gensForModel(String? model, List<Map<String, dynamic>>? models) {
+  List<Map<String, dynamic>>? _gensForModel(
+      String? model, List<Map<String, dynamic>>? models) {
     if (model == null || models == null) return null;
     Map<String, dynamic>? found;
     for (final m in models) {
-      if (m['name'] == model) { found = m; break; }
+      if (m['name'] == model) {
+        found = m;
+        break;
+      }
     }
     if (found == null) return null;
     final raw = found['g'] ?? found['generations'];
     if (raw is! List) return null;
     return raw.cast<Map<String, dynamic>>().where((g) {
-      final n = g['n']?.toString()?.trim() ?? '';
+      final n = g['n']?.toString().trim() ?? '';
       return n.isNotEmpty && !n.startsWith('---');
     }).map((g) => {
-      'name': g['n']?.toString() ?? '',
-      'year': g['y']?.toString() ?? '',
-      'pcd': g['p']?.toString() ?? '',
-      'offset': g['o']?.toString() ?? '',
-      'cb': g['c']?.toString() ?? '',
-      'thread': g['t']?.toString() ?? '',
-      'torque': g['q']?.toString() ?? '',
-    }).toList();
+          'name': g['n']?.toString() ?? '',
+          'year': g['y']?.toString() ?? '',
+          'pcd': g['p']?.toString() ?? '',
+          'offset': g['o']?.toString() ?? '',
+          'cb': g['c']?.toString() ?? '',
+          'thread': g['t']?.toString() ?? '',
+          'torque': g['q']?.toString() ?? '',
+        }).toList();
   }
 
   List<String> _getTs(Map<String, dynamic>? m) {
     if (m == null) return [];
     final raw = m['ts'] ?? m['tyreSizes'];
     if (raw is! List) return [];
-    return raw.cast<String>();
+    return raw.map((e) => '$e').toList();
   }
 
-  void _onMake(String? v) { setState(() { _make = v; _model = null; _gen = null; _result = null; }); }
-  void _onModel(String? v) { setState(() { _model = v; _gen = null; _result = null; }); }
-  void _onGen(int? v) { setState(() { _gen = v; _result = null; }); }
-  void _doLook() {
-    final make = _make;
-    final model = _model;
-    final gen = _gen;
-    final data = _data;
-    if (make == null || model == null || gen == null || data == null) return;
+  void _doLocalLook() {
+    final make = _lMake;
+    final model = _lModel;
+    final gen = _lGen;
+    if (make == null || model == null || gen == null) return;
     final models = _modelsForMake(make);
     if (models == null) return;
     final gens = _gensForModel(model, models);
     if (gens == null || gen >= gens.length) return;
-    final g = gens[gen];
     Map<String, dynamic>? found;
     for (final m in models) {
-      if (m['name'] == model) { found = m; break; }
+      if (m['name'] == model) {
+        found = m;
+        break;
+      }
     }
-    if (found == null) return;
-    setState(() => _result = {'gen': g, 'ts': _getTs(found)});
+    setState(() => _lResult = {'gen': gens[gen], 'ts': _getTs(found)});
   }
 
-  @override Widget build(BuildContext context) {
-    if (!_loaded) return const Scaffold(body: Center(child: CircularProgressIndicator()));
-    final models = _modelsForMake(_make);
-    final gens = _gensForModel(_model, models);
+  Future<void> _setMode(bool online) async {
+    setState(() {
+      _online = online;
+      _err = null;
+      _oResult = null;
+      _lResult = null;
+    });
+    if (online && _oMakes.isEmpty) await _loadOnlineMakes();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_loaded) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
     return Scaffold(
-      appBar: AppBar(title: const Text('輪胎配對')),
-      body: SingleChildScrollView(padding: const EdgeInsets.all(16),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          const Text('選擇車輛', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 12),
-          DropdownButtonFormField<String>(
-            value: (_make != null && _makes.contains(_make)) ? _make : null,
-            hint: const Text('請選擇品牌'),
-            decoration: const InputDecoration(labelText: '品牌', border: OutlineInputBorder(), isDense: true),
-            items: _makes
-                .map((m) => DropdownMenuItem(value: m, child: Text(m)))
-                .toList(),
-            onChanged: _onMake),
-          const SizedBox(height: 8),
-          DropdownButtonFormField<String>(
-            value: () {
-              final names = models
-                      ?.map((m) => m['name']?.toString() ?? '')
-                      .where((n) => n.isNotEmpty)
-                      .toList() ??
-                  const <String>[];
-              return (_model != null && names.contains(_model)) ? _model : null;
-            }(),
-            hint: const Text('請選擇型號'),
-            decoration: const InputDecoration(labelText: '型號', border: OutlineInputBorder(), isDense: true),
-            items: models
-                    ?.map((m) => m['name']?.toString() ?? '')
-                    .where((n) => n.isNotEmpty)
-                    .map((n) => DropdownMenuItem(value: n, child: Text(n)))
-                    .toList() ??
-                const [],
-            onChanged: _make != null ? _onModel : null),
-          const SizedBox(height: 8),
-          DropdownButtonFormField<int>(
-            value: (gens != null && _gen != null && _gen! >= 0 && _gen! < gens.length)
-                ? _gen
-                : null,
-            hint: const Text('請選擇世代'),
-            decoration: const InputDecoration(labelText: '世代 / 年份', border: OutlineInputBorder(), isDense: true),
-            items: gens?.asMap().entries.map((e) {
-              final y = e.value['year'] ?? '';
-              final label = y.contains('Present') || y.contains('New') || y.contains('new')
-                  ? '${e.value['name']} — 新車'
-                  : y.isNotEmpty ? '${e.value['name']} ($y)' : '${e.value['name']} (N/A)';
-              return DropdownMenuItem(value: e.key, child: Text(label));
-            }).toList() ?? [],
-            onChanged: _model != null ? _onGen : null),
-          if (_model != null && _gen != null)
-            Padding(padding: const EdgeInsets.symmetric(vertical: 8), child: FilledButton(
-              onPressed: _doLook,
-              child: const Text('查看規格'))),
-          const SizedBox(height: 20),
-          if (_result != null) ...[
-            const Divider(), const SizedBox(height: 8),
-            Text('規格', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary)),
-            _sr('Bolt Pattern', _result?['gen']?['pcd']),
-            _sr('Offset', _result?['gen']?['offset']),
-            _sr('Center Bore', _result?['gen']?['cb']),
-            _sr('Thread', _result?['gen']?['thread']),
-            _sr('Torque', _result?['gen']?['torque']),
-            const SizedBox(height: 12),
-            if ((_result?['ts'] as List?)?.isNotEmpty == true) ...[
-              const Text('適用輪胎尺寸', style: TextStyle(fontWeight: FontWeight.w600)),
-              ...((_result?['ts'] as List?) ?? const []).map((s) => Card(
-                margin: const EdgeInsets.symmetric(vertical: 2),
-                child: ListTile(dense: true, title: Text('$s'),
-                  trailing: Icon(Icons.check_circle, color: Colors.green.shade600)))),
+      appBar: AppBar(
+        title: const Text('輪胎配對'),
+        actions: [
+          if (_busy)
+            const Padding(
+              padding: EdgeInsets.all(16),
+              child: SizedBox(
+                  width: 18,
+                  height: 18,
+                  child: CircularProgressIndicator(strokeWidth: 2)),
+            ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SegmentedButton<bool>(
+              segments: const [
+                ButtonSegment(
+                    value: true,
+                    label: Text('線上'),
+                    icon: Icon(Icons.cloud_outlined)),
+                ButtonSegment(
+                    value: false,
+                    label: Text('本機'),
+                    icon: Icon(Icons.folder_outlined)),
+              ],
+              selected: {_online},
+              onSelectionChanged: (s) => _setMode(s.first),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              _online
+                  ? '資料來源：Wheel Size（港車常用：日規／歐規／東南亞）'
+                  : '資料來源：本機 fitment_data.json',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(color: Colors.grey[700]),
+            ),
+            if (_err != null) ...[
+              const SizedBox(height: 8),
+              Material(
+                color: Colors.red.shade50,
+                borderRadius: BorderRadius.circular(8),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(_err!, style: TextStyle(color: Colors.red.shade800)),
+                ),
+              ),
             ],
+            const SizedBox(height: 12),
+            const Text('選擇車輛',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            if (_online) _buildOnlineForm() else _buildLocalForm(),
+            const SizedBox(height: 20),
+            if (_online && _oResult != null) _buildOnlineResult(),
+            if (!_online && _lResult != null) _buildLocalResult(),
           ],
-        ])),
+        ),
+      ),
     );
   }
+
+  Widget _buildOnlineForm() {
+    final makeSlugs = _oMakes.map((e) => e['slug']!).toList();
+    final modelSlugs = _oModels.map((e) => e['slug']!).toList();
+    final modSlugs = _oMods.map((e) => e['slug']!).toList();
+    String nameOf(List<Map<String, String>> list, String slug) {
+      for (final e in list) {
+        if (e['slug'] == slug) return e['name'] ?? slug;
+      }
+      return slug;
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        DropdownButtonFormField<String>(
+          // ignore: deprecated_member_use
+          value: (_oMake != null && makeSlugs.contains(_oMake)) ? _oMake : null,
+          hint: const Text('請選擇品牌'),
+          decoration: const InputDecoration(
+              labelText: '品牌', border: OutlineInputBorder(), isDense: true),
+          items: _oMakes
+              .map((m) => DropdownMenuItem(
+                  value: m['slug'], child: Text(m['name'] ?? '')))
+              .toList(),
+          onChanged: _busy ? null : _onOnlineMake,
+        ),
+        const SizedBox(height: 8),
+        DropdownButtonFormField<String>(
+          // ignore: deprecated_member_use
+          value: (_oModel != null && modelSlugs.contains(_oModel))
+              ? _oModel
+              : null,
+          hint: const Text('請選擇型號'),
+          decoration: const InputDecoration(
+              labelText: '型號', border: OutlineInputBorder(), isDense: true),
+          items: _oModels
+              .map((m) => DropdownMenuItem(
+                  value: m['slug'], child: Text(m['name'] ?? '')))
+              .toList(),
+          onChanged: (_oMake != null && !_busy) ? _onOnlineModel : null,
+        ),
+        const SizedBox(height: 8),
+        DropdownButtonFormField<String>(
+          // ignore: deprecated_member_use
+          value: (_oYear != null && _oYears.contains(_oYear)) ? _oYear : null,
+          hint: const Text('請選擇年份'),
+          decoration: const InputDecoration(
+              labelText: '年份', border: OutlineInputBorder(), isDense: true),
+          items: _oYears
+              .map((y) => DropdownMenuItem(value: y, child: Text(y)))
+              .toList(),
+          onChanged: (_oModel != null && !_busy) ? _onOnlineYear : null,
+        ),
+        const SizedBox(height: 8),
+        DropdownButtonFormField<String>(
+          // ignore: deprecated_member_use
+          value: (_oMod != null && modSlugs.contains(_oMod)) ? _oMod : null,
+          hint: const Text('請選擇改裝／引擎'),
+          decoration: const InputDecoration(
+              labelText: '改裝', border: OutlineInputBorder(), isDense: true),
+          items: _oMods
+              .map((m) => DropdownMenuItem(
+                  value: m['slug'],
+                  child: Text(nameOf(_oMods, m['slug']!))))
+              .toList(),
+          onChanged: (_oYear != null && !_busy)
+              ? (v) => setState(() {
+                    _oMod = v;
+                    _oResult = null;
+                  })
+              : null,
+        ),
+        if (_oMod != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: FilledButton(
+              onPressed: _busy ? null : _doOnlineLook,
+              child: const Text('查看規格'),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildLocalForm() {
+    final models = _modelsForMake(_lMake);
+    final gens = _gensForModel(_lModel, models);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        DropdownButtonFormField<String>(
+          // ignore: deprecated_member_use
+          value: (_lMake != null && _lMakes.contains(_lMake)) ? _lMake : null,
+          hint: const Text('請選擇品牌'),
+          decoration: const InputDecoration(
+              labelText: '品牌', border: OutlineInputBorder(), isDense: true),
+          items: _lMakes
+              .map((m) => DropdownMenuItem(value: m, child: Text(m)))
+              .toList(),
+          onChanged: (v) => setState(() {
+            _lMake = v;
+            _lModel = null;
+            _lGen = null;
+            _lResult = null;
+          }),
+        ),
+        const SizedBox(height: 8),
+        DropdownButtonFormField<String>(
+          // ignore: deprecated_member_use
+          value: () {
+            final names = models
+                    ?.map((m) => m['name']?.toString() ?? '')
+                    .where((n) => n.isNotEmpty)
+                    .toList() ??
+                const <String>[];
+            return (_lModel != null && names.contains(_lModel)) ? _lModel : null;
+          }(),
+          hint: const Text('請選擇型號'),
+          decoration: const InputDecoration(
+              labelText: '型號', border: OutlineInputBorder(), isDense: true),
+          items: models
+                  ?.map((m) => m['name']?.toString() ?? '')
+                  .where((n) => n.isNotEmpty)
+                  .map((n) => DropdownMenuItem(value: n, child: Text(n)))
+                  .toList() ??
+              const [],
+          onChanged: _lMake == null
+              ? null
+              : (v) => setState(() {
+                    _lModel = v;
+                    _lGen = null;
+                    _lResult = null;
+                  }),
+        ),
+        const SizedBox(height: 8),
+        DropdownButtonFormField<int>(
+          // ignore: deprecated_member_use
+          value: (gens != null &&
+                  _lGen != null &&
+                  _lGen! >= 0 &&
+                  _lGen! < gens.length)
+              ? _lGen
+              : null,
+          hint: const Text('請選擇世代'),
+          decoration: const InputDecoration(
+              labelText: '世代 / 年份',
+              border: OutlineInputBorder(),
+              isDense: true),
+          items: gens?.asMap().entries.map((e) {
+                final y = e.value['year'] ?? '';
+                final label = y.contains('Present') ||
+                        y.contains('New') ||
+                        y.contains('new')
+                    ? '${e.value['name']} — 新車'
+                    : y.isNotEmpty
+                        ? '${e.value['name']} ($y)'
+                        : '${e.value['name']} (N/A)';
+                return DropdownMenuItem(value: e.key, child: Text(label));
+              }).toList() ??
+              [],
+          onChanged: _lModel == null
+              ? null
+              : (v) => setState(() {
+                    _lGen = v;
+                    _lResult = null;
+                  }),
+        ),
+        if (_lModel != null && _lGen != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: FilledButton(
+              onPressed: _doLocalLook,
+              child: const Text('查看規格'),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildOnlineResult() {
+    final r = _oResult!;
+    final tires = (r['tires'] as List?) ?? const [];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Divider(),
+        const SizedBox(height: 8),
+        Text('規格',
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.primary)),
+        if ('${r['name']}'.isNotEmpty) _sr('改裝', '${r['name']}'),
+        _sr('Bolt Pattern', '${r['bolt']}'),
+        _sr('PCD', '${r['pcd']}'),
+        _sr('Center Bore', '${r['cb']}'),
+        _sr('Torque', '${r['torque']}'),
+        const SizedBox(height: 12),
+        if (tires.isNotEmpty) ...[
+          const Text('適用輪胎／鈴', style: TextStyle(fontWeight: FontWeight.w600)),
+          ...tires.map((s) => Card(
+                margin: const EdgeInsets.symmetric(vertical: 2),
+                child: ListTile(
+                  dense: true,
+                  title: Text('$s'),
+                  trailing: Icon(Icons.check_circle,
+                      color: Colors.green.shade600),
+                ),
+              )),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildLocalResult() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Divider(),
+        const SizedBox(height: 8),
+        Text('規格',
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.primary)),
+        _sr('Bolt Pattern', _lResult?['gen']?['pcd']),
+        _sr('Offset', _lResult?['gen']?['offset']),
+        _sr('Center Bore', _lResult?['gen']?['cb']),
+        _sr('Thread', _lResult?['gen']?['thread']),
+        _sr('Torque', _lResult?['gen']?['torque']),
+        const SizedBox(height: 12),
+        if ((_lResult?['ts'] as List?)?.isNotEmpty == true) ...[
+          const Text('適用輪胎尺寸', style: TextStyle(fontWeight: FontWeight.w600)),
+          ...((_lResult?['ts'] as List?) ?? const []).map((s) => Card(
+                margin: const EdgeInsets.symmetric(vertical: 2),
+                child: ListTile(
+                  dense: true,
+                  title: Text('$s'),
+                  trailing: Icon(Icons.check_circle,
+                      color: Colors.green.shade600),
+                ),
+              )),
+        ],
+      ],
+    );
+  }
+
   Widget _sr(String l, String? v) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 2),
-    child: Row(children: [
-      SizedBox(width: 110, child: Text(l, style: const TextStyle(fontWeight: FontWeight.w500))),
-      Text(v ?? '-'),
-    ]),
-  );
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: Row(children: [
+          SizedBox(
+              width: 110,
+              child:
+                  Text(l, style: const TextStyle(fontWeight: FontWeight.w500))),
+          Expanded(child: Text(v ?? '-')),
+        ]),
+      );
 }
