@@ -1014,9 +1014,15 @@ class FitmentPage extends StatefulWidget {
 }
 
 class _FitmentPageState extends State<FitmentPage> {
-  static const _wsProxyHost = 'https://tyre.autragroupltd.com';
-  /// Online = Wheel Size API via Cloudflare; local = bundled JSON.
-  bool _online = true;
+  /// Online Wheel Size API is only for tyre.autragroupltd.com.
+  bool get _apiAllowed {
+    final host = Uri.base.host;
+    return host == 'tyre.autragroupltd.com' ||
+        host == 'localhost' ||
+        host == '127.0.0.1';
+  }
+
+  late bool _online;
   Map<String, dynamic>? _localData;
   bool _loaded = false;
   String? _err;
@@ -1038,6 +1044,7 @@ class _FitmentPageState extends State<FitmentPage> {
   @override
   void initState() {
     super.initState();
+    _online = _apiAllowed;
     _boot();
   }
 
@@ -1047,20 +1054,12 @@ class _FitmentPageState extends State<FitmentPage> {
           jsonDecode(await rootBundle.loadString('assets/fitment_data.json'));
     } catch (_) {}
     if (mounted) setState(() => _loaded = true);
-    if (_online) {
+    if (_online && _apiAllowed) {
       await _loadOnlineMakes();
     }
   }
 
-  String get _apiBase {
-    final host = Uri.base.host;
-    if (host.contains('autragroupltd.com') ||
-        host == 'localhost' ||
-        host == '127.0.0.1') {
-      return Uri.base.origin;
-    }
-    return _wsProxyHost;
-  }
+  String get _apiBase => Uri.base.origin;
 
   Future<Map<String, String>> _authHeaders() async {
     final p = await SharedPreferences.getInstance();
@@ -1070,6 +1069,9 @@ class _FitmentPageState extends State<FitmentPage> {
   }
 
   Future<dynamic> _wsGet(String path, [Map<String, String>? query]) async {
+    if (!_apiAllowed) {
+      throw '線上 API 僅限 tyre.autragroupltd.com';
+    }
     final uri = Uri.parse('$_apiBase/api/ws/$path')
         .replace(queryParameters: query);
     final res = await http
@@ -1370,6 +1372,13 @@ class _FitmentPageState extends State<FitmentPage> {
   }
 
   Future<void> _setMode(bool online) async {
+    if (online && !_apiAllowed) {
+      setState(() {
+        _err = '線上配對（Wheel Size）只在 https://tyre.autragroupltd.com 可用';
+        _online = false;
+      });
+      return;
+    }
     setState(() {
       _online = online;
       _err = null;
@@ -1403,24 +1412,36 @@ class _FitmentPageState extends State<FitmentPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SegmentedButton<bool>(
-              segments: const [
-                ButtonSegment(
-                    value: true,
-                    label: Text('線上'),
-                    icon: Icon(Icons.cloud_outlined)),
-                ButtonSegment(
-                    value: false,
-                    label: Text('本機'),
-                    icon: Icon(Icons.folder_outlined)),
-              ],
-              selected: {_online},
-              onSelectionChanged: (s) => _setMode(s.first),
-            ),
+            if (_apiAllowed)
+              SegmentedButton<bool>(
+                segments: const [
+                  ButtonSegment(
+                      value: true,
+                      label: Text('線上'),
+                      icon: Icon(Icons.cloud_outlined)),
+                  ButtonSegment(
+                      value: false,
+                      label: Text('本機'),
+                      icon: Icon(Icons.folder_outlined)),
+                ],
+                selected: {_online},
+                onSelectionChanged: (s) => _setMode(s.first),
+              )
+            else
+              Material(
+                color: Colors.orange.shade50,
+                borderRadius: BorderRadius.circular(8),
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    '線上 Wheel Size 僅限 https://tyre.autragroupltd.com\n此站使用本機配對資料。',
+                  ),
+                ),
+              ),
             const SizedBox(height: 8),
             Text(
-              _online
-                  ? '資料來源：Wheel Size（港車常用：日規／歐規／東南亞）'
+              _online && _apiAllowed
+                  ? '資料來源：Wheel Size（僅 Autra 網域）'
                   : '資料來源：本機 fitment_data.json',
               style: Theme.of(context)
                   .textTheme

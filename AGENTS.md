@@ -46,5 +46,5 @@ Flutter SDK on this machine: `C:\flutter\bin\flutter.bat`（若不在 PATH，用
 ## Scope tips
 
 - 幾乎所有 UI／庫存邏輯在 `lib/main.dart`；XLSX 解析在 `lib/xlsx_reader.dart`。
-- 配對：本機 `assets/fitment_data.json`；線上經 Cloudflare `/api/ws/*` 代理 Wheel Size API（Secret `WHEEL_SIZE_USER_KEY`）。香港無 `hkdm`，預設 region：`jdm`/`eudm`/`sam`。
+- 配對：本機 `assets/fitment_data.json`；線上 Wheel Size **只在** `tyre.autragroupltd.com`（`/api/ws/*` + Secret）。GitHub Pages 只用本機資料。
 - 未要求時不要 commit；部署 `gh-pages` 需明確推送意圖（遠端可能需先 fetch 再推，避免 non-fast-forward）。

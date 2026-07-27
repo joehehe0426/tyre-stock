@@ -1,12 +1,14 @@
 /**
- * Cloudflare Worker: auth gate + Wheel Size API proxy for GitHub Pages origin.
- * Secret: WHEEL_SIZE_USER_KEY (wrangler secret put WHEEL_SIZE_USER_KEY)
+ * Cloudflare Worker: auth gate + Wheel Size API proxy.
+ * Wheel Size key is ONLY used for requests on tyre.autragroupltd.com.
+ * Secret: WHEEL_SIZE_USER_KEY (or WHEEL_SIZE_API_KEY)
  */
 const DEFAULT_USER = "madam";
 const DEFAULT_PASS = "250183418";
 const ORIGIN = "https://joehehe0426.github.io";
 const ORIGIN_PREFIX = "/tyre-stock";
 const WS_API = "https://api.wheel-size.com/v2";
+const AUTRA_HOST = "tyre.autragroupltd.com";
 /** HK has no hkdm slug — use common import markets. */
 const DEFAULT_REGIONS = ["jdm", "eudm", "sam"];
 
@@ -21,19 +23,26 @@ export default {
     const authed = isAuthed(request, env);
 
     if (url.pathname.startsWith("/api/ws/")) {
-      if (!authed) {
-        return withCors(
-          request,
-          json({ error: "Unauthorized" }, 401),
+      // API key must never be usable from GitHub Pages / other hosts.
+      if (!isAutraHost(url)) {
+        return json(
+          { error: "Wheel Size API is only available on tyre.autragroupltd.com" },
+          403,
         );
       }
-      try {
-        return withCors(request, await handleWsApi(url, env));
-      } catch (e) {
-        return withCors(
-          request,
-          json({ error: String(e && e.message ? e.message : e) }, 502),
+      if (!isAutraClient(request)) {
+        return json(
+          { error: "Forbidden origin" },
+          403,
         );
+      }
+      if (!authed) {
+        return json({ error: "Unauthorized" }, 401);
+      }
+      try {
+        return await handleWsApi(url, env);
+      } catch (e) {
+        return json({ error: String(e && e.message ? e.message : e) }, 502);
       }
     }
 
@@ -80,6 +89,21 @@ export default {
   },
 };
 
+function isAutraHost(url) {
+  return url.hostname === AUTRA_HOST;
+}
+
+/** Same-origin Autra app only (no GitHub Pages CORS). */
+function isAutraClient(request) {
+  const origin = request.headers.get("Origin") || "";
+  if (!origin) return true; // same-origin navigations / no Origin header
+  try {
+    return new URL(origin).hostname === AUTRA_HOST;
+  } catch (_) {
+    return false;
+  }
+}
+
 function isAuthed(request, env) {
   const cookie = request.headers.get("Cookie") || "";
   if (cookie.includes("auth=ok")) return true;
@@ -112,44 +136,25 @@ function json(body, status = 200) {
 
 function allowedOrigin(request) {
   const origin = request.headers.get("Origin") || "";
-  if (
-    origin === "https://joehehe0426.github.io" ||
-    origin === "https://tyre.autragroupltd.com" ||
-    origin.startsWith("http://localhost") ||
-    origin.startsWith("http://127.0.0.1")
-  ) {
-    return origin;
-  }
+  if (origin === `https://${AUTRA_HOST}`) return origin;
   return "";
 }
 
 function corsPreflight(request) {
   const origin = allowedOrigin(request);
+  if (!origin) {
+    return json({ error: "Forbidden origin" }, 403);
+  }
   const headers = new Headers({
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Credentials": "true",
     "Access-Control-Allow-Methods": "GET, OPTIONS",
     "Access-Control-Allow-Headers": "Authorization, Content-Type",
     "Access-Control-Max-Age": "86400",
     "X-Tyre-Worker": "1",
+    Vary: "Origin",
   });
-  if (origin) {
-    headers.set("Access-Control-Allow-Origin", origin);
-    headers.set("Access-Control-Allow-Credentials", "true");
-  }
   return new Response(null, { status: 204, headers });
-}
-
-function withCors(request, response) {
-  const origin = allowedOrigin(request);
-  if (!origin) return response;
-  const headers = new Headers(response.headers);
-  headers.set("Access-Control-Allow-Origin", origin);
-  headers.set("Access-Control-Allow-Credentials", "true");
-  headers.set("Vary", "Origin");
-  return new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers,
-  });
 }
 
 async function handleWsApi(url, env) {
