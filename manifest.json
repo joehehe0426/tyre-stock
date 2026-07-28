@@ -1,11 +1,11 @@
 {
-    "name": "tyre_stock",
-    "short_name": "tyre_stock",
+    "name": "呔妹輪胎",
+    "short_name": "呔妹輪胎",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#fce4ec",
+    "theme_color": "#d81b60",
+    "description": "呔妹輪胎庫存",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
